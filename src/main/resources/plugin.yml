@@ -1,0 +1,4 @@
+name: AdvCommands
+version: '1.0'
+main: si.f5.stsaria.advCommands.AdvCommands
+api-version: '1.21'
