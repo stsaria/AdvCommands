@@ -8,6 +8,7 @@ import si.f5.stsaria.advCommands.variables.EmpVariables;
 import si.f5.stsaria.advCommands.variables.GlobalVariables;
 import si.f5.stsaria.advCommands.variables.Variables;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -53,24 +54,54 @@ public class UserFunction implements Function{
             while(line.contains("#randuuid#")){
                 line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString());
             }
-            Matcher variablesMatcher = Pattern.compile(";[a-zA-Z0-9_\\\\.]+;").matcher(line);
-            while (variablesMatcher.find()){
-                System.out.println(variablesMatcher.group());
-                String variableName = variablesMatcher.group().replaceAll(";", "");
-                String variableValue = this.getVariable(variableName);
-                if (variableValue == null) continue;
-                line = line.replace(variablesMatcher.group(), variableValue);
-            }
-            variablesMatcher = Pattern.compile("<[a-zA-Z0-9_\\\\.]+>").matcher(line);
-            while (variablesMatcher.find()){
-                System.out.println(variablesMatcher.group());
-                String variableName = variablesMatcher.group().replace("<", "").replace(">", "");
-                String variableValue = this.getVariable(variableName);
-                if (variableValue == null) continue;
-                line = line.replace(variablesMatcher.group(), variableValue);
-            }
-            if (line.split(" ").length == 0) break;
+            for (String[] prefix : new ArrayList<>(List.of(new String[]{";", ";"}, new String[]{"<", ">"}))) {
+                Matcher variablesMatcher = Pattern.compile(prefix[0]+"[a-zA-Z0-9.+\\-*/%=><^]+"+prefix[1]).matcher(line);
+                while (variablesMatcher.find()) {
+                    String g = variablesMatcher.group();
+                    String prefixRemovedG = g.replaceFirst(prefix[0], "").replace(prefix[1]+"$", "");
+                    if (g.matches(prefix[0]+"[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+"+prefix[1])) {
+                        String firstVarValue = this.getVariable(prefixRemovedG.split("\\+")[0]);
+                        String secondVarValue = this.getVariable(prefixRemovedG.split("\\+")[1]);
+                        if (firstVarValue == null || secondVarValue == null) continue;
+                        if (g.contains("=")) {
+                            line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
+                        } else {
+                            try {
+                                int firstVarValueInt = Integer.parseInt(firstVarValue);
+                                int secondVarValueInt = Integer.parseInt(secondVarValue);
+                                int ans = 0;
+                                if (g.contains("+")) {
+                                    ans = firstVarValueInt + secondVarValueInt;
+                                } else if (g.contains("-")) {
+                                    ans = firstVarValueInt - secondVarValueInt;
+                                } else if (g.contains("*")) {
+                                    ans = firstVarValueInt * secondVarValueInt;
+                                } else if (g.contains("/")) {
+                                    ans = firstVarValueInt / secondVarValueInt;
+                                } else if (g.contains("%")) {
+                                    ans = firstVarValueInt % secondVarValueInt;
+                                } else if (g.contains("<")) {
+                                    line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
+                                    continue;
+                                } else if (g.contains(">")) {
+                                    line = line.replace(g, firstVarValueInt > secondVarValueInt ? "true" : "false");
+                                    continue;
+                                } else if (g.contains("^")) {
+                                    ans = (int) Math.pow(firstVarValueInt, secondVarValueInt);
 
+                                }
+                                line = line.replace(g, String.valueOf(ans));
+                            } catch (Exception ignore) {
+                                return "error: cant cast string to int";
+                            }
+                        }
+                    } else {
+                        String variableValue = this.getVariable(prefixRemovedG);
+                        if (variableValue == null) continue;
+                        line = line.replace(g, variableValue);
+                    }
+                }
+            }
             if (line.matches(new SetVar().syntax())){
                 String[] lineSplit = line.split(" ");
                 this.setVariable(lineSplit[1], line.replaceFirst("setVar "+lineSplit[1]+" ", ""));

@@ -64,7 +64,7 @@ hoge
 hoge hello
 
 関数hoge内
-cmd say <args.1>
+cmd say <args.0>
 ```
 ### 繰り返し
 ある処理を特定の回数で繰り替えします。

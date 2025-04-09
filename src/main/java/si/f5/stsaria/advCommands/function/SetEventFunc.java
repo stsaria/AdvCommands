@@ -18,7 +18,7 @@ public class SetEventFunc implements Function{
         if (r == 1){
             return "error: not found event type";
         } else if (r == 2){
-            return "error: not found function";
+            return "error: func not found";
         } else if (r == 3){
             return "error: only user defined functions can be registered";
         }
