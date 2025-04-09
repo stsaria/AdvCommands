@@ -1,14 +1,11 @@
 package si.f5.stsaria.advCommands.function;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import si.f5.stsaria.advCommands.FunctionsManager;
 import si.f5.stsaria.advCommands.variables.GlobalVariables;
 
 public class SetVar implements Function{
     @Override
     public String syntax() {
-        return "setVar [a-zA-Z0-9]+ .*";
+        return "setVarG? [a-zA-Z0-9]+ .*";
     }
 
     @Override

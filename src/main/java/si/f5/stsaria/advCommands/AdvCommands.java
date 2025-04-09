@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,6 +59,13 @@ public final class AdvCommands extends JavaPlugin implements Listener {
     public void onBreakBlock(BlockBreakEvent e){
         for (UserFunction f : EventFunctionsManager.getEventFunctions(EventType.ON_BREAK_BLOCK)){
             new OnBreakBlockEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
+            f.execute("");
+        }
+    }
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e){
+        for (UserFunction f : EventFunctionsManager.getEventFunctions(EventType.ON_CHAT)){
+            new OnChatEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
             f.execute("");
         }
     }

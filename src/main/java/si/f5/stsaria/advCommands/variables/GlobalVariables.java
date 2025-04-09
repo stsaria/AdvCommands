@@ -9,14 +9,14 @@ public class GlobalVariables {
             variables.setVariable(name, variable);
         }
     }
-    public static String getVariable(String name){
-        synchronized (GlobalVariables.class) {
-            return variables.getVariable(name);
-        }
-    }
     public static Map<String, String> getVariables(){
         synchronized (GlobalVariables.class){
             return variables.getVariableMap();
+        }
+    }
+    public static void deleteVariable(String name){
+        synchronized (GlobalVariables.class){
+            variables.deleteVariable(name);
         }
     }
 }

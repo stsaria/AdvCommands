@@ -15,10 +15,13 @@ public class FunctionsManager {
         functionMap.put("for", new For());
         functionMap.put("declFunc", new DeclFunc());
         functionMap.put("setVar", new SetVar());
-        functionMap.put("setVarG", new SetVarG());
+        functionMap.put("setVarG", new SetVar());
         functionMap.put("cmd", new Cmd());
         functionMap.put("setEventFunc", new SetEventFunc());
         functionMap.put("if", new If());
+        functionMap.put("nop", new Nop());
+        functionMap.put("delVar", new DelVar());
+        functionMap.put("delVarG", new DelVar());
     }
     public static int addUserFunction(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
