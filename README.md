@@ -10,7 +10,7 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 ## 始めてみましょう
 このプラグインをspigot系のサーバーで導入して、起動します。
 
-起動したらコマンド`/runcmd say Hello world`を実行してみてください。
+起動したらコマンド`/advCmd cmd say Hello world`を実行してみてください。
 そうしたら、`Hello world`が出力されます。いや、されることを祈っています。
 ## 追加される機能
 - 変数※
@@ -28,7 +28,11 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 `;変数名;`のほうが早く埋め込まれます。
 ※setVarは関数以外（チャットコマンド）で使えますが、変数の埋め込みはできません。
 ```
+関数内変数bakaにahoを代入
 setVar baka aho
+グローバル変数(どこからもアクセス可)zaemonにdaisukiを代入
+setVarG zaemon daisuki
+
 cmd say <baka>
 これでahoと表示されます。
 ```
@@ -47,10 +51,10 @@ cmd say <baka>
 
 ```
 座標`20 30 10`が1行目とした関数hogeの宣言
-/declFunc hoge 20 30 10
+/advcmd declFunc hoge world 20 30 10
 
 関数hogeの実行
-/runFunc hoge
+/advcmd runFunc hoge
 
 関数内で関数を呼び出す場合はrunFuncはいりません。
 hoge
@@ -84,7 +88,7 @@ addEvent onKill hoge
 
 例:移動したプレイヤーにmove!と送る
 チャットコマンド
-/addEvent onMove fuga
+/advCmd addEvent onMove fuga
 関数fuga内
 cmd tell {player.name} move!
 ```

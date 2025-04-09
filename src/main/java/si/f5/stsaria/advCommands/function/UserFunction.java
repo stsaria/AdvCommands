@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CommandBlock;
 import si.f5.stsaria.advCommands.FunctionsManager;
 import si.f5.stsaria.advCommands.variables.EmpVariables;
+import si.f5.stsaria.advCommands.variables.GlobalVariables;
 import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.List;
@@ -38,31 +39,35 @@ public class UserFunction implements Function{
         for (int i = 1; i < code.split(" ").length; i++){
             this.setVariable("args."+(i-1), code.split(" ")[i]);
         }
+        GlobalVariables.getVariables().forEach(this::setVariable);
         StringBuilder funcCode = new StringBuilder();
         this.blocks.forEach(b -> {
             if (b.getType().equals(Material.COMMAND_BLOCK)){
-                funcCode.append(((CommandBlock) b.getState()).getCommand());
+                funcCode.append(((CommandBlock) b.getState()).getCommand()).append("\n");
             }
         });
         int i = 0;
         for (String line : funcCode.toString().split("\n")){
             i++;
+            if (line.isEmpty()) continue;
             while(line.contains("#randuuid#")){
                 line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString());
             }
-            Matcher variablesMatcher = Pattern.compile(";(.*?);").matcher(line);
+            Matcher variablesMatcher = Pattern.compile(";[a-zA-Z0-9_\\\\.]+;").matcher(line);
             while (variablesMatcher.find()){
-                String variableName = variablesMatcher.group(1).replace(";", "");
+                System.out.println(variablesMatcher.group());
+                String variableName = variablesMatcher.group().replaceAll(";", "");
                 String variableValue = this.getVariable(variableName);
                 if (variableValue == null) continue;
-                line = line.replace(variablesMatcher.group(1), variableValue);
+                line = line.replace(variablesMatcher.group(), variableValue);
             }
-            variablesMatcher = Pattern.compile("<(.*?)>").matcher(line);
+            variablesMatcher = Pattern.compile("<[a-zA-Z0-9_\\\\.]+>").matcher(line);
             while (variablesMatcher.find()){
-                String variableName = variablesMatcher.group(1).replace("<", "").replace(">", "");
+                System.out.println(variablesMatcher.group());
+                String variableName = variablesMatcher.group().replace("<", "").replace(">", "");
                 String variableValue = this.getVariable(variableName);
                 if (variableValue == null) continue;
-                line = line.replace(variablesMatcher.group(1), variableValue);
+                line = line.replace(variablesMatcher.group(), variableValue);
             }
             if (line.split(" ").length == 0) break;
 

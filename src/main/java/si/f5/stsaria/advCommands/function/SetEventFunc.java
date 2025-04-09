@@ -17,6 +17,10 @@ public class SetEventFunc implements Function{
         int r = EventFunctionsManager.setEventFunction(code.split(" ")[1], code.split(" ")[2]);
         if (r == 1){
             return "error: not found event type";
+        } else if (r == 2){
+            return "error: not found function";
+        } else if (r == 3){
+            return "error: only user defined functions can be registered";
         }
         return "";
     }

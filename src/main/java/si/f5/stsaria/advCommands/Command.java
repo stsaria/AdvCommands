@@ -3,7 +3,6 @@ package si.f5.stsaria.advCommands;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import si.f5.stsaria.advCommands.function.Function;
@@ -17,7 +16,6 @@ public class Command implements CommandExecutor {
         PluginCommand command = this.plugin.getCommand("advCmd");
         if(command != null){
             command.setExecutor(this);
-            command.setTabCompleter((TabCompleter) this);
         }
     }
     @Override

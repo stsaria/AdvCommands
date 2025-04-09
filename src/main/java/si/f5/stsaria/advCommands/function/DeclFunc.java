@@ -4,15 +4,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import si.f5.stsaria.advCommands.FunctionsManager;
 
+import java.util.regex.Pattern;
+
 public class DeclFunc implements Function{
     @Override
     public String syntax() {
-        return "declFunc [a-zA-Z0-9]+ [a-zA-Z0-9_]+　[+-]?\\d+　[+-]?\\d+　[+-]?\\d+";
+        return "declFunc [a-zA-Z0-9]+ [a-zA-Z0-9_]+ [+-]?\\d+ [+-]?\\d+ [+-]?\\d+";
     }
 
     @Override
     public String execute(String code) {
-        if (!code.matches(syntax())){
+        if (!Pattern.compile(syntax()).matcher(code).find()){
             return "error: syntax";
         }
         String[] codeSplit = code.split(" ");

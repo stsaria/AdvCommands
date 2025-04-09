@@ -16,6 +16,8 @@ public class FunctionsManager {
         functionMap.put("declFunc", new DeclFunc());
         functionMap.put("setVar", new SetVar());
         functionMap.put("setVarG", new SetVarG());
+        functionMap.put("cmd", new Cmd());
+        functionMap.put("setEventFunc", new SetEventFunc());
     }
     public static int addUserFunction(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
