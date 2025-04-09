@@ -55,7 +55,7 @@ public class UserFunction implements Function{
                 line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString());
             }
             for (String[] prefix : new ArrayList<>(List.of(new String[]{";", ";"}, new String[]{"<", ">"}))) {
-                Matcher variablesMatcher = Pattern.compile(prefix[0]+"[a-zA-Z0-9.+\\-*/%=><^]+"+prefix[1]).matcher(line);
+                Matcher variablesMatcher = Pattern.compile(prefix[0]+"[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+"+prefix[1]).matcher(line);
                 while (variablesMatcher.find()) {
                     String g = variablesMatcher.group();
                     String prefixRemovedG = g.replaceFirst(prefix[0], "").replace(prefix[1]+"$", "");
@@ -88,26 +88,28 @@ public class UserFunction implements Function{
                                     continue;
                                 } else if (g.contains("^")) {
                                     ans = (int) Math.pow(firstVarValueInt, secondVarValueInt);
-
                                 }
                                 line = line.replace(g, String.valueOf(ans));
                             } catch (Exception ignore) {
                                 return "error: cant cast string to int";
                             }
                         }
-                    } else {
-                        String variableValue = this.getVariable(prefixRemovedG);
-                        if (variableValue == null) continue;
-                        line = line.replace(g, variableValue);
                     }
+                }
+                variablesMatcher = Pattern.compile(prefix[0]+"[a-zA-Z0-9.]+"+prefix[1]).matcher(line);
+                while (variablesMatcher.find()){
+                    String g = variablesMatcher.group();
+                    String prefixRemovedG = g.replaceFirst(prefix[0], "").replace(prefix[1]+"$", "");
+                    String variableValue = this.getVariable(prefixRemovedG);
+                    if (variableValue == null) continue;
+                    line = line.replace(g, variableValue);
                 }
             }
             if (line.matches(new SetVar().syntax())){
                 String[] lineSplit = line.split(" ");
                 this.setVariable(lineSplit[1], line.replaceFirst("setVar "+lineSplit[1]+" ", ""));
                 return "";
-            }
-            else {
+            } else {
                 Function func = FunctionsManager.getFunction(line.split(" ")[0]);
                 if (func == null) return "error: func not found";
                 String r = func.execute(line);
