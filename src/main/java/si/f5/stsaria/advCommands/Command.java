@@ -23,10 +23,15 @@ public class Command implements CommandExecutor {
         if (args.length == 0) return false;
         Function func = FunctionsManager.getFunction(args[0]);
         if (func == null){
+            commandSender.sendMessage("error: func not found");
             return false;
         }
         String r = func.execute(String.join(" ", args));
-        commandSender.sendMessage(r);
+        if (r.isEmpty()) {
+            commandSender.sendMessage("done");
+        } else {
+            commandSender.sendMessage(r);
+        }
         return true;
     }
 }

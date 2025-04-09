@@ -22,6 +22,9 @@ public class FunctionsManager {
         functionMap.put("nop", new Nop());
         functionMap.put("delVar", new DelVar());
         functionMap.put("delVarG", new DelVar());
+        functionMap.put("catFunc", new CatFunc());
+        functionMap.put("exit", new Exit());
+
     }
     public static int addUserFunction(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;

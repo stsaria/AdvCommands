@@ -6,8 +6,10 @@ import org.bukkit.block.CommandBlock;
 import si.f5.stsaria.advCommands.FunctionsManager;
 import si.f5.stsaria.advCommands.variables.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,11 +86,11 @@ public class UserFunction implements Function{
                             ans = firstVarValueInt / secondVarValueInt;
                         } else if (g.contains("%")) {
                             ans = firstVarValueInt % secondVarValueInt;
-                        } else if (g.contains("<")) {
+                        } else if (prefixRemovedG.contains("<")) {
                             line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
                             variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
                             continue;
-                        } else if (g.contains(">")) {
+                        } else if (prefixRemovedG.contains(">")) {
                             line = line.replace(g, firstVarValueInt > secondVarValueInt ? "true" : "false");
                             variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
                             continue;
@@ -119,11 +121,25 @@ public class UserFunction implements Function{
                 Function func = FunctionsManager.getFunction(line.split(" ")[0]);
                 if (func == null) return "error: func not found";
                 String r = func.execute(line);
-                if (!r.isEmpty()) {
+                if (r.startsWith("error: ")) {
                     return "error: Line " + i + ": " + line + " - " + r;
                 }
             }
         }
         return "";
+    }
+
+    public synchronized String cat(){
+        StringBuilder funcCode = new StringBuilder();
+        AtomicInteger i = new AtomicInteger();
+        this.blocks.forEach(b -> {
+            if (b.getType().equals(Material.COMMAND_BLOCK)){
+                if (((CommandBlock) b.getState()).getCommand().isEmpty()) return;
+                funcCode.append(i.getAndIncrement()+1);
+                funcCode.append(" ".repeat(Math.max(0, 4 - Arrays.stream(funcCode.toString().split("\n")).toList().getLast().length())));
+                funcCode.append(((CommandBlock) b.getState()).getCommand()).append("\n");
+            }
+        });
+        return funcCode.toString();
     }
 }
