@@ -10,7 +10,7 @@ public class If implements Function {
 
     @Override
     public String execute(String code) {
-        if (code.matches(syntax())){
+        if (!code.matches(syntax())){
             return "error: syntax";
         }
         String[] codeSplit = code.split(" ");

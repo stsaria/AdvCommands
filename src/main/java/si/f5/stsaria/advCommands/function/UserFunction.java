@@ -27,7 +27,11 @@ public class UserFunction implements Function{
         variables.setVariable(name, variable);
     }
     public synchronized String getVariable(String name){
-        return variables.getVariable(name);
+        try{
+            return String.valueOf(Integer.parseInt(name));
+        } catch (Exception ignore) {
+            return variables.getVariable(name);
+        }
     }
 
     @Override
@@ -52,55 +56,52 @@ public class UserFunction implements Function{
             i++;
             if (line.isEmpty()) continue;
             while(line.contains("#randuuid#")){
-                line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString());
+                line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString().replace("-", ""));
             }
             for (String[] prefix : new ArrayList<>(List.of(new String[]{";", ";"}, new String[]{"<", ">"}))) {
                 Matcher variablesMatcher = Pattern.compile(prefix[0]+"[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+"+prefix[1]).matcher(line);
                 while (variablesMatcher.find()) {
                     String g = variablesMatcher.group();
-                    String prefixRemovedG = g.replaceFirst(prefix[0], "").replace(prefix[1]+"$", "");
-                    if (g.matches(prefix[0]+"[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+"+prefix[1])) {
-                        String firstVarValue = this.getVariable(prefixRemovedG.split("\\+")[0]);
-                        String secondVarValue = this.getVariable(prefixRemovedG.split("\\+")[1]);
-                        if (firstVarValue == null || secondVarValue == null) continue;
-                        if (g.contains("=")) {
-                            line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
-                        } else {
-                            try {
-                                int firstVarValueInt = Integer.parseInt(firstVarValue);
-                                int secondVarValueInt = Integer.parseInt(secondVarValue);
-                                int ans = 0;
-                                if (g.contains("+")) {
-                                    ans = firstVarValueInt + secondVarValueInt;
-                                } else if (g.contains("-")) {
-                                    ans = firstVarValueInt - secondVarValueInt;
-                                } else if (g.contains("*")) {
-                                    ans = firstVarValueInt * secondVarValueInt;
-                                } else if (g.contains("/")) {
-                                    ans = firstVarValueInt / secondVarValueInt;
-                                } else if (g.contains("%")) {
-                                    ans = firstVarValueInt % secondVarValueInt;
-                                } else if (g.contains("<")) {
-                                    line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
-                                    continue;
-                                } else if (g.contains(">")) {
-                                    line = line.replace(g, firstVarValueInt > secondVarValueInt ? "true" : "false");
-                                    continue;
-                                } else if (g.contains("^")) {
-                                    ans = (int) Math.pow(firstVarValueInt, secondVarValueInt);
-                                }
-                                line = line.replace(g, String.valueOf(ans));
-                            } catch (Exception ignore) {
-                                return "error: cant cast string to int";
+                    String prefixRemovedG = g.replaceFirst(prefix[0], "").replaceAll(prefix[1]+"$", "");
+                    String firstVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[0]);
+                    String secondVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[1]);
+                    if (firstVarValue == null || secondVarValue == null) continue;
+                    if (g.contains("=")) {
+                        line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
+                    } else {
+                        try {
+                            int firstVarValueInt = Integer.parseInt(firstVarValue);
+                            int secondVarValueInt = Integer.parseInt(secondVarValue);
+                            int ans = 0;
+                            if (g.contains("+")) {
+                                ans = firstVarValueInt + secondVarValueInt;
+                            } else if (g.contains("-")) {
+                                ans = firstVarValueInt - secondVarValueInt;
+                            } else if (g.contains("*")) {
+                                ans = firstVarValueInt * secondVarValueInt;
+                            } else if (g.contains("/")) {
+                                ans = firstVarValueInt / secondVarValueInt;
+                            } else if (g.contains("%")) {
+                                ans = firstVarValueInt % secondVarValueInt;
+                            } else if (g.contains("<")) {
+                                line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
+                                continue;
+                            } else if (g.contains(">")) {
+                                line = line.replace(g, firstVarValueInt > secondVarValueInt ? "true" : "false");
+                                continue;
+                            } else if (g.contains("^")) {
+                                ans = (int) Math.pow(firstVarValueInt, secondVarValueInt);
                             }
+                            line = line.replace(g, String.valueOf(ans));
+                        } catch (Exception ignore) {
+                            return "error: cant cast string to int";
                         }
                     }
                 }
                 variablesMatcher = Pattern.compile(prefix[0]+"[a-zA-Z0-9.]+"+prefix[1]).matcher(line);
                 while (variablesMatcher.find()){
                     String g = variablesMatcher.group();
-                    String prefixRemovedG = g.replaceFirst(prefix[0], "").replace(prefix[1]+"$", "");
-                    String variableValue = this.getVariable(prefixRemovedG);
+                    String variableValue = this.getVariable(g.replaceFirst(prefix[0], "").replaceAll(prefix[1]+"$", ""));
                     if (variableValue == null) continue;
                     line = line.replace(g, variableValue);
                 }
