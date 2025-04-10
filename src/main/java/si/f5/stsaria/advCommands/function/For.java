@@ -5,7 +5,7 @@ import si.f5.stsaria.advCommands.FunctionsManager;
 public class For implements Function{
     @Override
     public String syntax() {
-        return "for \\d+ \\.*\\";
+        return "for \\d+ .*";
     }
 
     @Override
@@ -15,11 +15,20 @@ public class For implements Function{
         }
         String[] codeSplit = code.split(" ");
         for (int i = 0; i < Integer.parseInt(codeSplit[1]); i++){
-            Function func = FunctionsManager.getFunction(codeSplit[2].split(" ")[0]);
+            Function func = FunctionsManager.getFunction(codeSplit[2]);
             if (func == null) return "error: func not found";
-            String r = func.execute(code.replaceFirst("for "+codeSplit[1]+" ", ""));
-            if (!r.startsWith("error: ")){
-                return r;
+            if (func instanceof UserFunction userFunc){
+                userFunc.setVariable("i", String.valueOf(i));
+                String r = userFunc.execute(code.replaceFirst("for " + codeSplit[1] + " ", ""));
+                if (r.startsWith("error: ")) {
+                    return r;
+                }
+            }
+            else {
+                String r = func.execute(code.replaceFirst("for " + codeSplit[1] + " ", ""));
+                if (r.startsWith("error: ")) {
+                    return r;
+                }
             }
         }
         return "";

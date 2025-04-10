@@ -1,6 +1,6 @@
 package si.f5.stsaria.advCommands.function;
 
-import org.bukkit.Bukkit;
+import si.f5.stsaria.advCommands.Main;
 
 public class Cmd implements Function{
     @Override
@@ -13,7 +13,7 @@ public class Cmd implements Function{
         if (!code.matches(syntax())){
             return "error: syntax";
         }
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), code.replaceFirst("cmd", ""));
+        Main.addRunCommands(code.replaceFirst("cmd ", ""));
         return "";
     }
 }

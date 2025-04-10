@@ -24,6 +24,7 @@ public class FunctionsManager {
         functionMap.put("delVarG", new DelVar());
         functionMap.put("catFunc", new CatFunc());
         functionMap.put("exit", new Exit());
+        functionMap.put("waitRun", new WaitRun());
 
     }
     public static int addUserFunction(String name, Location location){

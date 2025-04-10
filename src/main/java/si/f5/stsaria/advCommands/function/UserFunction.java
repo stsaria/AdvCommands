@@ -53,11 +53,11 @@ public class UserFunction implements Function{
                 funcCode.append(((CommandBlock) b.getState()).getCommand()).append("\n");
             }
         });
-        new BlockV(this.blocks.getFirst()).getVariableMap().forEach(this::setVariable);
+        new BlockV(this.blocks.getFirst()).getVariableMap().forEach((n, v) -> this.setVariable("funcFirstBlock."+n, v));
         int i = 0;
         for (String line : funcCode.toString().split("\n")){
             i++;
-            new BlockV(this.blocks.get(i-1)).getVariableMap().forEach(this::setVariable);
+            new BlockV(this.blocks.get(i-1)).getVariableMap().forEach(((n, v) -> this.setVariable("funcNowLineBlock."+n, v)));
             if (line.isEmpty()) continue;
             while(line.contains("#randuuid#")){
                 line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString().replace("-", ""));
@@ -68,7 +68,9 @@ public class UserFunction implements Function{
                 String prefixRemovedG = g.replaceFirst("<", "").replaceAll(">$", "");
                 String firstVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[0]);
                 String secondVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[1]);
-                if (firstVarValue == null || secondVarValue == null) continue;
+                if (firstVarValue == null || secondVarValue == null){
+                    continue;
+                }
                 if (g.contains("=")) {
                     line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
                 } else {

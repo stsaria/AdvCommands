@@ -8,5 +8,6 @@
 - `setEventFunc <onKill,onMove,onPlaceBlock,onBreakBlock,onJoinEvent,onChatEvent> <関数名>` : 特定のイベント時には特定の関数を実行する。
 - `setVar <変数名> <変数値>` : 変数を定義または上書きします。
 - `delVar <変数名>` : 変数を削除します。
-- `for <繰り返し回数> <関数名>` : 特定の回数関数を実行します。
+- `for <繰り返し回数> <関数名>` : 特定の回数、関数を実行します。
 - `if <true,false> <関数1名> else <関数2名>` : trueであれば関数1を実行して、falseであれば関数2を実行します。
+- `waitRun <遅延ミリ秒> <関数名>` : 特定のミリ秒遅延したあとに関数を実行します。
