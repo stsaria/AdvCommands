@@ -85,8 +85,10 @@ public class UserFunction implements Function{
                         } else if (g.contains("*")) {
                             ans = firstVarValueInt * secondVarValueInt;
                         } else if (g.contains("/")) {
+                            if (secondVarValueInt == 0) return "error: divide by zero";
                             ans = firstVarValueInt / secondVarValueInt;
                         } else if (g.contains("%")) {
+                            if (secondVarValueInt == 0) return "error: divide by zero";
                             ans = firstVarValueInt % secondVarValueInt;
                         } else if (prefixRemovedG.contains("<")) {
                             line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
