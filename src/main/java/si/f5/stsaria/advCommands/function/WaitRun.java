@@ -1,6 +1,8 @@
 package si.f5.stsaria.advCommands.function;
 
 import si.f5.stsaria.advCommands.FunctionsManager;
+import si.f5.stsaria.advCommands.InfoRunFunc;
+import si.f5.stsaria.advCommands.Main;
 
 public class WaitRun implements Function, Runnable{
     private String code = "";
@@ -33,6 +35,6 @@ public class WaitRun implements Function, Runnable{
         } catch (InterruptedException ignore){}
         Function func = FunctionsManager.getFunction(codeSplit[2].split(" ")[0]);
         if (func == null) return;
-        func.execute(code.replaceFirst("waitRun "+codeSplit[1]+" ", ""));
+        Main.addRunFunctions(new InfoRunFunc(func, code.replaceFirst("waitRun "+codeSplit[1]+" ", "")));
     }
 }

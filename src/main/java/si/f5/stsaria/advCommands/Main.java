@@ -1,6 +1,5 @@
 package si.f5.stsaria.advCommands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -17,7 +16,7 @@ import si.f5.stsaria.advCommands.variables.*;
 import java.util.ArrayList;
 
 public class Main extends BukkitRunnable implements Listener {
-    private static final ArrayList<String> runCommands = new ArrayList<>();
+    private static final ArrayList<InfoRunFunc> runFunctions = new ArrayList<>();
     public Main(JavaPlugin plugin){
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         FunctionsManager.initial();
@@ -25,16 +24,16 @@ public class Main extends BukkitRunnable implements Listener {
 
         this.runTaskTimer(plugin,0,0);
     }
-    public static synchronized void addRunCommands(String cmd){
-        runCommands.add(cmd);
+    public static synchronized void addRunFunctions(InfoRunFunc info){
+        runFunctions.add(info);
     }
-    public static synchronized void runCommands(){
-        runCommands.forEach(cmd -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd));
-        runCommands.clear();
+    public static synchronized void runFunctions(){
+        runFunctions.forEach(info -> info.getFunction().execute(info.getCode()));
+        runFunctions.clear();
     }
     @Override
     public void run() {
-        runCommands();
+        runFunctions();
     }
 
     @EventHandler
