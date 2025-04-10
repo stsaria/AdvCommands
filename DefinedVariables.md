@@ -17,23 +17,23 @@
 - `<funcfirstblock>` : 関数の最初のブロック（line 1）-> block
 - `<funcnowlineblock>` : 関数の現在実行しているラインのブロック -> block
 ## イベント変数
-### onKill
+### onkill
 - `<player.*>` -> player
 - `<killer.*>` -> player
-### onMove
+### onmove
 - `<player.*>` -> player
 - `<from.*>` : もとにいる位置 -> location
 - `<to.*>` : 移動後の位置 -> location
-### onJoin
+### onjoin
 - `<player.*>` -> player
-### onPlaceBlock
+### onplaceblock
 - `<player.*>` -> player
 - `<block.*>` -> block
 - `<placedblock.*>` -> block
-### onBreakBlock
+### onbreakblock
 - `<player.*>` -> player
 - `<block.*>` -> block
-### onChat
+### onchat
 - `<message>` : メッセージ（\<と\>は取り除き済み）
 - `<player.*>` -> player
 ## for時"ユーザー関数"変数

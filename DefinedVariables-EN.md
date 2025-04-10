@@ -17,23 +17,23 @@
 - `<funcfirstblock>` : First block of the function (line 1) -> block
 - `<funcnowlineblock>` : Block of the current line being executed in function -> block
 ## Event Variables
-### onKill
+### onkill
 - `<player.*>` -> player
 - `<killer.*>` -> player
-### onMove
+### onmove
 - `<player.*>` -> player
 - `<from.*>` : Original position -> location
 - `<to.*>` : Destination position -> location
-### onJoin
+### onjoin
 - `<player.*>` -> player
-### onPlaceBlock
+### onplaceblock
 - `<player.*>` -> player
 - `<block.*>` -> block
 - `<placedblock.*>` -> block
-### onBreakBlock
+### onbreakblock
 - `<player.*>` -> player
 - `<block.*>` -> block
-### onChat
+### onchat
 - `<message>` : Message (with \< and \> removed)
 - `<player.*>` -> player
 ## "User Function" Variables During Loops
