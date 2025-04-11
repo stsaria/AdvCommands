@@ -13,14 +13,16 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 起動したらコマンド`/advcmd cmd say Hello world`を実行してみてください。
 そうしたら、`Hello world`が出力されます。いや、されることを祈っています。
 ## 追加される機能
-- 変数(\<v\>, setVar, delVar)※
-- 関数(f, declFunc)
+- 変数(\<v\>, setvar, delvar)
+- 関数(f, declfunc, catfunc)
 - 繰り返し(for)
-- イベントハンドラ(setEventFunc)
-- ランダムUUID(#randuuid#)※
-- 四則演算&累乗(<x[+-*/%^]y>)※
+- イベントハンドラ(seteventfunc)
+- ランダムUUID(<randuuid>)
+- UnixTime(<unixtime>)
+- 四則演算&累乗(<x[+-*/%^]y>)
 - 比較(<x[<>=]y>)
 - 条件分岐(if)
+- 遅延(waitrun)
 
 詳しくはDefinedFunctions.mdとDefinedVariables.mdを参照してください。
 
@@ -29,22 +31,21 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 順を追って説明します。
 ### 変数
 変数を使えば、具体的な値を抽象的な名前にし、わかりやすくコードを書くことができます。
-`setVar 変数名 値`で変数を宣言します。
+`setvar 変数名 値`で変数を宣言します。
 `<変数名>`で値を埋め込みます。
-※setVarは関数以外（チャットコマンド）で使えますが、変数の埋め込みは関数以外から使えません。
 ```
 関数内変数bakaにahoを代入
-setVar baka aho
+setvar baka aho
 表示
 cmd say <baka>
 これでahoと表示されます。
 
 グローバル変数(どこからもアクセス可)zaemonにdaisukiを代入
-setVarG zaemon daisuki
+setvarG zaemon daisuki
 関数内変数bakaを削除
-delVar baka
+delvar baka
 グローバル変数zaemonを削除
-delVarG zaemon
+delvarG zaemon
 ```
 グローバル変数は関数内変数に同じ名前がある場合に無視されます。
 ### 関数
@@ -62,10 +63,10 @@ delVarG zaemon
 
 ```
 座標`20 30 10`が1行目とした関数hogeの宣言
-/advcmd declFunc hoge world 20 30 10
+/advcmd declfunc hoge world 20 30 10
 
 関数hogeの実行
-/advcmd runFunc hoge
+/advcmd runfunc hoge
 
 関数内で関数を呼び出す場合はrunFuncはいりません。
 hoge
@@ -95,26 +96,34 @@ for 10 hoge
 
 ```
 キルイベントでhogeという関数を実行するスケジュールを登録
-setEventFunc onKill hoge
+seteventfunc onKill hoge
 
 例:移動したプレイヤーにmove!と送る
 チャットコマンド
-/advcmd setEventFunc onMove fuga
+/advcmd seteventfunc onMove fuga
 関数fuga内
 cmd tell {player.name} move!
 ```
 ### ランダムUUID
-`#randuuid#`とすることによってそこがランダムなUUID(ハイフン無し)に置き換わります。
+`<randuuid>`とすることによってそこがランダムなUUID(ハイフン無し)に置き換わります。
 たとえば、ランダムUUIDを使用して、結果を保存する変数名を予定することができます。
 ```
 関数hoge内
-setVar returnId #randuuid#
+setvar returnId #randuuid#
 piyo <returnId>
 関数piyo内
-setVarG return<args.0> hello
+setvarG return<args.0> hello
 関数hoge内
 cmd say <return<returnId>>
 これでhelloと表示されます。
+```
+### UnixTime
+`<unixtime>`とすることによってそこが現在のUnixTimeに置き換わります。
+ゲーム開始から何秒経ったかの計算などに使用できます。
+```
+setvar start <unixtime>
+waitrun 1000 cmd say <<unixtime>-start>
+こうすると、1と表示されるはずです。
 ```
 ### 四則演算&累乗
 今まで`scoreboard`などで行っていた四則演算と累乗をかんたんに実装できます。
@@ -164,7 +173,13 @@ if false panda else hoge
 不定式を使ってみる
 if <2>1> nisu else nice
 ```
-### 注意点
-- 数値を扱うときは32ビット整数最大値(2^31)を超えた場合は計算がうまくいかなくなります。（特に四則演算で起きがちです）
+### 遅延
+**バックグランドで**特定のミリ秒数遅延したあとに、特定の関数を実行します。
+```
+一秒後（1000ミリ秒後）にこんにちはと表示する
+waitrun 1000 cmd say こんにちは
+```
+※バックグランドなので、例えば`for 10 waitrun 1000 cmd say hello`こうしたときに、`hello`は1秒後にほぼ同時に10回表示されます。
+## 注意点
 - 自分の変数の値に自分の変数の参照を代入しないでください。二度と終わらなくなります。
 - ↑関数も同じです。

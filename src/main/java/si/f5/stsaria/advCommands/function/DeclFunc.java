@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class DeclFunc implements Function{
     @Override
     public String syntax() {
-        return "declFunc [a-zA-Z0-9]+ [a-zA-Z0-9_]+ [+-]?\\d+ [+-]?\\d+ [+-]?\\d+";
+        return "declfunc [a-zA-Z0-9]+ [a-zA-Z0-9_]+ [+-]?\\d+ [+-]?\\d+ [+-]?\\d+";
     }
 
     @Override

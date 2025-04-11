@@ -5,7 +5,7 @@ import si.f5.stsaria.advCommands.variables.GlobalVariables;
 public class SetVar implements Function{
     @Override
     public String syntax() {
-        return "setVarG? [a-zA-Z0-9]+ .*";
+        return "setvarG? [a-zA-Z0-9]+ .*";
     }
 
     @Override
@@ -14,7 +14,7 @@ public class SetVar implements Function{
             return "error: syntax";
         }
         String[] codeSplit = code.split(" ");
-        GlobalVariables.setVariable(codeSplit[1], code.replaceFirst("setVar "+codeSplit[1]+" ", ""));
+        GlobalVariables.setVariable(codeSplit[1], code.replaceFirst("setvar "+codeSplit[1]+" ", ""));
         return "";
     }
 }

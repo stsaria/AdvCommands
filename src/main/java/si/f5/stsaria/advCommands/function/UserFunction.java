@@ -4,14 +4,12 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CommandBlock;
 import si.f5.stsaria.advCommands.FunctionsManager;
+import si.f5.stsaria.advCommands.Parser;
 import si.f5.stsaria.advCommands.variables.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UserFunction implements Function{
     private final List<Block> blocks;
@@ -24,13 +22,6 @@ public class UserFunction implements Function{
 
     public synchronized void setVariable(String name, String variable) {
         this.variables.setVariable(name, variable);
-    }
-    public synchronized String getVariable(String name){
-        try{
-            return String.valueOf(Integer.parseInt(name));
-        } catch (Exception ignore) {
-            return this.variables.getVariable(name);
-        }
     }
     public synchronized void deleteVariable(String name){
         this.variables.deleteVariable(name);
@@ -59,64 +50,11 @@ public class UserFunction implements Function{
             i++;
             new BlockV(this.blocks.get(i-1)).getVariableMap().forEach(((n, v) -> this.setVariable("funcNowLineBlock."+n, v)));
             if (line.isEmpty()) continue;
-            while(line.contains("#randuuid#")){
-                line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString().replace("-", ""));
-            }
-            Matcher variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-            while (variablesMatcher.find()) {
-                String g = variablesMatcher.group();
-                String prefixRemovedG = g.replaceFirst("<", "").replaceAll(">$", "");
-                String firstVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[0]);
-                String secondVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[1]);
-                if (firstVarValue == null || secondVarValue == null){
-                    continue;
-                }
-                if (g.contains("=")) {
-                    line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
-                } else {
-                    try {
-                        int firstVarValueInt = Integer.parseInt(firstVarValue);
-                        int secondVarValueInt = Integer.parseInt(secondVarValue);
-                        int ans = 0;
-                        if (g.contains("+")) {
-                            ans = firstVarValueInt + secondVarValueInt;
-                        } else if (g.contains("-")) {
-                            ans = firstVarValueInt - secondVarValueInt;
-                        } else if (g.contains("*")) {
-                            ans = firstVarValueInt * secondVarValueInt;
-                        } else if (g.contains("/")) {
-                            ans = firstVarValueInt / secondVarValueInt;
-                        } else if (g.contains("%")) {
-                            ans = firstVarValueInt % secondVarValueInt;
-                        } else if (prefixRemovedG.contains("<")) {
-                            line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
-                            variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                            continue;
-                        } else if (prefixRemovedG.contains(">")) {
-                            line = line.replace(g, firstVarValueInt > secondVarValueInt ? "true" : "false");
-                            variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                            continue;
-                        } else if (g.contains("^")) {
-                            ans = (int) Math.pow(firstVarValueInt, secondVarValueInt);
-                        }
-                        line = line.replace(g, String.valueOf(ans));
-                    } catch (Exception ignore) {
-                        return "error: cant cast string to int";
-                    }
-                }
-                variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-            }
-            variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+>").matcher(line);
-            while (variablesMatcher.find()){
-                String g = variablesMatcher.group();
-                String variableValue = this.getVariable(g.replaceFirst("<", "").replaceAll(">$", ""));
-                if (variableValue == null) continue;
-                line = line.replace(g, variableValue);
-                variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+>").matcher(line);
-            }
+            line = Parser.variableSubstitution(variables, line);
+            if (line.startsWith("error: ")) return line;
             String[] lineSplit = line.split(" ");
             if (line.matches(new SetVar().syntax())){
-                this.setVariable(lineSplit[1], line.replaceFirst("setVar "+lineSplit[1]+" ", ""));
+                this.setVariable(lineSplit[1], line.replaceFirst("setvar "+lineSplit[1]+" ", ""));
             } else if (line.matches(new DelVar().syntax())){
                 this.deleteVariable(lineSplit[1]);
             } else {

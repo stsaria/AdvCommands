@@ -5,7 +5,7 @@ import si.f5.stsaria.advCommands.variables.GlobalVariables;
 public class DelVar implements Function{
     @Override
     public String syntax() {
-        return "delVarG? [a-zA-Z0-9.]+";
+        return "delvarG? [a-zA-Z0-9.]+";
     }
 
     @Override

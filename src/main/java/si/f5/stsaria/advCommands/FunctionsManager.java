@@ -13,18 +13,18 @@ public class FunctionsManager {
     private static final Map<String, Function> functionMap = new HashMap<>();
     public static void initial(){
         functionMap.put("for", new For());
-        functionMap.put("declFunc", new DeclFunc());
-        functionMap.put("setVar", new SetVar());
-        functionMap.put("setVarG", new SetVar());
+        functionMap.put("declfunc", new DeclFunc());
+        functionMap.put("setvar", new SetVar());
+        functionMap.put("setvarG", new SetVar());
         functionMap.put("cmd", new Cmd());
-        functionMap.put("setEventFunc", new SetEventFunc());
+        functionMap.put("seteventfunc", new SetEventFunc());
         functionMap.put("if", new If());
         functionMap.put("nop", new Nop());
-        functionMap.put("delVar", new DelVar());
-        functionMap.put("delVarG", new DelVar());
-        functionMap.put("catFunc", new CatFunc());
+        functionMap.put("delvar", new DelVar());
+        functionMap.put("delvarG", new DelVar());
+        functionMap.put("catfunc", new CatFunc());
         functionMap.put("exit", new Exit());
-        functionMap.put("waitRun", new WaitRun());
+        functionMap.put("waitrun", new WaitRun());
 
     }
     public static int addUserFunction(String name, Location location){

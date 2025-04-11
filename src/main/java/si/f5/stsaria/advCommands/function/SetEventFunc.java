@@ -6,7 +6,7 @@ public class SetEventFunc implements Function{
 
     @Override
     public String syntax() {
-        return "setEventFunc [a-zA-Z0-9]+ [a-zA-Z0-9]+";
+        return "seteventfunc [a-zA-Z0-9]+ [a-zA-Z0-9]+";
     }
 
     @Override

@@ -5,7 +5,7 @@ import si.f5.stsaria.advCommands.FunctionsManager;
 public class CatFunc implements Function{
     @Override
     public String syntax() {
-        return "catFunc [a-zA-Z0-9]+";
+        return "catfunc [a-zA-Z0-9]+";
     }
 
     @Override

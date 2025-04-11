@@ -15,7 +15,7 @@ public class WaitRun implements Function, Runnable{
 
     @Override
     public String syntax() {
-        return "waitRun \\d+ .*";
+        return "waitrun \\d+ .*";
     }
 
     @Override
@@ -35,6 +35,6 @@ public class WaitRun implements Function, Runnable{
         } catch (InterruptedException ignore){}
         Function func = FunctionsManager.getFunction(codeSplit[2].split(" ")[0]);
         if (func == null) return;
-        Main.addRunFunctions(new InfoRunFunc(func, code.replaceFirst("waitRun "+codeSplit[1]+" ", "")));
+        Main.addRunFunctions(new InfoRunFunc(func, code.replaceFirst("waitrun "+codeSplit[1]+" ", "")));
     }
 }

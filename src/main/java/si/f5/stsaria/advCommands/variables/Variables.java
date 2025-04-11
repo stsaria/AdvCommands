@@ -10,9 +10,15 @@ public abstract class Variables {
         this.variableMap.put(name, variable);
     }
     public String getVariable(String name){
-        AtomicReference<String> variable = new AtomicReference<>(null);
-        this.variableMap.forEach((n, v) -> {if (n.equals(name)) variable.set(v);});
-        return variable.get();
+        try{
+            return String.valueOf(Long.parseLong(name));
+        } catch (Exception ignore) {
+            AtomicReference<String> variable = new AtomicReference<>(null);
+            this.variableMap.forEach((n, v) -> {
+                if (n.equals(name)) variable.set(v);
+            });
+            return variable.get();
+        }
     }
     public Map<String, String> getVariableMap(){
         return new HashMap<>(this.variableMap);

@@ -11,20 +11,23 @@ public class EventFunctionsManager {
         EventType eventType;
         Function function;
         switch (eventTypeStr){
-            case "onKill":
+            case "onkill":
                 eventType = EventType.ON_KILL;
                 break;
-            case "onMove":
+            case "onmove":
                 eventType = EventType.ON_MOVE;
                 break;
-            case "onJoin":
+            case "onjoin":
                 eventType = EventType.ON_JOIN;
                 break;
-            case "onPlaceBlock":
+            case "onplaceblock":
                 eventType = EventType.ON_PLACE_BLOCK;
                 break;
-            case "onBreakBlock":
+            case "onbreakblock":
                 eventType = EventType.ON_BREAK_BLOCK;
+                break;
+            case "onchat":
+                eventType = EventType.ON_CHAT;
                 break;
             default:
                 return 1;
