@@ -1,3 +1,4 @@
+This README is in Japanese. The English README is [here](README-EN.md). (It is left to machine translation, so there is a possibility that something may have gone wrong.)
 # AdvCommands
 AdvCommandsは、従来のマインクラフトコマンドに複数の機能を追加するプラグインのプロジェクトです。
 ## これが必要な理由
