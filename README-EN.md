@@ -29,8 +29,6 @@ You should then see `Hello world` displayed. Well, I hope so.
 
 For details, please refer to DefinedFunctions-EN.md and DefinedVariables-EN.md.
 
-*Note: Can be used within functions*
-
 I'll explain each in order.
 
 ### Variables
