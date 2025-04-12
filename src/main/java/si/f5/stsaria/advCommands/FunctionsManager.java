@@ -25,6 +25,7 @@ public class FunctionsManager {
         functionMap.put("catfunc", new CatFunc());
         functionMap.put("exit", new Exit());
         functionMap.put("waitrun", new WaitRun());
+        functionMap.put("randint", new RandInt());
 
     }
     public static int addUserFunction(String name, Location location){

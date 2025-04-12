@@ -13,7 +13,7 @@ public class Cmd implements Function{
         if (!code.matches(syntax())){
             return "error: syntax";
         }
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), code.replaceFirst("cmd ", ""));
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), code.replaceFirst("cmd ", "").replace("&lt", "<").replace("&gt", ">"));
         return "";
     }
 }
