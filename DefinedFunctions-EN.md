@@ -12,4 +12,4 @@
 - `for <repetition count> <function name>` : Executes a function a specific number of times.
 - `if <true,false> <function1 name> else <function2 name>` : Executes function1 if true, executes function2 if false.
 - `waitrun <delay in milliseconds> <function name>` : Executes a function after a specific delay in milliseconds.
-- `randint <range start> <range end> <variable name>` : assigns a random number in the range to the value for the given variable Pluto.
+- `randint <range start> <range end> <variable name>` : assigns a random number in the range to the value for the given variable name.
