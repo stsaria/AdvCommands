@@ -20,16 +20,14 @@ You should then see `Hello world` displayed. Well, I hope so.
 - Functions (f, declfunc, catfunc)
 - Loops (for)
 - Event handlers (seteventfunc)
-- Random UUID (<randuuid>)
-- UnixTime (<unixtime>)
-- Basic arithmetic & exponentiation (<x[+-*/%^]y>)
-- Comparisons (<x[<>=]y>)
+- Random UUID (\<randuuid\>)
+- UnixTime (\<unixtime\>)
+- Basic arithmetic & exponentiation (\<x[+-*/%^]y\>)
+- Comparisons (\<x[<>=]y\>)
 - Conditional branching (if)
 - Delays (waitrun)
 
 For details, please refer to DefinedFunctions-EN.md and DefinedVariables-EN.md.
-
-*Note: Can be used within functions*
 
 I'll explain each in order.
 
@@ -38,17 +36,17 @@ Variables allow you to replace specific values with abstract names, making your 
 Use `setvar variable_name value` to declare a variable.
 Use `<variable_name>` to embed the value.
 ```
-Assign "aho" to function-local variable "baka"
+# Assign "aho" to function-local variable "baka"
 setvar baka aho
-Display it
+# Display it
 cmd say <baka>
-This will display "aho".
+# This will display "aho".
 
-Assign "daisuki" to global variable "zaemon" (accessible from anywhere)
+# Assign "daisuki" to global variable "zaemon" (accessible from anywhere)
 setvarG zaemon daisuki
-Delete function-local variable "baka"
+# Delete function-local variable "baka"
 delvar baka
-Delete global variable "zaemon"
+# Delete global variable "zaemon"
 delvarG zaemon
 ```
 Global variables are ignored if there are function-local variables with the same name.
@@ -67,20 +65,20 @@ Please don't attach repeat or chain command blocks.
 You can also add arguments to functions. (Return values are not supported.)
 
 ```
-Declare function "hoge" with first line at coordinate `20 30 10`
+# Declare function "hoge" with first line at coordinate `20 30 10`
 /advcmd declfunc hoge world 20 30 10
 
-Execute function "hoge"
+# Execute function "hoge"
 /advcmd runfunc hoge
 
-When calling a function within another function, you don't need runFunc.
-Just use:
+# When calling a function within another function, you don't need runFunc.
+# Just use:
 hoge
 
-Pass "hello" as an argument to function "hoge"
+# Pass "hello" as an argument to function "hoge"
 hoge hello
 
-Within function "hoge"
+# Within function "hoge"
 cmd say <args.0>
 ```
 If you want to add a return value to a function, decide on a variable ID beforehand using a UUID or something similar, send it as an argument to the function, and assign it within the function.
@@ -91,7 +89,7 @@ This repeats a process a specific number of times.
 While this can be done using `scoreboard` and `execute`, this plugin simplifies it significantly.
 
 ```
-Execute function "hoge" 10 times
+# Execute function "hoge" 10 times
 for 10 hoge
 ```
 
@@ -102,13 +100,13 @@ This increases readability by using an event-driven approach instead of the trad
 Event handlers include variables related to the event.
 
 ```
-Register function "hoge" to be executed on kill events
+# Register function "hoge" to be executed on kill events
 seteventfunc onKill hoge
 
-Example: Send "move!" to players who move
-Chat command:
+# Example: Send "move!" to players who move
+# Chat command:
 /advcmd seteventfunc onMove fuga
-Within function "fuga":
+# Within function "fuga":
 cmd tell {player.name} move!
 ```
 
@@ -116,14 +114,14 @@ cmd tell {player.name} move!
 Using `<randuuid>` will replace that with a random UUID (without hyphens).
 For example, you can use a random UUID to create a variable name for storing results.
 ```
-Within function "hoge":
+# Within function "hoge":
 setvar returnId <randuuid>
 piyo <returnId>
-Within function "piyo":
+# Within function "piyo":
 setvarG return<args.0> hello
-Within function "hoge":
+# Within function "hoge":
 cmd say <return<returnId>>
-This will display "hello".
+# This will display "hello".
 ```
 
 ### UnixTime
@@ -132,7 +130,7 @@ This can be used for calculations such as how many seconds have passed since the
 ```
 setvar start <unixtime>
 waitrun 1000 cmd say <<unixtime>-<start>>
-This should display "1".
+# This should display "1".
 ```
 
 ### Basic Arithmetic & Exponentiation
@@ -145,17 +143,17 @@ The written part will be replaced with the result of the calculation.
 
 Calculation examples:
 ```
-Addition
+# Addition
 <1+1>
-Subtraction
+# Subtraction
 <2-1>
-Multiplication
+# Multiplication
 <5*4>
-Division
+# Division
 <9/3>
-Modulus (remainder)
+# Modulus (remainder)
 <8%5>
-Exponentiation
+# Exponentiation
 <2^10>
 ```
 
@@ -165,11 +163,11 @@ Inequality and equality operators evaluate to true or false.
 True cases are replaced with `true`,
 False cases are replaced with `false`
 ```
-Equality
+# Equality
 <5=5>
-Inequality
+# Inequality
 <1<2>
-Inequality
+# Inequality
 <1>2>
 ```
 
@@ -178,19 +176,19 @@ If the given string is `true`, it executes the first function; if `false`, it ex
 
 Comparisons can also be used.
 ```
-If true execute function "hoge", if false execute function "panda". (Always executes "hoge")
+# If true execute function "hoge", if false execute function "panda". (Always executes "hoge")
 if true hoge else panda
-The opposite:
+# The opposite:
 if false panda else hoge
-Using a comparison:
+# Using a comparison:
 if <2>1> nisu else nice
 ```
 
 ### Delay
 Executes a specific function after a specified delay in milliseconds **in the background**.
 ```
-Display "こんにちは" (Hello) after one second (1000 milliseconds)
-waitrun 1000 cmd say こんにちは
+# Display "hello" after one second (1000 milliseconds)
+waitrun 1000 cmd say hello
 ```
 *Note: Since this runs in the background, if you do something like `for 10 waitrun 1000 cmd say hello`, "hello" will be displayed 10 times almost simultaneously after 1 second.*
 
