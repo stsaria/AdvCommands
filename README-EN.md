@@ -194,4 +194,3 @@ waitrun 1000 cmd say hello
 
 ## Important Notes
 - Do not assign a reference to a variable to itself. This will cause an infinite loop.
-- The same applies to functions.
