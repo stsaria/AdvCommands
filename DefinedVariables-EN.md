@@ -12,6 +12,10 @@
 ### block
 - `<materialname>` : Material name (example: polished_andesite)
 - `<location.*>` -> location
+### itemstack
+- `<displayname>` : Item display name
+- `<materialname>` : Material name
+- `<amount>` : Stack count/amount
 ## Variables During Function Execution
 - `<args.n>` : The nth argument
 - `<funcfirstblock>` : First block of the function (line 1) -> block
@@ -35,6 +39,16 @@
 - `<block.*>` -> block
 ### onchat
 - `<message>` : Message (with \< and \> removed)
+- `<player.*>` -> player
+### onclickguiitem
+- `<guiname>` : GUI inventory name
+- `<guititle>` : GUI inventory title
+- `<itemstack.*>` -> itemstack
+### onclickhanditem
+- `<player>` : GUI inventory name
+- `<guititle>` : GUI inventory title
+- `<itemstack.*>` -> itemstack
+### onleave
 - `<player.*>` -> player
 ## "User Function" Variables During Loops
 - `<i>` : Current iteration count (starting from 0)

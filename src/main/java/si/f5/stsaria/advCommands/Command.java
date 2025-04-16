@@ -25,9 +25,9 @@ public class Command implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull org.bukkit.command.Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 0) return false;
         Variables variables = new EmpVariables();
-        GlobalVariables.getVariables().forEach(variables::setVariable);
+        GlobalVariables.getAll().forEach(variables::set);
         String line = Parser.variableSubstitution(variables, String.join(" ", args));
-        Function func = FunctionsManager.getFunction(args[0]);
+        Function func = FunctionsManager.get(args[0]);
         if (func == null){
             commandSender.sendMessage("error: func not found");
             return false;

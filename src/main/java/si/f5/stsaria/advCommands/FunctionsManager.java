@@ -6,7 +6,6 @@ import org.bukkit.block.Block;
 import si.f5.stsaria.advCommands.function.*;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FunctionsManager {
@@ -26,45 +25,39 @@ public class FunctionsManager {
         functionMap.put("exit", new Exit());
         functionMap.put("waitrun", new WaitRun());
         functionMap.put("randint", new RandInt());
+        functionMap.put("copyvar", new CopyVar());
+        functionMap.put("copyvarG", new CopyVar());
+        functionMap.put("length", new Length());
+        functionMap.put("itemstack", new ItemStackF());
+        functionMap.put("newgui", new NewGui());
+        functionMap.put("opengui", new OpenGui());
+        functionMap.put("give", new Give());
 
     }
-    public static int addUserFunction(String name, Location location){
+    public static synchronized int addUserFunction(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
-        AtomicBoolean founded = new AtomicBoolean(false);
-        synchronized (FunctionsManager.class){
-            functionMap.forEach((n, f) -> {
-                if (n.equals(name)) {
-                    founded.set(true);
-                }
-            });
-            if (!founded.get()) {
-                ArrayList<Block> blocks = new ArrayList<>(List.of(location.getBlock()));
-                while (true) {
-                    Block b = Objects.requireNonNull(location.getWorld()).getBlockAt(
-                        location.getBlockX(), blocks.getLast().getLocation().getBlockY() + 1, location.getBlockZ()
-                    );
-                    if (b.getType().equals(Material.COMMAND_BLOCK)){
-                       blocks.add(b);
-                    } else {
-                        break;
-                    }
-                }
-                functionMap.put(name, new UserFunction(name, blocks));
+        if (get(name) != null) return 2;
+        ArrayList<Block> blocks = new ArrayList<>(List.of(location.getBlock()));
+        while (true) {
+            Block b = Objects.requireNonNull(location.getWorld()).getBlockAt(
+                location.getBlockX(), blocks.getLast().getLocation().getBlockY() + 1, location.getBlockZ()
+            );
+            if (b.getType().equals(Material.COMMAND_BLOCK)){
+               blocks.add(b);
             } else {
-                return 2;
+                break;
             }
         }
+        functionMap.put(name, new UserFunction(name, blocks));
         return 0;
     }
-    public static Function getFunction(String name){
-        AtomicReference<Function> function = new AtomicReference<>();
-        synchronized (FunctionsManager.class){
-            functionMap.forEach((n, f) -> {
-                if (n.equals(name)) {
-                    function.set(f);
-                }
-            });
-        }
+    public static synchronized Function get(String name){
+        AtomicReference<Function> function = new AtomicReference<>(null);
+        functionMap.forEach((n, f) -> {
+            if (n.equals(name)) {
+                function.set(f);
+            }
+        });
         return function.get();
     }
 }

@@ -10,11 +10,9 @@ public class CatFunc implements Function{
 
     @Override
     public String execute(String code) {
-        if (!code.matches(syntax())){
-            return "error: syntax";
-        }
+        if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
-        Function func = FunctionsManager.getFunction(codeSplit[1]);
+        Function func = FunctionsManager.get(codeSplit[1]);
         if (!(func instanceof UserFunction)) return "error: func not found";
         return "\n"+((UserFunction) func).cat()+"\n";
     }

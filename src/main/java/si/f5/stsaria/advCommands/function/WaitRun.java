@@ -20,9 +20,7 @@ public class WaitRun implements Function, Runnable{
 
     @Override
     public String execute(String code) {
-        if (!code.matches(syntax())){
-            return "error: syntax";
-        }
+        if (!code.matches(syntax())) return "error: syntax";
         new Thread(new WaitRun(code)).start();
         return "";
     }
@@ -33,7 +31,7 @@ public class WaitRun implements Function, Runnable{
         try {
             Thread.sleep(Integer.parseInt(codeSplit[1]));
         } catch (InterruptedException ignore){}
-        Function func = FunctionsManager.getFunction(codeSplit[2].split(" ")[0]);
+        Function func = FunctionsManager.get(codeSplit[2].split(" ")[0]);
         if (func == null) return;
         Main.addRunFunctions(new InfoRunFunc(func, code.replaceFirst("waitrun "+codeSplit[1]+" ", "")));
     }

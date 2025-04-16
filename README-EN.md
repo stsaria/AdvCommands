@@ -112,7 +112,7 @@ cmd tell {player.name} move!
 
 ### Random UUID
 Using `<randuuid>` will replace that with a random UUID (without hyphens).
-For example, you can use a random UUID to create a variable name for storing results.
+For example, a random UUID can be used to schedule the name of the variable that will store the results.
 ```
 # Within function "hoge":
 setvar returnId <randuuid>
@@ -157,18 +157,20 @@ Calculation examples:
 <2^10>
 ```
 
-### Comparisons
-Inequality and equality operators evaluate to true or false.
+### True/False
+Determines whether something is true or false.
 
-True cases are replaced with `true`,
-False cases are replaced with `false`
+If true, it is replaced with `true`,
+If false, it is replaced with `false`
 ```
-# Equality
+# Is 5 the same as 5?
 <5=5>
-# Inequality
+# Is 1 less than 2?
 <1<2>
-# Inequality
+# Is a 1 greater than 2?
 <1>2>
+# Does the variable hoge exist?
+<hoge?>
 ```
 
 ### Conditional Branching
@@ -191,6 +193,36 @@ Executes a specific function after a specified delay in milliseconds **in the ba
 waitrun 1000 cmd say hello
 ```
 *Note: Since this runs in the background, if you do something like `for 10 waitrun 1000 cmd say hello`, "hello" will be displayed 10 times almost simultaneously after 1 second.*
+
+### GUI
+Creates an inventory GUI similar to a game menu.
+```
+# When green dye in the GUI is clicked, display "Start!!!!"
+# Hint?: This is a bit of a tricky usage, but running with waitrun can ignore errors on exit.
+# Inside the newEmpItemStack function
+if <i=4> exit else nop
+itemstack itemstacks.<i> air 1 n/a
+# Inside the clickGuiItem function
+if <event.itemstack.displayname=startButtuonName> nop else exit
+cmd say Start!!!!
+# Inside the clickHandItem function
+if <event.itemstack.displayname=menuOpenItemName> nop else exit
+opengui menuGui <event.player.name>
+# Inside the main function
+declfunc newEmpItemStack world 12 10 10
+declfunc clickGuiItem world 14 10 10
+seteventfunc onclickguiitem
+setvarG startButtonName Start!!
+setvarG menuOpenItemName Game Menu
+for 9 waitrun 0 newEmpItemStack
+itemstack itemstacks.4 green_dye 1 <startButtuonName>
+itemstack menuOpenItem compass 1 <menuOpenItemName>
+newgui menuGui itemstacks StartGUI
+# In chat command (lups0 is my player name)
+/advcmd declfunc main world 10 10 10
+/advcmd main
+/advcmd give menuOpenItem lups0
+```
 
 ## Important Notes
 - Do not assign a reference to a variable to itself. This will cause an infinite loop.

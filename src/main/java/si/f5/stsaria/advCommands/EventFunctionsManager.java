@@ -7,7 +7,7 @@ import java.util.*;
 
 public class EventFunctionsManager {
     private static final Map<EventType, UserFunction> eventFunctionMap = new HashMap<>();
-    public static int setEventFunction(String eventTypeStr, String functionName){
+    public static synchronized int set(String eventTypeStr, String functionName){
         EventType eventType;
         Function function;
         switch (eventTypeStr){
@@ -29,22 +29,27 @@ public class EventFunctionsManager {
             case "onchat":
                 eventType = EventType.ON_CHAT;
                 break;
+            case "onclickguiitem":
+                eventType = EventType.ON_CLICK_GUI_ITEM;
+                break;
+            case "onclickhanditem":
+                eventType = EventType.ON_CLICK_HAND_ITEM;
+                break;
+            case "onleave":
+                eventType = EventType.ON_LEAVE;
+                break;
             default:
                 return 1;
         }
-        function = FunctionsManager.getFunction(functionName);
+        function = FunctionsManager.get(functionName);
         if (function == null) return 2;
         if (!(function instanceof UserFunction)) return 3;
-        synchronized (EventFunctionsManager.class){
-            eventFunctionMap.put(eventType, (UserFunction) function);
-        }
+        eventFunctionMap.put(eventType, (UserFunction) function);
         return 0;
     }
-    public static List<UserFunction> getEventFunctions(EventType eventType){
+    public static synchronized List<UserFunction> get(EventType eventType){
         ArrayList<UserFunction> functions = new ArrayList<>();
-        synchronized (EventFunctionsManager.class) {
-            eventFunctionMap.forEach((t, f) -> {if (t.equals(eventType)) functions.add(f);});
-        }
+        eventFunctionMap.forEach((t, f) -> {if (t.equals(eventType)) functions.add(f);});
         return functions;
     }
 }

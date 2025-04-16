@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import si.f5.stsaria.advCommands.FunctionsManager;
 
-import java.util.regex.Pattern;
-
 public class DeclFunc implements Function{
     @Override
     public String syntax() {
@@ -14,9 +12,7 @@ public class DeclFunc implements Function{
 
     @Override
     public String execute(String code) {
-        if (!Pattern.compile(syntax()).matcher(code).find()){
-            return "error: syntax";
-        }
+        if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
         if (Bukkit.getWorld(codeSplit[2]) == null) return "error: world not found";
         int r = FunctionsManager.addUserFunction(codeSplit[1], new Location(Bukkit.getWorld(codeSplit[2]),

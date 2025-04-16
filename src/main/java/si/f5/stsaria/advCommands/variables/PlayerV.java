@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 
 public class PlayerV extends Variables {
     public PlayerV(Player player){
-        this.setVariable("name", player.getName());
-        this.setVariable("displayname", player.getDisplayName().replace("<", "&lt").replace(">", "&gt").replace("\n", "\\n"));
-        new LocationV(player.getLocation()).getVariableMap().forEach((n, v) -> this.setVariable("location."+n, v));
+        this.set("name", player.getName());
+        this.set("displayname", player.getDisplayName().replace("<", "&lt").replace(">", "&gt").replace("\n", "\\n"));
+        new LocationV(player.getLocation()).getVariableMap().forEach((n, v) -> this.set("location."+n, v));
     }
 }

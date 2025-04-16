@@ -10,11 +10,9 @@ public class DelVar implements Function{
 
     @Override
     public String execute(String code) {
-        if (!code.matches(syntax())){
-            return "error: syntax";
-        }
+        if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
-        GlobalVariables.deleteVariable(codeSplit[1]);
+        GlobalVariables.delete(codeSplit[1]);
         return "";
     }
 }

@@ -1,9 +1,9 @@
 package si.f5.stsaria.advCommands.variables;
 
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-public class OnJoinEvent extends Variables{
-    public OnJoinEvent(PlayerJoinEvent e){
+public class OnLeaveEvent extends Variables{
+    public OnLeaveEvent(PlayerQuitEvent e){
         new PlayerV(e.getPlayer()).getVariableMap().forEach((n, v) -> this.set("player."+n, v));
     }
 }

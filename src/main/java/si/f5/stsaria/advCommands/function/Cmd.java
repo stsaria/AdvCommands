@@ -10,9 +10,7 @@ public class Cmd implements Function{
 
     @Override
     public String execute(String code) {
-        if (!code.matches(syntax())){
-            return "error: syntax";
-        }
+        if (!code.matches(syntax())) return "error: syntax";
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), code.replaceFirst("cmd ", "").replace("&lt", "<").replace("&gt", ">"));
         return "";
     }

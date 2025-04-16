@@ -10,12 +10,10 @@ public class For implements Function{
 
     @Override
     public String execute(String code) {
-        if (!code.matches(syntax())){
-            return "error: syntax";
-        }
+        if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
         for (int i = 0; i < Integer.parseInt(codeSplit[1]); i++){
-            Function func = FunctionsManager.getFunction(codeSplit[2]);
+            Function func = FunctionsManager.get(codeSplit[2]);
             if (func == null) return "error: func not found";
             if (func instanceof UserFunction userFunc){
                 userFunc.setVariable("i", String.valueOf(i));

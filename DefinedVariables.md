@@ -12,6 +12,10 @@
 ### block
 - `<materialname>` : マテリアル名（例:polished_andesite）
 - `<location.*>` -> location
+### itemstack
+- `<displayname>` : アイテム表示名
+- `<materialname>` : マテリアル名
+- `<amount>` : スタック数
 ## 関数実行時変数
 - `<args.n>` : n個目の引数
 - `<funcfirstblock>` : 関数の最初のブロック（line 1）-> block
@@ -35,6 +39,16 @@
 - `<block.*>` -> block
 ### onchat
 - `<message>` : メッセージ（\<と\>は取り除き済み）
+- `<player.*>` -> player
+### onclickguiitem
+- `<guiname>` : GUIインベントリ名
+- `<guititle>` : GUIインベントリタイトル
+- `<itemstack.*>` -> itemstack
+### onclickhanditem
+- `<player>` : GUIインベントリ名
+- `<guititle>` : GUIインベントリタイトル
+- `<itemstack.*>` -> itemstack
+### onleave
 - `<player.*>` -> player
 ## for時"ユーザー関数"変数
 - `<i>` : 現在の往復回数（0から数えた）

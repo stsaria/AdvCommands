@@ -14,14 +14,14 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 起動したらコマンド`/advcmd cmd say Hello world`を実行してみてください。
 そうしたら、`Hello world`が出力されます。いや、されることを祈っています。
 ## 追加される機能
-- 変数(\<v\>, setvar, delvar)
+- 変数(\<v\>, setvar, copyvar, delvar)
 - 関数(f, declfunc, catfunc)
 - 繰り返し(for)
 - イベントハンドラ(seteventfunc)
 - ランダムUUID(\<randuuid\>)
 - UnixTime(\<unixtime\>)
 - 四則演算&累乗(\<x[+-*/%^]y\>)
-- 比較(\<x[<>=]y\>)
+- 真・偽(\<x[<>=]y\>)
 - 条件分岐(if)
 - 遅延(waitrun)
 
@@ -30,11 +30,15 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 順を追って説明します。
 ### 変数
 変数を使えば、具体的な値を抽象的な名前にし、わかりやすくコードを書くことができます。
-`setvar 変数名 値`で変数を宣言します。
+`setvar 変数名 値`で変数を宣言し、
+`copyvar コピー元変数名 コピー先変数名`で変数をコピー（配下の要素をすべてコピーする）、
+`delvar 変数名`で変数を削除します。
 `<変数名>`で値を埋め込みます。
 ```
 # 関数内変数bakaにahoを代入
 setvar baka aho
+# bakaのコピーkasuを作成
+copyvar baka kasu
 # 表示
 cmd say <baka>
 # これでahoと表示されます。
@@ -105,7 +109,7 @@ cmd tell {player.name} move!
 ```
 ### ランダムUUID
 `<randuuid>`とすることによってそこがランダムなUUID(ハイフン無し)に置き換わります。
-たとえば、ランダムUUIDを使用して、結果を保存する変数名を予定することができます。
+たとえば、ランダムUUIDを使用して、結果を保存する変数名を予定できます。
 ```
 # 関数hoge内
 setvar returnId #randuuid#
@@ -147,18 +151,20 @@ waitrun 1000 cmd say <<unixtime>-start>
 # 累乗
 <2^10>
 ```
-### 比較
-不等号と等号が真か偽を判断します。
+### 真・偽
+真か偽を判断します。
 
 真の場合は`true`、
 偽の場合は`false`に置き換えます
 ```
-# 等号
+# 5と5は同じか
 <5=5>
-# 不等号
+# 1は2より小さいか
 <1<2>
-# 不等号
+# 1は2より大きいか
 <1>2>
+# 変数hogeが存在するか
+<hoge?>
 ```
 ### 条件分岐
 あたえられた文字列が`true`なら最初の関数を実行し、`false`ならelseのあとの関数を実行します。
@@ -179,6 +185,35 @@ if <2>1> nisu else nice
 waitrun 1000 cmd say こんにちは
 ```
 ※バックグランドなので、例えば`for 10 waitrun 1000 cmd say hello`こうしたときに、`hello`は1秒後にほぼ同時に10回表示されます。
+### GUI
+ゲームのメニューのようなインベントリGUIを作成します。
+```
+# GUIの緑の染料をクリックしたらStart!!!!って表示する
+# ヒント？: ちょっと意地悪な使い方ですが、waitrunで実行するとexit時のエラーを無視したりできます。
+# 関数newEmpItemStack内
+if <i=4> exit else nop
+itemstack itemstacks.<i> air 1 n/a
+# 関数clickGuiItem内
+if <event.itemstack.displayname=startButtuonName> nop else exit
+cmd say Start!!!!
+# 関数clickHandItem内
+if <event.itemstack.displayname=menuOpenItemName> nop else exit
+opengui menuGui <event.player.name>
+# 関数main内
+declfunc newEmpItemStack world 12 10 10
+declfunc clickGuiItem world 14 10 10
+seteventfunc onclickguiitem 
+setvarG startButtonName Start!!
+setvarG menuOpenItemName Game Menu
+for 9 waitrun 0 newEmpItemStack
+itemstack itemstacks.4 green_dye 1 <startButtuonName>
+itemstack menuOpenItem compass 1 <menuOpenItemName>
+newgui menuGui itemstacks StartGUI
+# チャットコマンド内(lups0は私のプレイヤー名です)
+/advcmd declfunc main world 10 10 10
+/advcmd main
+/advcmd give menuOpenItem lups0
+```
 ## 注意点
 - 自分の変数の値に自分の変数の参照を代入しないでください。二度と終わらなくなります。
 - ↑関数も同じです。

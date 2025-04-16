@@ -4,14 +4,12 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CommandBlock;
 import si.f5.stsaria.advCommands.FunctionsManager;
+import si.f5.stsaria.advCommands.Parser;
 import si.f5.stsaria.advCommands.variables.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UserFunction implements Function{
     private final List<Block> blocks;
@@ -21,21 +19,9 @@ public class UserFunction implements Function{
         this.name = name;
         this.blocks = blocks;
     }
-
     public synchronized void setVariable(String name, String variable) {
-        this.variables.setVariable(name, variable);
+        this.variables.set(name, variable);
     }
-    public synchronized String getVariable(String name){
-        try{
-            return String.valueOf(Integer.parseInt(name));
-        } catch (Exception ignore) {
-            return this.variables.getVariable(name);
-        }
-    }
-    public synchronized void deleteVariable(String name){
-        this.variables.deleteVariable(name);
-    }
-
     @Override
     public String syntax() {
         return this.name;
@@ -44,93 +30,46 @@ public class UserFunction implements Function{
     @Override
     public synchronized String execute(String code) {
         for (int i = 1; i < code.split(" ").length; i++){
-            this.setVariable("args."+(i-1), code.split(" ")[i]);
+            this.variables.set("args."+(i-1), code.split(" ")[i]);
         }
-        GlobalVariables.getVariables().forEach(this::setVariable);
+        GlobalVariables.getAll().forEach(this.variables::set);
         StringBuilder funcCode = new StringBuilder();
         this.blocks.forEach(b -> {
             if (b.getType().equals(Material.COMMAND_BLOCK)){
                 funcCode.append(((CommandBlock) b.getState()).getCommand()).append("\n");
             }
         });
-        new BlockV(this.blocks.getFirst()).getVariableMap().forEach((n, v) -> this.setVariable("funcFirstBlock."+n, v));
+        new BlockV(this.blocks.getFirst()).getVariableMap().forEach((n, v) -> this.variables.set("funcFirstBlock."+n, v));
         int i = 0;
         for (String line : funcCode.toString().split("\n")){
             i++;
-            new BlockV(this.blocks.get(i-1)).getVariableMap().forEach(((n, v) -> this.setVariable("funcNowLineBlock."+n, v)));
+            new BlockV(this.blocks.get(i-1)).getVariableMap().forEach(((n, v) -> this.variables.set("funcNowLineBlock."+n, v)));
             if (line.isEmpty()) continue;
-            while(line.contains("#randuuid#")){
-                line = line.replaceFirst("#randuuid#", UUID.randomUUID().toString().replace("-", ""));
-            }
-            Matcher variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-            while (variablesMatcher.find()) {
-                String g = variablesMatcher.group();
-                String prefixRemovedG = g.replaceFirst("<", "").replaceAll(">$", "");
-                String firstVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[0]);
-                String secondVarValue = this.getVariable(prefixRemovedG.split("[+\\-*/%=><^]")[1]);
-                if (firstVarValue == null || secondVarValue == null){
-                    continue;
-                }
-                if (g.contains("=")) {
-                    line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
-                } else {
-                    try {
-                        int firstVarValueInt = Integer.parseInt(firstVarValue);
-                        int secondVarValueInt = Integer.parseInt(secondVarValue);
-                        int ans = 0;
-                        if (g.contains("+")) {
-                            ans = firstVarValueInt + secondVarValueInt;
-                        } else if (g.contains("-")) {
-                            ans = firstVarValueInt - secondVarValueInt;
-                        } else if (g.contains("*")) {
-                            ans = firstVarValueInt * secondVarValueInt;
-                        } else if (g.contains("/")) {
-                            ans = firstVarValueInt / secondVarValueInt;
-                        } else if (g.contains("%")) {
-                            ans = firstVarValueInt % secondVarValueInt;
-                        } else if (prefixRemovedG.contains("<")) {
-                            line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
-                            variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                            continue;
-                        } else if (prefixRemovedG.contains(">")) {
-                            line = line.replace(g, firstVarValueInt > secondVarValueInt ? "true" : "false");
-                            variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                            continue;
-                        } else if (g.contains("^")) {
-                            ans = (int) Math.pow(firstVarValueInt, secondVarValueInt);
-                        }
-                        line = line.replace(g, String.valueOf(ans));
-                    } catch (Exception ignore) {
-                        return "error: cant cast string to int";
-                    }
-                }
-                variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-            }
-            variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+>").matcher(line);
-            while (variablesMatcher.find()){
-                String g = variablesMatcher.group();
-                String variableValue = this.getVariable(g.replaceFirst("<", "").replaceAll(">$", ""));
-                if (variableValue == null) continue;
-                line = line.replace(g, variableValue);
-                variablesMatcher = Pattern.compile("<[a-zA-Z0-9.]+>").matcher(line);
-            }
+            line = Parser.variableSubstitution(this.variables, line);
             String[] lineSplit = line.split(" ");
-            if (line.matches(new SetVar().syntax())){
-                this.setVariable(lineSplit[1], line.replaceFirst("setVar "+lineSplit[1]+" ", ""));
-            } else if (line.matches(new DelVar().syntax())){
-                this.deleteVariable(lineSplit[1]);
-            } else {
-                Function func = FunctionsManager.getFunction(line.split(" ")[0]);
-                if (func == null) return "error: func not found";
-                String r = func.execute(line);
-                if (r.startsWith("error: ")) {
-                    return "error: Line " + i + ": " + line + " - " + r;
+            if (!lineSplit[0].endsWith("G")){
+                if (line.matches(new SetVar().syntax())){
+                    this.variables.set(lineSplit[1], line.replaceFirst("setVar "+lineSplit[1]+" ", ""));
+                    continue;
+                } else if (line.matches(new DelVar().syntax())){
+                    this.variables.delete(lineSplit[1]);
+                    continue;
+                } else if (line.matches(new CopyVar().syntax())){
+                    this.variables.copy(lineSplit[1], lineSplit[2]);
+                    continue;
+                } else if (lineSplit[0].equals("empexit")){
+                    return "";
                 }
+            }
+            Function func = FunctionsManager.get(line.split(" ")[0]);
+            if (func == null) return "error: Line " + i + ": " + line + " - " + "func not found";
+            String r = func.execute(line);
+            if (r.startsWith("error: ")) {
+                return "error: Line " + i + ": " + line + " - " + r;
             }
         }
         return "";
     }
-
     public synchronized String cat(){
         StringBuilder funcCode = new StringBuilder();
         AtomicInteger i = new AtomicInteger();

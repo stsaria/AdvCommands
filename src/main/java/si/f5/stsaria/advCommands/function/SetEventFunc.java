@@ -11,10 +11,8 @@ public class SetEventFunc implements Function{
 
     @Override
     public String execute(String code) {
-        if (!code.matches(syntax())){
-            return "error: syntax";
-        }
-        int r = EventFunctionsManager.setEventFunction(code.split(" ")[1], code.split(" ")[2]);
+        if (!code.matches(syntax())) return "error: syntax";
+        int r = EventFunctionsManager.set(code.split(" ")[1], code.split(" ")[2]);
         if (r == 1){
             return "error: not found event type";
         } else if (r == 2){
