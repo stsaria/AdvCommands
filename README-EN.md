@@ -129,7 +129,7 @@ Using `<unixtime>` will replace that with the current Unix time.
 This can be used for calculations such as how many seconds have passed since the game started.
 ```
 setvar start <unixtime>
-waitrun 1000 cmd say <<unixtime>-<start>>
+waitrun 1000 cmd say <<unixtime>-start>
 # This should display "1".
 ```
 
@@ -226,4 +226,3 @@ newgui menuGui itemstacks StartGUI
 
 ## Important Notes
 - Do not assign a reference to a variable to itself. This will cause an infinite loop.
-- The same applies to functions.
