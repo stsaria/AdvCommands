@@ -190,10 +190,8 @@ waitrun 1000 cmd say こんにちは
 ゲームのメニューのようなインベントリGUIを作成します。
 ```
 # GUIの緑の染料をクリックしたらStart!!!!って表示する
-# ヒント？: ちょっと意地悪な使い方ですが、waitrunで実行するとexit時のエラーを無視したりできます。
 # 関数newEmpItemStack内
-if <i=4> exit else nop
-itemstack itemstacks.<i> air 1 n/a
+if <i=4> nop else itemstack itemstacks.<i> air 1 n/a
 # 関数clickGuiItem内
 if <event.itemstack.displayname=startButtuonName> nop else exit
 cmd say Start!!!!
@@ -206,7 +204,7 @@ declfunc clickGuiItem world 14 10 10
 seteventfunc onclickguiitem 
 setvarG startButtonName Start!!
 setvarG menuOpenItemName Game Menu
-for 9 waitrun 0 newEmpItemStack
+for 9 newEmpItemStack
 itemstack itemstacks.4 green_dye 1 <startButtuonName>
 itemstack menuOpenItem compass 1 <menuOpenItemName>
 newgui menuGui itemstacks StartGUI
