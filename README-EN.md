@@ -26,6 +26,7 @@ You should then see `Hello world` displayed. Well, I hope so.
 - Comparisons (\<x[<>=]y\>)
 - Conditional branching (if)
 - Delays (waitrun)
+- GUI
 
 For details, please refer to DefinedFunctions-EN.md and DefinedVariables-EN.md.
 

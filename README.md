@@ -24,6 +24,7 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 - 真・偽(\<x[<>=]y\>)
 - 条件分岐(if)
 - 遅延(waitrun)
+- GUI
 
 詳しくはDefinedFunctions.mdとDefinedVariables.mdを参照してください。
 
