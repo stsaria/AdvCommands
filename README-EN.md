@@ -199,10 +199,8 @@ waitrun 1000 cmd say hello
 Creates an inventory GUI similar to a game menu.
 ```
 # When green dye in the GUI is clicked, display "Start!!!!"
-# Hint?: This is a bit of a tricky usage, but running with waitrun can ignore errors on exit.
 # Inside the newEmpItemStack function
-if <i=4> exit else nop
-itemstack itemstacks.<i> air 1 n/a
+if <i=4> nop else itemstack itemstacks.<i> air 1 n/a
 # Inside the clickGuiItem function
 if <event.itemstack.displayname=startButtuonName> nop else exit
 cmd say Start!!!!
@@ -215,7 +213,7 @@ declfunc clickGuiItem world 14 10 10
 seteventfunc onclickguiitem
 setvarG startButtonName Start!!
 setvarG menuOpenItemName Game Menu
-for 9 waitrun 0 newEmpItemStack
+for 9 newEmpItemStack
 itemstack itemstacks.4 green_dye 1 <startButtuonName>
 itemstack menuOpenItem compass 1 <menuOpenItemName>
 newgui menuGui itemstacks StartGUI
