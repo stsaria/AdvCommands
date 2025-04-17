@@ -18,6 +18,9 @@ public abstract class Variables {
             this.variableMap.forEach((n, v) -> {
                 if (n.equals(name)) variable.set(v);
             });
+            if (variable.get() == null){
+                return name;
+            }
             return variable.get();
         }
     }
@@ -38,10 +41,9 @@ public abstract class Variables {
         if (this.get(sourceName) != null) this.variableMap.put(destinationName, this.get(sourceName));
     }
     public boolean contains(String name){
-        if (this.get(name) != null) return true;
         AtomicBoolean found = new AtomicBoolean(false);
         this.variableMap.forEach((n, v) -> {
-            if (n.startsWith(name+".")) found.set(true);
+            if (n.equals(name) || n.startsWith(name+".")) found.set(true);
         });
         return found.get();
     }

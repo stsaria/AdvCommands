@@ -23,9 +23,6 @@ public class Parser {
                 String prefixRemovedG = g.replaceFirst("<", "").replaceAll(">$", "");
                 String firstVarValue = variables.get(prefixRemovedG.split("[+\\-*/%=><^]")[0]);
                 String secondVarValue = variables.get(prefixRemovedG.split("[+\\-*/%=><^]")[1]);
-                if (firstVarValue == null || secondVarValue == null) {
-                    continue;
-                }
                 if (g.contains("=")) {
                     line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
                 } else {

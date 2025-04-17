@@ -200,9 +200,9 @@ Creates an inventory GUI similar to a game menu.
 ```
 # When green dye in the GUI is clicked, display "Start!!!!"
 # Inside the newEmpItemStack function
-if <i=4> nop else itemstack itemstacks.<i> air 1 n/a
+itemstack itemstacks.<i> barrier 64 n/a
 # Inside the clickGuiItem function
-if <event.itemstack.displayname=startButtuonName> nop else exit
+if <event.itemstack.displayname=startButtonName> nop else exit
 cmd say Start!!!!
 # Inside the clickHandItem function
 if <event.itemstack.displayname=menuOpenItemName> nop else exit

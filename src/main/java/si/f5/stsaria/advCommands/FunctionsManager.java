@@ -32,7 +32,7 @@ public class FunctionsManager {
         functionMap.put("newgui", new NewGui());
         functionMap.put("opengui", new OpenGui());
         functionMap.put("give", new Give());
-
+        functionMap.put("trueif", new TrueIf());
     }
     public static synchronized int addUserFunction(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;

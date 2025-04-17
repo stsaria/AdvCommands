@@ -1,5 +1,5 @@
 name: AdvCommands
-version: '1.5'
+version: '1.6'
 main: si.f5.stsaria.advCommands.AdvCommands
 api-version: '1.21'
 author: yudenOfSauce

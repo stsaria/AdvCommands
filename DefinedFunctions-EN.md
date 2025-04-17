@@ -21,3 +21,4 @@ Assigns it to the specified global variable.
 - `length <assigned_variable_name> <variable_name>`:　Counts the number of elements in a variable structured like `variable_name.0`, `variable_name.1`, etc.
 Assigns the count to the specified global variable.
 (Note: If the sequence is broken or doesn't start at 0, the count may be inaccurate.)
+- `trueif <true,false> <code>` : An `if` that only handles the `true` case. The code can be as long as you want.

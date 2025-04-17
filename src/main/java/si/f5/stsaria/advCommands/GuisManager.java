@@ -18,9 +18,11 @@ public class GuisManager {
             if (!GlobalVariables.contains(varPrefix)) return 2;
             String materialName = GlobalVariables.get(varPrefix+".materialname").toUpperCase();
             ItemStack itemStack = new ItemStack(Objects.requireNonNull(Material.matchMaterial(materialName)), Integer.parseInt(GlobalVariables.get(varPrefix+".amount")));
-            ItemMeta itemMeta = Objects.requireNonNull(itemStack.getItemMeta());
-            itemMeta.setDisplayName(GlobalVariables.get(varPrefix+".displayname"));
-            itemStack.setItemMeta(itemMeta);
+            try {
+                ItemMeta itemMeta = Objects.requireNonNull(itemStack.getItemMeta());
+                itemMeta.setDisplayName(GlobalVariables.get(varPrefix + ".displayname"));
+                itemStack.setItemMeta(itemMeta);
+            } catch (Exception ignore) {}
             itemStacks.add(itemStack);
         }
         guiMap.put(name, new Gui(name, title, itemStacks));

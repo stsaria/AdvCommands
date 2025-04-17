@@ -32,7 +32,6 @@ public class UserFunction implements Function{
         for (int i = 1; i < code.split(" ").length; i++){
             this.variables.set("args."+(i-1), code.split(" ")[i]);
         }
-        GlobalVariables.getAll().forEach(this.variables::set);
         StringBuilder funcCode = new StringBuilder();
         this.blocks.forEach(b -> {
             if (b.getType().equals(Material.COMMAND_BLOCK)){
@@ -41,15 +40,21 @@ public class UserFunction implements Function{
         });
         new BlockV(this.blocks.getFirst()).getVariableMap().forEach((n, v) -> this.variables.set("funcFirstBlock."+n, v));
         int i = 0;
+        boolean nextSkip = false;
         for (String line : funcCode.toString().split("\n")){
+            GlobalVariables.getAll().forEach(this.variables::set);
             i++;
+            if (nextSkip){
+                nextSkip = false;
+                continue;
+            }
             new BlockV(this.blocks.get(i-1)).getVariableMap().forEach(((n, v) -> this.variables.set("funcNowLineBlock."+n, v)));
             if (line.isEmpty()) continue;
             line = Parser.variableSubstitution(this.variables, line);
             String[] lineSplit = line.split(" ");
             if (!lineSplit[0].endsWith("G")){
                 if (line.matches(new SetVar().syntax())){
-                    this.variables.set(lineSplit[1], line.replaceFirst("setVar "+lineSplit[1]+" ", ""));
+                    this.variables.set(lineSplit[1], line.replaceFirst("setvar "+lineSplit[1]+" ", ""));
                     continue;
                 } else if (line.matches(new DelVar().syntax())){
                     this.variables.delete(lineSplit[1]);
@@ -59,6 +64,9 @@ public class UserFunction implements Function{
                     continue;
                 } else if (lineSplit[0].equals("empexit")){
                     return "";
+                } else if (lineSplit[0].equals("skip")){
+                    nextSkip = true;
+                    continue;
                 }
             }
             Function func = FunctionsManager.get(line.split(" ")[0]);

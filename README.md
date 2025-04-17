@@ -191,9 +191,9 @@ waitrun 1000 cmd say こんにちは
 ```
 # GUIの緑の染料をクリックしたらStart!!!!って表示する
 # 関数newEmpItemStack内
-if <i=4> nop else itemstack itemstacks.<i> air 1 n/a
+itemstack itemstacks.<i> barrier 64 n/a
 # 関数clickGuiItem内
-if <event.itemstack.displayname=startButtuonName> nop else exit
+if <event.itemstack.displayname=startButtonName> nop else exit
 cmd say Start!!!!
 # 関数clickHandItem内
 if <event.itemstack.displayname=menuOpenItemName> nop else exit
