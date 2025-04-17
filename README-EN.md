@@ -210,7 +210,9 @@ opengui menuGui <event.player.name>
 # Inside the main function
 declfunc newEmpItemStack world 12 10 10
 declfunc clickGuiItem world 14 10 10
-seteventfunc onclickguiitem
+seteventfunc onclickguiitem clickGuiItem
+declfunc clickHandItem world 16 10 10
+seteventfunc onclickhanditem clickHandItem
 setvarG startButtonName Start!!
 setvarG menuOpenItemName Game Menu
 for 9 newEmpItemStack
