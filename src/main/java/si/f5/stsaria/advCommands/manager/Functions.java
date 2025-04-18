@@ -1,4 +1,4 @@
-package si.f5.stsaria.advCommands;
+package si.f5.stsaria.advCommands.manager;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,7 +8,7 @@ import si.f5.stsaria.advCommands.function.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class FunctionsManager {
+public class Functions{
     private static final Map<String, Function> functionMap = new HashMap<>();
     public static void initial(){
         functionMap.put("for", new For());
@@ -33,10 +33,11 @@ public class FunctionsManager {
         functionMap.put("opengui", new OpenGui());
         functionMap.put("give", new Give());
         functionMap.put("trueif", new TrueIf());
+        functionMap.put("bungeemove", new BungeeMove());
     }
-    public static synchronized int addUserFunction(String name, Location location){
+    public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
-        if (get(name) != null) return 2;
+        else if (functionMap.get(name) != null) return 2;
         ArrayList<Block> blocks = new ArrayList<>(List.of(location.getBlock()));
         while (true) {
             Block b = Objects.requireNonNull(location.getWorld()).getBlockAt(
@@ -50,6 +51,9 @@ public class FunctionsManager {
         }
         functionMap.put(name, new UserFunction(name, blocks));
         return 0;
+    }
+    public static synchronized void remove(String name){
+        functionMap.remove(name);
     }
     public static synchronized Function get(String name){
         AtomicReference<Function> function = new AtomicReference<>(null);

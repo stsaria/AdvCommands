@@ -1,6 +1,6 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.FunctionsManager;
+import si.f5.stsaria.advCommands.manager.Functions;
 
 public class For implements Function{
     @Override
@@ -13,7 +13,7 @@ public class For implements Function{
         if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
         for (int i = 0; i < Integer.parseInt(codeSplit[1]); i++){
-            Function func = FunctionsManager.get(codeSplit[2]);
+            Function func = Functions.get(codeSplit[2]);
             if (func == null) return "error: func not found";
             if (func instanceof UserFunction userFunc){
                 userFunc.setVariable("i", String.valueOf(i));

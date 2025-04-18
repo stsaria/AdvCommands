@@ -1,14 +1,15 @@
-package si.f5.stsaria.advCommands;
+package si.f5.stsaria.advCommands.manager;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import si.f5.stsaria.advCommands.Gui;
 import si.f5.stsaria.advCommands.variables.GlobalVariables;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class GuisManager {
+public class Guis {
     private static final Map<String, Gui> guiMap = new HashMap<>();
     public static synchronized int add(String name, String title, String itemStacksVarName){
         if (get(name) != null) return 1;

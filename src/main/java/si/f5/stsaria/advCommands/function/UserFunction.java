@@ -1,9 +1,10 @@
 package si.f5.stsaria.advCommands.function;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CommandBlock;
-import si.f5.stsaria.advCommands.FunctionsManager;
+import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.Parser;
 import si.f5.stsaria.advCommands.variables.*;
 
@@ -18,6 +19,12 @@ public class UserFunction implements Function{
     public UserFunction(String name, List<Block> blocks){
         this.name = name;
         this.blocks = blocks;
+    }
+    public synchronized String getName(){
+        return this.name;
+    }
+    public synchronized Location getStartLocation(){
+        return this.blocks.getFirst().getLocation();
     }
     public synchronized void setVariable(String name, String variable) {
         this.variables.set(name, variable);
@@ -69,7 +76,7 @@ public class UserFunction implements Function{
                     continue;
                 }
             }
-            Function func = FunctionsManager.get(line.split(" ")[0]);
+            Function func = Functions.get(line.split(" ")[0]);
             if (func == null) return "error: Line " + i + ": " + line + " - " + "func not found";
             String r = func.execute(line);
             if (r.startsWith("error: ")) {
@@ -90,5 +97,8 @@ public class UserFunction implements Function{
             }
         });
         return funcCode.toString();
+    }
+    public synchronized int size(){
+        return this.blocks.size();
     }
 }

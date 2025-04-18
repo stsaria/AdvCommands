@@ -22,3 +22,6 @@ Assigns it to the specified global variable.
 Assigns the count to the specified global variable.
 (Note: If the sequence is broken or doesn't start at 0, the count may be inaccurate.)
 - `trueif <true,false> <code>` : An `if` that only handles the `true` case. The code can be as long as you want.
+- `bungeemove <serverID> <playerName>` : Moves a player to another server using BungeeCord.
+- `/advcmd appendfuncmode <functionName>` : Enters function line append mode. (Messages sent in chat will be added as new lines to the function) (Chat command only)
+- `/advcmd endappendfuncmode` : Ends function line append mode. (Chat command only)

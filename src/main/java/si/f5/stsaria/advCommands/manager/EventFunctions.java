@@ -1,11 +1,12 @@
-package si.f5.stsaria.advCommands;
+package si.f5.stsaria.advCommands.manager;
 
+import si.f5.stsaria.advCommands.EventType;
 import si.f5.stsaria.advCommands.function.Function;
 import si.f5.stsaria.advCommands.function.UserFunction;
 
 import java.util.*;
 
-public class EventFunctionsManager {
+public class EventFunctions{
     private static final Map<EventType, UserFunction> eventFunctionMap = new HashMap<>();
     public static synchronized int set(String eventTypeStr, String functionName){
         EventType eventType;
@@ -41,7 +42,7 @@ public class EventFunctionsManager {
             default:
                 return 1;
         }
-        function = FunctionsManager.get(functionName);
+        function = Functions.get(functionName);
         if (function == null) return 2;
         if (!(function instanceof UserFunction)) return 3;
         eventFunctionMap.put(eventType, (UserFunction) function);
