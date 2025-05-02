@@ -60,5 +60,8 @@
 - `<itemstack.*>` -> itemstack
 ### onleave
 - `<player.*>` -> player
+### ondrop
+- `<player.*>` -> player
+- `<itemstack.*>` -> itemstack
 ## for時"ユーザー関数"変数
 - `<i>` : 現在の往復回数（0から数えた）

@@ -60,5 +60,8 @@ Angle (pitch) is 0 degrees when looking straight ahead, and increases as you loo
 - `<itemstack.*>` -> itemstack
 ### onleave
 - `<player.*>` -> player
+### ondrop
+- `<player.*>` -> player
+- `<itemstack.*>` -> itemstack
 ## "User function" variables for loops
 - `<i>` : Current iteration count (starting from 0)
