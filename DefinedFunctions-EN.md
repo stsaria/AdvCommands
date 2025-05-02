@@ -1,27 +1,32 @@
-# Defined Functions
-*Note: The \<items\> written here are just for clarity; the actual syntax doesn't include these brackets.*
+# Predefined Functions
+Note: The \<parameters\> shown here are just for clarity; in actual usage, these brackets are not included.
 
 - `nop` : Does nothing
 - `cmd <Minecraft command>` : Executes a Minecraft command through the server console.
-- `declFunc <function name> <world name> <x coordinate (of the first command block)> <y coordinate> <z coordinate>` : Defines a new function.
+- `declFunc <function name> <world name> <x coordinate (for the first command block)> <y coordinate> <z coordinate>` : Defines a new function.
 - `catFunc <function name>` : Outputs the contents of a function.
-- `exit` : intentionally exits the function with an error.
-- `seteventfunc <onkill,onmove,onplaceblock,onbreakblock,onjoin,onchat,onclickguiitem,onclickhanditem,onleave> <function name>` : Executes a specific function when a specific event occurs.
+- `exit` : Intentionally generates an error to terminate execution.
+- `seteventfunc <event type (onkill, onmove, onplaceblock, onbreakblock, onjoin, onchat, onclickguiitem, onclickhanditem, onleave, ondrop, ondrag)> <function name>` : Executes a specified function when a specific event occurs.
 - `setvar <variable name> <variable value>` : Defines or overwrites a variable.
 - `delvar <variable name>` : Deletes a variable.
-- `for <repetition count> <function name>` : Executes a function a specific number of times.
-- `if <true,false> <function1 name> else <function2 name>` : Executes function1 if true, executes function2 if false.
+- `for <number of iterations> <function name>` : Executes a function a specific number of times.
+- `if <true, false> <function name 1> else <function name 2>` : Executes function 1 if the condition is true, and function 2 if it's false.
 - `waitrun <delay in milliseconds> <function name>` : Executes a function after a specific delay in milliseconds.
-- `randint <range start> <range end> <variable name>` : assigns a random number in the range to the value for the given variable Pluto. start> <end of range> <variable name>` : assigns a random number in the range to the value for the given variable Pluto.
-- `itemstack <variable_name> <material_name> <stack_size> <item_display_name>`:　Creates an ItemStack from the specified display name, material name (use the lowercase version of Spigot's Material Enum, e.g., acacia_boat), and stack size.
-Assigns it to the specified global variable.
-- `newgui <GUI_name> <itemstack_array_variable (e.g., hoge.0 -> itemstack, hoge.1)> <GUI_display_name>`: Creates an inventory GUI with the given display name and array of item stacks (global variables only).
-- `opengui <GUI_name> <player_name>`:　Displays the specified inventory GUI to the player.
-- `give <itemstack_variable> <player_name>`: Gives the item stack to the specified player.
-- `length <assigned_variable_name> <variable_name>`:　Counts the number of elements in a variable structured like `variable_name.0`, `variable_name.1`, etc.
-Assigns the count to the specified global variable.
-(Note: If the sequence is broken or doesn't start at 0, the count may be inaccurate.)
-- `trueif <true,false> <code>` : An `if` that only handles the `true` case. The code can be as long as you want.
-- `bungeemove <serverID> <playerName>` : Moves a player to another server using BungeeCord.
-- `/advcmd appendfuncmode <functionName>` : Enters function line append mode. (Messages sent in chat will be added as new lines to the function) (Chat command only)
-- `/advcmd endappendfuncmode` : Ends function line append mode. (Chat command only)
+- `randint <range start> <range end> <variable name>` : Assigns a random number within the specified range to the given variable name. (Global variable)
+- `itemstack <assignment variable name> <material name> <stack count> <item display name>` : Creates an item stack with the specified display name, material name (lowercase version of the Spigot material enum) (example: acacia_boat), and stack count, then assigns it to the specified variable name. (Global variables only)
+- `newgui <GUI name> <item stack array variable (example: hoge.0 -> itemstack, hoge.1) (Global variables only)> <GUI display name>` : Creates an inventory GUI.
+- `opengui <GUI name> <player name>` : Displays an inventory GUI to a player.
+- `give <item stack variable> <player name>` : Gives an item stack to a player.
+- `length <assignment variable name> <variable name>` : Counts the number of elements in variables with integer-based sequential names like `variable name.0`, `variable name.1`, and assigns the count to the specified assignment variable name. (May not count accurately if the sequence is interrupted or doesn't start from 0) (Global variables only)
+- `trueif <true, false> <code>` : An `if` statement that only handles the `true` case. The code can be any length.
+- `bungeemove <server ID> <player name>` : Moves a player using BungeeCord.
+- `/advcmd appendfuncmode <function name>` : Enters function line append mode. (Chatting normally will add new lines to the function) (Chat command only)
+- `/advcmd endappendfuncmode` : Exits function line append mode. (Chat command only)
+- `teams <assignment variable name>` : Assigns the team list to the specified variable name. (Global variables only)
+- `size <assignment variable name> <variable name>` : Counts the number of elements in variables with any names like `variable name.a`, `variable name.hogeee`, and assigns the count to the specified assignment variable name. (Global variables only)
+- `players <assignment variable name>` : Assigns the player list to the specified variable name. (Global variables only)
+- `cancel` : Terminates the function and, in the case of events, cancels the event if possible. (Can only be used within functions)
+- `silexit` : Terminates the function without generating an error. (Can only be used within functions)
+- `skip` : Ignores the next line of the function. (Can only be used within functions)
+- `strtolist <assignment variable name> <string>` : Converts a string into a list of single-character strings. (Global variables only)
+- `shuffled <source variable name> <assignment variable name>` : Shuffles a list and assigns it to a variable. (Global variables only)

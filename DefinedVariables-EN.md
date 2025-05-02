@@ -1,13 +1,18 @@
-# Defined Variables
-## Normal Variables
+# Predefined Variables
+## Standard Variables
 ### location
 - `<world>` : World name
 - `<x>` : x coordinate
 - `<y>` : y coordinate
 - `<z>` : z coordinate
+- `<yaw>` : Direction the player is facing (in degrees) (horizontal)
+- `<pitch>` : Direction the player is facing (in degrees) (vertical)
+
+Angle (yaw) increases as you turn to the right.
+Angle (pitch) is 0 degrees when looking straight ahead, and increases as you look down.
 ### player
-- `<name>` : Player name (MCID)
-- `<displayname>` : Display name (with \< and \> removed)
+- `<name>` : Player name (mcid)
+- `<displayname>` : Display name (with \< and \> already removed)
 - `<location.*>` -> location
 ### block
 - `<materialname>` : Material name (example: polished_andesite)
@@ -15,11 +20,16 @@
 ### itemstack
 - `<displayname>` : Item display name
 - `<materialname>` : Material name
-- `<amount>` : Stack count/amount
-## Variables During Function Execution
-- `<args.n>` : The nth argument
+- `<amount>` : Stack count
+### team
+- `<name>` : Team name
+- `<displayname>` : Team display name
+- `<playernames.n>` : Name of the nth player
+- `<onlineplayers.n>` : nth player (only online players)
+## Function Execution Variables
+- `<args.n>` : nth argument
 - `<funcfirstblock>` : First block of the function (line 1) -> block
-- `<funcnowlineblock>` : Block of the current line being executed in function -> block
+- `<funcnowlineblock>` : Block of the current executing line -> block
 ## Event Variables
 ### onkill
 - `<player.*>` -> player
@@ -27,7 +37,7 @@
 ### onmove
 - `<player.*>` -> player
 - `<from.*>` : Original position -> location
-- `<to.*>` : Destination position -> location
+- `<to.*>` : Position after movement -> location
 ### onjoin
 - `<player.*>` -> player
 ### onplaceblock
@@ -38,10 +48,10 @@
 - `<player.*>` -> player
 - `<block.*>` -> block
 ### onchat
-- `<message>` : Message (with \< and \> removed)
+- `<message>` : Message (with \< and \> already removed)
 - `<player.*>` -> player
 ### onclickguiitem
-- `<guiname>` : GUI inventory name
+- `<guiname>` : GUI inventory name (default for player default)
 - `<guititle>` : GUI inventory title
 - `<itemstack.*>` -> itemstack
 ### onclickhanditem
@@ -50,5 +60,5 @@
 - `<itemstack.*>` -> itemstack
 ### onleave
 - `<player.*>` -> player
-## "User Function" Variables During Loops
+## "User function" variables for loops
 - `<i>` : Current iteration count (starting from 0)
