@@ -5,7 +5,7 @@
 - `declFunc <関数名> <ワールド名> <x座標(最初のコマンドブロックの)> <y座標> <z座標>` : 新しい関数を定義します。
 - `catFunc <関数名>` : 関数の中身を出力します。
 - `exit` : 意図的にエラーを出して終了させます。
-- `seteventfunc <onkill,onmove,onplaceblock,onbreakblock,onjoin,onchat,onclickguiitem,onclickhanditem,onleave> <関数名>` : 特定のイベント時には特定の関数を実行する。
+- `seteventfunc <イベントタイプ(onkill,onmove,onplaceblock,onbreakblock,onjoin,onchat,onclickguiitem,onclickhanditem,onleave,ondrop,ondrag)> <関数名>` : 特定のイベント時には特定の関数を実行する。
 - `setvar <変数名> <変数値>` : 変数を定義または上書きします。
 - `delvar <変数名>` : 変数を削除します。
 - `for <繰り返し回数> <関数名>` : 特定の回数、関数を実行します。
@@ -21,3 +21,11 @@
 - `bungeemove <サーバーID> <プレイヤー名>` : BungeeCordでプレイヤーを移動させます。
 - `/advcmd appendfuncmode <関数名>` : 関数行追加モードになります。（そのままチャットすると、関数の新しい行として追加されます）（チャットコマンドのみ）
 - `/advcmd endappendfuncmode` : 関数行追加モードを終了します。（チャットコマンドのみ）
+- `teams <代入変数名>` : チームリストを指定された変数名に対する値に代入します。（グローバル変数のみ）
+- `size <代入変数名> <変数名>` : `変数名.a`・`変数名.hogeee`のような変数の要素数を数えて、指定された代入変数名に対する値に代入します。（グローバル変数のみ）
+- `players <代入変数名>` : プレイヤー指定された変数名に対する値に代入します。（グローバル変数のみ）
+- `cancel` : 関数を終了して、イベント時には可能な場合にイベントをキャンセルする。（関数内のみ使用可）
+- `silexit` : エラーを出さずに関数を終了させる。（関数内のみ使用可）
+- `skip` : 関数の次の行を無視する。（関数内のみ使用可）
+- `strtolist <代入変数名> <文字列>` : 文字列を一文字の文字列リストに変換する。（グローバル変数のみ）
+- `shuffled <乱元変数名> <代入変数名>` : リストをシャッフルして変数に代入する。（グローバル変数のみ）

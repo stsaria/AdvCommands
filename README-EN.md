@@ -95,21 +95,23 @@ for 10 hoge
 ```
 
 ### Event Handlers
-Plugins can execute specific functions when certain events (like movement or block placement) occur.
-This increases readability by using an event-driven approach instead of the traditional command method of checking every tick.
+Plug-ins can execute a specific function when some event occurs (such as movement or block placement).
+This improves readability if the method is to have the function executed when something happens, rather than the traditional command that is checked with every tick.
 
-Event handlers include variables related to the event.
+The event handler contains a variable (event.*) about the event
 
-```
-# Register function "hoge" to be executed on kill events
+````
+# Register a schedule to execute a function named hoge on a kill event
 seteventfunc onKill hoge
 
-# Example: Send "move!" to players who move
-# Chat command:
+# Example: send “move!
+# chat command
 /advcmd seteventfunc onMove fuga
-# Within function "fuga":
-cmd tell {player.name} move!
+# in function fuga
+cmd tell {event.player.name} move!
 ```
+
+Translated with DeepL.com (free version)
 
 ### Random UUID
 Using `<randuuid>` will replace that with a random UUID (without hyphens).

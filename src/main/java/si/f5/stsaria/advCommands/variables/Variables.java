@@ -1,8 +1,10 @@
 package si.f5.stsaria.advCommands.variables;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Variables {
@@ -28,9 +30,11 @@ public abstract class Variables {
         return new HashMap<>(this.variableMap);
     }
     public void delete(String name){
+        ArrayList<String> deleteKeys = new ArrayList<>();
         this.variableMap.forEach((n, v) -> {
-            if (n.equals(name) || n.startsWith(name+".")) this.variableMap.remove(n);
+            if (n.equals(name) || n.startsWith(name+".")) deleteKeys.add(n);
         });
+        deleteKeys.forEach(this.variableMap::remove);
     }
     public void copy(String sourceName, String destinationName){
         Map<String, String> variableMapTemp = new HashMap<>();
@@ -58,5 +62,12 @@ public abstract class Variables {
             }
         }
         return foundCount;
+    }
+    public int size(String name){
+        AtomicInteger foundCount = new AtomicInteger(0);
+        this.variableMap.forEach((n, v) -> {
+            if (n.startsWith(name+".")) foundCount.getAndIncrement();
+        });
+        return foundCount.get();
     }
 }

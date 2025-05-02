@@ -1,0 +1,21 @@
+package si.f5.stsaria.advCommands.function;
+
+import org.bukkit.Bukkit;
+import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.TeamV;
+
+import java.util.Objects;
+
+public class Teams implements Function{
+    @Override
+    public String syntax() {
+        return "teams [a-zA-Z0-9.]+";
+    }
+
+    @Override
+    public String execute(String code) {
+        if (!code.matches(syntax())) return "error: syntax";
+        Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard().getTeams().forEach(t -> new TeamV(t).getVariableMap().forEach((n, v) -> GlobalVariables.set(code.split(" ")[0]+"."+n, v)));
+        return "";
+    }
+}

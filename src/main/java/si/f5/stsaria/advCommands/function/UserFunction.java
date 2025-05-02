@@ -59,6 +59,21 @@ public class UserFunction implements Function{
             if (line.isEmpty()) continue;
             line = Parser.variableSubstitution(this.variables, line);
             String[] lineSplit = line.split(" ");
+            if (line.matches(new If().syntax())){
+                if (lineSplit[1].equals("true")){
+                    line = lineSplit[2];
+                    lineSplit = new String[]{lineSplit[2]};
+                } else if (lineSplit[1].equals("false")){
+                    line = lineSplit[4];
+                    lineSplit = new String[]{lineSplit[4]};
+                }
+            } else if (line.matches(new TrueIf().syntax())){
+                if (lineSplit[1].equals("true")){
+                    line = line.replaceFirst("trueif true ", "");
+                    lineSplit = line.split(" ");
+                }
+            }
+
             if (!lineSplit[0].endsWith("G")){
                 if (line.matches(new SetVar().syntax())){
                     this.variables.set(lineSplit[1], line.replaceFirst("setvar "+lineSplit[1]+" ", ""));
@@ -69,11 +84,13 @@ public class UserFunction implements Function{
                 } else if (line.matches(new CopyVar().syntax())){
                     this.variables.copy(lineSplit[1], lineSplit[2]);
                     continue;
-                } else if (lineSplit[0].equals("empexit")){
+                } else if (lineSplit[0].equals("silexit")){
                     return "";
                 } else if (lineSplit[0].equals("skip")){
                     nextSkip = true;
                     continue;
+                } else if (lineSplit[0].equals("cancel")){
+                    return "cancel";
                 }
             }
             Function func = Functions.get(line.split(" ")[0]);

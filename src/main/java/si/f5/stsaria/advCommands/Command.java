@@ -31,15 +31,17 @@ public class Command implements CommandExecutor {
         Variables variables = new EmpVariables();
         GlobalVariables.getAll().forEach(variables::set);
         String line = Parser.variableSubstitution(variables, String.join(" ", args));
-        if (line.matches(new AppendFuncMode((Player) commandSender).syntax())){
-            AppendFuncMode appendFuncMode = new AppendFuncMode((Player) commandSender);
-            commandSender.sendMessage(appendFuncMode.execute(line));
-            return true;
-        } else if (line.matches(new EndAppendFuncMode((Player) commandSender).syntax())){
-            EndAppendFuncMode endAppendFuncMode = new EndAppendFuncMode((Player) commandSender);
-            commandSender.sendMessage(endAppendFuncMode.execute(line));
-            return true;
-        }
+        try {
+            if (line.matches(new AppendFuncMode((Player) commandSender).syntax())) {
+                AppendFuncMode appendFuncMode = new AppendFuncMode((Player) commandSender);
+                commandSender.sendMessage(appendFuncMode.execute(line));
+                return true;
+            } else if (line.matches(new EndAppendFuncMode((Player) commandSender).syntax())) {
+                EndAppendFuncMode endAppendFuncMode = new EndAppendFuncMode((Player) commandSender);
+                commandSender.sendMessage(endAppendFuncMode.execute(line));
+                return true;
+            }
+        } catch (Exception ignore){}
         Function func = Functions.get(args[0]);
         if (func == null){
             commandSender.sendMessage("error: func not found");

@@ -10,5 +10,7 @@ public class LocationV extends Variables{
         this.set("x", String.valueOf(location.getBlockX()));
         this.set("y", String.valueOf(location.getBlockY()));
         this.set("z", String.valueOf(location.getBlockZ()));
+        this.set("yaw", String.valueOf((int) location.getYaw()));
+        this.set("pitch", String.valueOf((int) location.getPitch()));
     }
 }

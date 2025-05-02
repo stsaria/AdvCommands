@@ -10,7 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import si.f5.stsaria.advCommands.function.Function;
@@ -66,38 +69,38 @@ public class Main extends BukkitRunnable implements Listener {
 
     @EventHandler
     public void onKill(PlayerDeathEvent e){
-        for (UserFunction f : EventFunctions.get(EventType.ON_KILL)){
-            new OnKillEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        UserFunction f = EventFunctions.get(EventType.ON_KILL);
+        if (f == null) return;
+        new OnKillEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        f.execute("");
     }
     @EventHandler
     public void onMove(PlayerMoveEvent e){
-        for (UserFunction f : EventFunctions.get(EventType.ON_MOVE)){
-            new OnMoveEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        UserFunction f = EventFunctions.get(EventType.ON_MOVE);
+        if (f == null) return;
+        new OnMoveEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
-        for (UserFunction f : EventFunctions.get(EventType.ON_JOIN)){
-            new OnJoinEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        UserFunction f = EventFunctions.get(EventType.ON_JOIN);
+        if (f == null) return;
+        new OnJoinEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        f.execute("");
     }
     @EventHandler
     public void onPlaceBlock(BlockPlaceEvent e){
-        for (UserFunction f : EventFunctions.get(EventType.ON_PLACE_BLOCK)){
-            new OnPlaceBlockEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        UserFunction f = EventFunctions.get(EventType.ON_PLACE_BLOCK);
+        if (f == null) return;
+        new OnPlaceBlockEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
     @EventHandler
     public void onBreakBlock(BlockBreakEvent e){
-        for (UserFunction f : EventFunctions.get(EventType.ON_BREAK_BLOCK)){
-            new OnBreakBlockEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        UserFunction f = EventFunctions.get(EventType.ON_BREAK_BLOCK);
+        if (f == null) return;
+        new OnBreakBlockEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e){
@@ -110,27 +113,53 @@ public class Main extends BukkitRunnable implements Listener {
             int length = ((UserFunction) func).size();
             Location funcStartLocation = ((UserFunction) func).getStartLocation();
             Location newLocation = new Location(Bukkit.getWorld(Objects.requireNonNull(funcStartLocation.getWorld()).getName()), funcStartLocation.getX(), funcStartLocation.getY()+length, funcStartLocation.getZ());
+            if (newLocation.getY() > 256){
+                e.getPlayer().sendMessage("error: height cant exceed 256");
+                return;
+            }
             addFunctionBlock(new InfoFunctionBlock(funcName, newLocation, e.getMessage()));
             e.getPlayer().sendMessage( (length+1)+" ".repeat(Math.max(0, 4 - String.valueOf(length+1).length()))+e.getMessage());
             return;
         }
-        for (UserFunction f : EventFunctions.get(EventType.ON_CHAT)){
-            new OnChatEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        UserFunction f = EventFunctions.get(EventType.ON_CHAT);
+        if (f == null) return;
+        new OnChatEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
     @EventHandler
     public void onPlayerItemClick(PlayerInteractEvent e){
-        for (UserFunction f : EventFunctions.get(EventType.ON_CLICK_HAND_ITEM)){
-            new OnClickHandItemEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        ItemStack clickedItem = e.getItem();
+        if (clickedItem == null) return;
+        else if (clickedItem.getType().isAir()) return;
+        UserFunction f = EventFunctions.get(EventType.ON_CLICK_HAND_ITEM);
+        if (f == null) return;
+        new OnClickHandItemEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
     @EventHandler
     public void onLeave(PlayerQuitEvent e){
-        for (UserFunction f : EventFunctions.get(EventType.ON_LEAVE)){
-            new OnLeaveEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event."+n, v));
-            f.execute("");
-        }
+        UserFunction f = EventFunctions.get(EventType.ON_LEAVE);
+        if (f == null) return;
+        new OnLeaveEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        f.execute("");
+    }
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent e){
+        UserFunction f = EventFunctions.get(EventType.ON_DROP);
+        if (f == null) return;
+        new OnDropEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e){
+        if(!e.getInventory().getType().equals(InventoryType.CRAFTING)) return;
+        ItemStack clickedItem = e.getCurrentItem();
+        if (clickedItem == null) return;
+        else if (clickedItem.getType().isAir()) return;
+        UserFunction f = EventFunctions.get(EventType.ON_CLICK_GUI_ITEM);
+        if (f == null) return;
+        new OnClickGuiItemEvent("default", e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
 }

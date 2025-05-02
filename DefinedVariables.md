@@ -5,6 +5,11 @@
 - `<x>` : x座標
 - `<y>` : y座標
 - `<z>` : z座標
+- `<yaw>` : プレイヤーが向いている方向(角 度単位)（横）
+- `<pitch>` : プレイヤーが向いている方向(角 度単位)（縦）
+
+角度(yaw)は右に向くほど増加します。
+角度(pitch)は正面が0度で、下を向くほど増加します。
 ### player
 - `<name>` : プレイヤー名(mcid)
 - `<displayname>` : 表示名（\<と\>は取り除き済み）
@@ -16,6 +21,11 @@
 - `<displayname>` : アイテム表示名
 - `<materialname>` : マテリアル名
 - `<amount>` : スタック数
+### team
+- `<name>` : チーム名
+- `<displayname>` : チーム表示名
+- `<playernames.n>` : n人目のプレイヤー名
+- `<onlineplayers.n>` : n人目のプレイヤー（オンラインプレイヤーのみ）
 ## 関数実行時変数
 - `<args.n>` : n個目の引数
 - `<funcfirstblock>` : 関数の最初のブロック（line 1）-> block
@@ -41,7 +51,7 @@
 - `<message>` : メッセージ（\<と\>は取り除き済み）
 - `<player.*>` -> player
 ### onclickguiitem
-- `<guiname>` : GUIインベントリ名
+- `<guiname>` : GUIインベントリ名（プレイヤーデフォルトだとdefault）
 - `<guititle>` : GUIインベントリタイトル
 - `<itemstack.*>` -> itemstack
 ### onclickhanditem

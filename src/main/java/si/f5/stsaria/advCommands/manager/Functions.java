@@ -34,6 +34,11 @@ public class Functions{
         functionMap.put("give", new Give());
         functionMap.put("trueif", new TrueIf());
         functionMap.put("bungeemove", new BungeeMove());
+        functionMap.put("size", new Size());
+        functionMap.put("teams", new Teams());
+        functionMap.put("players", new Players());
+        functionMap.put("strtolist", new StrToList());
+        functionMap.put("shuffled", new Shuffled());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;

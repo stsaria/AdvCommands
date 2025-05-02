@@ -25,4 +25,7 @@ public class GlobalVariables {
     public static synchronized int length(String name){
         return variables.length(name);
     }
+    public static synchronized int size(String name){
+        return variables.size(name);
+    }
 }
