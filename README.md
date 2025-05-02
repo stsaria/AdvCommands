@@ -96,7 +96,7 @@ for 10 hoge
 プラグインでは何らかのイベント（移動やブロック設置など）が発生すると特定の関数を実行できます。
 これによって毎tickで確認する従来のコマンドではなく、何かが起きたら実行してもらうという方式だと可読性が上がります。
 
-イベントハンドラにはイベントに関する変数が含まれます
+イベントハンドラにはイベントに関する変数(event.*)が含まれます
 
 ```
 # キルイベントでhogeという関数を実行するスケジュールを登録
@@ -106,7 +106,7 @@ seteventfunc onKill hoge
 # チャットコマンド
 /advcmd seteventfunc onMove fuga
 # 関数fuga内
-cmd tell {player.name} move!
+cmd tell {event.player.name} move!
 ```
 ### ランダムUUID
 `<randuuid>`とすることによってそこがランダムなUUID(ハイフン無し)に置き換わります。
