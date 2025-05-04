@@ -126,7 +126,7 @@ cmd say <return<returnId>>
 ゲーム開始から何秒経ったかの計算などに使用できます。
 ```
 setvar start <unixtime>
-waitrun 1000 cmd say <<unixtime>-start>
+waitrun 1000 cmd say <unixtime-start>
 # こうすると、1と表示されるはずです。
 ```
 ### 四則演算&累乗
