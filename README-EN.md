@@ -100,7 +100,7 @@ This improves readability if the method is to have the function executed when so
 
 The event handler contains a variable (event.*) about the event
 
-````
+```
 # Register a schedule to execute a function named hoge on a kill event
 seteventfunc onKill hoge
 
@@ -110,8 +110,6 @@ seteventfunc onKill hoge
 # in function fuga
 cmd tell {event.player.name} move!
 ```
-
-Translated with DeepL.com (free version)
 
 ### Random UUID
 Using `<randuuid>` will replace that with a random UUID (without hyphens).
@@ -132,7 +130,7 @@ Using `<unixtime>` will replace that with the current Unix time.
 This can be used for calculations such as how many seconds have passed since the game started.
 ```
 setvar start <unixtime>
-waitrun 1000 cmd say <<unixtime>-start>
+waitrun 1000 cmd say <unixtime-start>
 # This should display "1".
 ```
 
