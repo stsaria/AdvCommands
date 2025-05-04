@@ -1,10 +1,9 @@
 package si.f5.stsaria.advCommands.manager;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import si.f5.stsaria.advCommands.Gui;
 import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.ItemStackV;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -15,15 +14,9 @@ public class Guis {
         if (get(name) != null) return 1;
         ArrayList<ItemStack> itemStacks = new ArrayList<>();
         for (int i = 0; i < GlobalVariables.length(itemStacksVarName); i++){
-            String varPrefix = itemStacksVarName+"."+i;
-            if (!GlobalVariables.contains(varPrefix)) return 2;
-            String materialName = GlobalVariables.get(varPrefix+".materialname").toUpperCase();
-            ItemStack itemStack = new ItemStack(Objects.requireNonNull(Material.matchMaterial(materialName)), Integer.parseInt(GlobalVariables.get(varPrefix+".amount")));
-            try {
-                ItemMeta itemMeta = Objects.requireNonNull(itemStack.getItemMeta());
-                itemMeta.setDisplayName(GlobalVariables.get(varPrefix + ".displayname"));
-                itemStack.setItemMeta(itemMeta);
-            } catch (Exception ignore) {}
+            if (!GlobalVariables.contains(itemStacksVarName+"."+i)) return 2;
+            ItemStack itemStack = ItemStackV.toItemStack(itemStacksVarName+"."+i);
+            if (itemStack == null) return 3;
             itemStacks.add(itemStack);
         }
         guiMap.put(name, new Gui(name, title, itemStacks));

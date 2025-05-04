@@ -39,6 +39,7 @@ public class Functions{
         functionMap.put("players", new Players());
         functionMap.put("strtolist", new StrToList());
         functionMap.put("shuffled", new Shuffled());
+        functionMap.put("addenchant", new AddEnchant());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;

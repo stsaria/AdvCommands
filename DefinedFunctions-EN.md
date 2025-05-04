@@ -30,3 +30,4 @@ Note: The \<parameters\> shown here are just for clarity; in actual usage, these
 - `skip` : Ignores the next line of the function. (Can only be used within functions)
 - `strtolist <assignment variable name> <string>` : Converts a string into a list of single-character strings. (Global variables only)
 - `shuffled <source variable name> <assignment variable name>` : Shuffles a list and assigns it to a variable. (Global variables only)
+- `addenchant <source itemStack variable> <enchant name> <enchant level>` : Adds an enchantment to the itemStack. (Global variables only)

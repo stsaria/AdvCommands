@@ -17,10 +17,14 @@ Angle (pitch) is 0 degrees when looking straight ahead, and increases as you loo
 ### block
 - `<materialname>` : Material name (example: polished_andesite)
 - `<location.*>` -> location
+### enchant
+- `<name>` : enchant name (example: power)
+- `<level>` : enchant level
 ### itemstack
 - `<displayname>` : Item display name
 - `<materialname>` : Material name
 - `<amount>` : Stack count
+- `<enchants.n>` : nth enchant (n -> enchant)
 ### team
 - `<name>` : Team name
 - `<displayname>` : Team display name

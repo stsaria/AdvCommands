@@ -17,10 +17,14 @@
 ### block
 - `<materialname>` : マテリアル名（例:polished_andesite）
 - `<location.*>` -> location
+### enchant
+- `<name>` : エンチャント名（例:power）
+- `<level>` : エンチャントレベル
 ### itemstack
 - `<displayname>` : アイテム表示名
 - `<materialname>` : マテリアル名
 - `<amount>` : スタック数
+- `<enchants.n>` : n個目のエンチャント (n -> enchant)
 ### team
 - `<name>` : チーム名
 - `<displayname>` : チーム表示名
