@@ -32,7 +32,7 @@ public class JsonToStruct implements Function{
             ((Map<String, Object>) obj).forEach((k, v) -> {
                 if (v instanceof Map) setVars(v, baseVarName + "." + k);
                 else if (v instanceof ArrayList) setVars(v, baseVarName + "." + k);
-                else GlobalVariables.set(baseVarName + "." + k, String.valueOf(v).replaceAll("[_-]", ""));
+                else GlobalVariables.set(baseVarName + "." + k.replaceAll("[_-]", ""), String.valueOf(v).replaceAll("[_-]", ""));
             });
         } else if (obj instanceof ArrayList){
             ArrayList<Object> al = (ArrayList<Object>) obj;
