@@ -10,7 +10,9 @@ public enum EventType {
     ON_CLICK_GUI_ITEM("onclickguiitem"),
     ON_CLICK_HAND_ITEM("onclickhanditem"),
     ON_LEAVE("onleave"),
-    ON_DROP("ondrop");
+    ON_DROP("ondrop"),
+    ON_DAMAGE("ondamage"),
+    ON_DAMAGE_BY_ENTITY("ondamagebyentity");
 
     private final String name;
     EventType(String name){

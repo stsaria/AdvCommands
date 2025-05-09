@@ -170,6 +170,10 @@ If false, it is replaced with `false`
 <1<2>
 # Is a 1 greater than 2?
 <1>2>
+# 2 is less than or equal to 3?
+<2<=3>
+# 5 is greater than or equal to 5
+<5>=5>
 # Does the variable hoge exist?
 <hoge?>
 ```
@@ -224,6 +228,12 @@ newgui menuGui itemstacks StartGUI
 /advcmd main
 /advcmd give menuOpenItem lups0
 ```
-
+### HTTP
+Sends an HTTP request.
+````
+# Get IP with get protocol
+httpget ip https://ipinfo.io/ip
+cmd say <ip>
+```
 ## Important Notes
 - Do not assign a reference to a variable to itself. This will cause an infinite loop.

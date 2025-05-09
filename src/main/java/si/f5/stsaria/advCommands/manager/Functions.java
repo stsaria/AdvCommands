@@ -40,6 +40,14 @@ public class Functions{
         functionMap.put("strtolist", new StrToList());
         functionMap.put("shuffled", new Shuffled());
         functionMap.put("addenchant", new AddEnchant());
+        functionMap.put("regex", new RegexF());
+        functionMap.put("split", new Split());
+        functionMap.put("jsontostruct", new JsonToStruct());
+        functionMap.put("httpget", new HttpGet());
+        functionMap.put("httppost", new HttpPost());
+        functionMap.put("replace", new Replace());
+        functionMap.put("structtojson", new StructToJson());
+        functionMap.put("variables", new VariablesF());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;

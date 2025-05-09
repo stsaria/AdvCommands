@@ -21,10 +21,11 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 - ランダムUUID(\<randuuid\>)
 - UnixTime(\<unixtime\>)
 - 四則演算&累乗(\<x[+-*/%^]y\>)
-- 真・偽(\<x[<>=]y\>)
+- 真・偽(\<x[<>=]|>=|<=y\>)
 - 条件分岐(if)
 - 遅延(waitrun)
 - GUI
+- HTTP
 
 詳しくはDefinedFunctions.mdとDefinedVariables.mdを参照してください。
 
@@ -164,6 +165,10 @@ waitrun 1000 cmd say <unixtime-start>
 <1<2>
 # 1は2より大きいか
 <1>2>
+# 2は3以下か
+<2<=3>
+# 5は5以上か
+<5>=5>
 # 変数hogeが存在するか
 <hoge?>
 ```
@@ -214,6 +219,13 @@ newgui menuGui itemstacks StartGUI
 /advcmd declfunc main world 10 10 10
 /advcmd main
 /advcmd give menuOpenItem lups0
+```
+### HTTP
+HTTPリクエストを送信します。
+```
+# getプロトコルでIPを取得
+httpget ip https://ipinfo.io/ip
+cmd say <ip>
 ```
 ## 注意点
 - 自分の変数の値に自分の変数の参照を代入しないでください。二度と終わらなくなります。

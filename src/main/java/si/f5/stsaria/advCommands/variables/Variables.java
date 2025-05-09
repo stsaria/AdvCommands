@@ -1,6 +1,9 @@
 package si.f5.stsaria.advCommands.variables;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,18 +16,14 @@ public abstract class Variables {
         this.variableMap.put(name, variable);
     }
     public String get(String name){
-        try{
-            return String.valueOf(Long.parseLong(name));
-        } catch (Exception ignore) {
-            AtomicReference<String> variable = new AtomicReference<>(null);
-            this.variableMap.forEach((n, v) -> {
-                if (n.equals(name)) variable.set(v);
-            });
-            if (variable.get() == null){
-                return name;
-            }
-            return variable.get();
+        AtomicReference<String> variable = new AtomicReference<>(null);
+        this.variableMap.forEach((n, v) -> {
+            if (n.equals(name)) variable.set(v);
+        });
+        if (variable.get() == null){
+            return name;
         }
+        return variable.get();
     }
     public Map<String, String> getVariableMap(){
         return new HashMap<>(this.variableMap);
@@ -43,6 +42,13 @@ public abstract class Variables {
         });
         this.variableMap.putAll(variableMapTemp);
         if (this.get(sourceName) != null) this.variableMap.put(destinationName, this.get(sourceName));
+    }
+    public boolean containsDirect(String name){
+        AtomicBoolean found = new AtomicBoolean(false);
+        this.variableMap.forEach((n, v) -> {
+            if (n.equals(name)) found.set(true);
+        });
+        return found.get();
     }
     public boolean contains(String name){
         AtomicBoolean found = new AtomicBoolean(false);
@@ -69,5 +75,29 @@ public abstract class Variables {
             if (n.startsWith(name+".")) foundCount.getAndIncrement();
         });
         return foundCount.get();
+    }
+    public Map<String, Object> toMap(String name){
+        Map<String, Object> map = new HashMap<>();
+        this.variableMap.forEach((n, v) -> {
+            if (n.equals(name)) map.put(Arrays.stream(n.split("\\.")).toList().getLast(), v);
+            else if (n.startsWith(name + ".") && name.split("\\.").length+1 == n.split("\\.").length) map.put(Arrays.stream(n.split("\\.")).toList().getLast(), toMap(n));
+        });
+        return map;
+    }
+    public String toJson(String name){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(toMap(name));
+        } catch (Exception ignore){
+            return null;
+        }
+    }
+    public Map<String, String> toOneLayerMap(String name){
+        Map<String, String> map = new HashMap<>();
+        this.variableMap.forEach((n, v) -> {
+            if (n.startsWith(name + ".") && name.split("\\.").length + 1 == n.split("\\.").length)
+                map.put(Arrays.stream(n.split("\\.")).toList().getLast(), v);
+        });
+        return map;
     }
 }

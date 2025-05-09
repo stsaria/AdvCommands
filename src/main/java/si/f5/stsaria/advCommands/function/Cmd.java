@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 public class Cmd implements Function{
     @Override
     public String syntax() {
-        return "cmd .*";
+        return "cmd (?s).+";
     }
 
     @Override

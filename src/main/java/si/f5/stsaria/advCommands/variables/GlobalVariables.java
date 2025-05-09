@@ -19,6 +19,9 @@ public class GlobalVariables {
     public static synchronized void copy(String sourceName, String destinationName){
         variables.copy(sourceName, destinationName);
     }
+    public static synchronized boolean containsDirect(String name){
+        return variables.containsDirect(name);
+    }
     public static synchronized boolean contains(String name){
         return variables.contains(name);
     }
@@ -27,5 +30,14 @@ public class GlobalVariables {
     }
     public static synchronized int size(String name){
         return variables.size(name);
+    }
+    public static synchronized Map<String, Object> toMap(String name){
+        return variables.toMap(name);
+    }
+    public static synchronized String toJson(String name){
+        return variables.toJson(name);
+    }
+    public static synchronized Map<String, String> toOneLayerMap(String name){
+        return variables.toOneLayerMap(name);
     }
 }

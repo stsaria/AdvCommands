@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'si.f5.stsaria'
-version = '1.9'
+version = '2.0'
 
 repositories {
     mavenCentral()
@@ -20,6 +20,8 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+    implementation("commons-io:commons-io:2.19.0")
 }
 
 tasks {

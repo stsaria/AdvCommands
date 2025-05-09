@@ -3,8 +3,8 @@ Note: The \<parameters\> shown here are just for clarity; in actual usage, these
 
 - `nop` : Does nothing
 - `cmd <Minecraft command>` : Executes a Minecraft command through the server console.
-- `declFunc <function name> <world name> <x coordinate (for the first command block)> <y coordinate> <z coordinate>` : Defines a new function.
-- `catFunc <function name>` : Outputs the contents of a function.
+- `declfunc <function name> <world name> <x coordinate (for the first command block)> <y coordinate> <z coordinate>` : Defines a new function.
+- `catfunc <function name>` : Outputs the contents of a function.
 - `exit` : Intentionally generates an error to terminate execution.
 - `seteventfunc <event type (onkill, onmove, onplaceblock, onbreakblock, onjoin, onchat, onclickguiitem, onclickhanditem, onleave, ondrop, ondrag)> <function name>` : Executes a specified function when a specific event occurs.
 - `setvar <variable name> <variable value>` : Defines or overwrites a variable.
@@ -31,3 +31,11 @@ Note: The \<parameters\> shown here are just for clarity; in actual usage, these
 - `strtolist <assignment variable name> <string>` : Converts a string into a list of single-character strings. (Global variables only)
 - `shuffled <source variable name> <assignment variable name>` : Shuffles a list and assigns it to a variable. (Global variables only)
 - `addenchant <source itemStack variable> <enchant name> <enchant level>` : Adds an enchantment to the itemStack. (Global variables only)
+- `jsontostruct <assigned variable name> <Json string>` : Convert a Json string to a structure. (Global variables only)
+- `structtojson <assigned variable name> <structure variable name>` : Convert a structure to a Json string. (Global variables only)
+- `regex <assigned variable name> <match source variable name> <regex string>` : Assigns true to the value for the assigned variable name if it matches, or false if it does not match. (Global variables only)
+- `replace <substituted variable name> <source variable name> <substituted regexp variable name> <substituted variable name>` : replaces a string with a regular expression. (Global variables only)
+- `split <substitute variable name> <source string variable name> <delimited string>` : delimits a string. (Global variables only)
+- `httpget <substitute variable name> <URL>` : sends an HTTP GET request. (Global variables only)
+- `httppost <httpresponse assignment variable name> <argument structure variable name> <URL>` : send HTTP POST request. (Global variables only)
+- `variables <assigned variable name>` : generate a list array of variables. (Global variables only)

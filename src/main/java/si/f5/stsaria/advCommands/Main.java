@@ -9,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -160,6 +162,22 @@ public class Main extends BukkitRunnable implements Listener {
         UserFunction f = EventFunctions.get(EventType.ON_CLICK_GUI_ITEM);
         if (f == null) return;
         new OnClickGuiItemEvent("default", e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent e){
+        UserFunction f = EventFunctions.get(EventType.ON_DAMAGE);
+        if (f == null) return;
+        new OnDamageEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        if (f.execute("").equals("cancel")) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamageByEntity(EntityDamageByEntityEvent e){
+        UserFunction f = EventFunctions.get(EventType.ON_DAMAGE_BY_ENTITY);
+        if (f == null) return;
+        new OnDamageByEntityEvent(e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
         if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
 }

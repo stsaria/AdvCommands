@@ -26,37 +26,42 @@ public class Parser {
                 if (g.contains("=")) {
                     line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
                 } else {
-                    try {
-                        long firstVarValueInt = Long.parseLong(firstVarValue);
-                        long secondVarValueInt = Long.parseLong(secondVarValue);
-                        long ans = 0;
-                        if (g.contains("+")) {
-                            ans = firstVarValueInt + secondVarValueInt;
-                        } else if (g.contains("-")) {
-                            ans = firstVarValueInt - secondVarValueInt;
-                        } else if (g.contains("*")) {
-                            ans = firstVarValueInt * secondVarValueInt;
-                        } else if (g.contains("/")) {
-                            ans = firstVarValueInt / secondVarValueInt;
-                        } else if (g.contains("%")) {
-                            ans = firstVarValueInt % secondVarValueInt;
-                        } else if (prefixRemovedG.contains("<")) {
-                            line = line.replace(g, firstVarValueInt < secondVarValueInt ? "true" : "false");
-                            matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                            found = true;
-                            continue;
-                        } else if (prefixRemovedG.contains(">")) {
-                            line = line.replace(g, firstVarValueInt > secondVarValueInt ? "true" : "false");
-                            matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                            found = true;
-                            continue;
-                        } else if (g.contains("^")) {
-                            ans = (int) Math.pow(firstVarValueInt, secondVarValueInt);
-                        }
-                        line = line.replace(g, String.valueOf(ans));
-                    } catch (Exception ignore) {
-                        return "error: cant cast string to long";
+                    double firstVarValueDouble;
+                    double secondVarValueDouble;
+                    try{
+                        firstVarValueDouble = Double.parseDouble(firstVarValue);
+                        secondVarValueDouble = Double.parseDouble(secondVarValue);
+                    } catch (NumberFormatException ignore) {
+                        continue;
                     }
+                    double ans = 0;
+                    if (g.contains("+")) {
+                        ans = firstVarValueDouble + secondVarValueDouble;
+                    } else if (g.contains("-")) {
+                        ans = firstVarValueDouble - secondVarValueDouble;
+                    } else if (g.contains("*")) {
+                        ans = firstVarValueDouble * secondVarValueDouble;
+                    } else if (g.contains("/")) {
+                        ans = firstVarValueDouble / secondVarValueDouble;
+                    } else if (g.contains("%")) {
+                        ans = firstVarValueDouble % secondVarValueDouble;
+                    } else if (prefixRemovedG.contains("<")) {
+                        line = line.replace(g, firstVarValueDouble < secondVarValueDouble ? "true" : "false");
+                        matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
+                        found = true;
+                        continue;
+                    } else if (prefixRemovedG.contains(">")) {
+                        line = line.replace(g, firstVarValueDouble > secondVarValueDouble ? "true" : "false");
+                        matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
+                        found = true;
+                        continue;
+                    } else if (g.contains("^")) {
+                        ans = Math.pow(firstVarValueDouble, secondVarValueDouble);
+                    }
+                    if (ans - ((double) ((long) ans)) == 0D){
+                        line = line.replace(g, String.valueOf((long) ans));
+                    }
+                    line = line.replace(g, String.valueOf(ans));
                 }
                 matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
                 found = true;
