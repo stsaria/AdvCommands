@@ -9,17 +9,18 @@ import java.util.Map;
 public class JsonToStruct implements Function{
     @Override
     public String syntax() {
-        return "jsontostruct [a-zA-Z0-9.]+ (?s).*";
+        return "jsontostruct [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
     }
 
     @Override
     public String execute(String code) {
         if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
+        if (!GlobalVariables.containsDirect(codeSplit[2])) return "error: json string variable not found";
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonMap;
         try{
-            jsonMap = mapper.readValue(code.replaceFirst("jsontostruct "+codeSplit[1]+" ", ""), Map.class);
+            jsonMap = mapper.readValue(GlobalVariables.get(codeSplit[2]), Map.class);
         } catch (Exception ignore){
             return "error: cant parse json";
         }

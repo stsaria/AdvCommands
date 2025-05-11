@@ -42,6 +42,8 @@ setvar baka aho
 # Display it
 cmd say <baka>
 # This will display "aho".
+cmd say <baka!>
+# This way it will be executed as just <baka>, not as a variable.
 
 # Assign "daisuki" to global variable "zaemon" (accessible from anywhere)
 setvarG zaemon daisuki

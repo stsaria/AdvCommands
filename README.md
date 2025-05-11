@@ -44,6 +44,8 @@ copyvar baka kasu
 # 表示
 cmd say <baka>
 # これでahoと表示されます。
+cmd say <baka!>
+# こうすると、変数としてではなく、ただの<baka>として実行されます。
 
 # グローバル変数(どこからもアクセス可)zaemonにdaisukiを代入
 setvarG zaemon daisuki

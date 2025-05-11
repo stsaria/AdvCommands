@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import si.f5.stsaria.advCommands.function.Function;
+import si.f5.stsaria.advCommands.function.BlocksFunction;
 import si.f5.stsaria.advCommands.function.UserFunction;
 import si.f5.stsaria.advCommands.manager.AppendFuncModePlayers;
 import si.f5.stsaria.advCommands.manager.EventFunctions;
@@ -58,7 +59,7 @@ public class Main extends BukkitRunnable implements Listener {
             CommandBlock commandBlock = (CommandBlock) block.getState();
             commandBlock.setCommand(info.getCommand());
             commandBlock.update();
-            Location funcStartLocation = ((UserFunction) Functions.get(info.getFuncName())).getStartLocation();
+            Location funcStartLocation = ((BlocksFunction) Functions.get(info.getFuncName())).getStartLocation();
             Functions.remove(info.getFuncName());
             Functions.add(info.getFuncName(), funcStartLocation);
         });
@@ -111,9 +112,9 @@ public class Main extends BukkitRunnable implements Listener {
             if (e.getMessage().isEmpty()) return;
             String funcName = AppendFuncModePlayers.get(e.getPlayer());
             Function func = Functions.get(funcName);
-            if (!(func instanceof UserFunction)) return;
-            int length = ((UserFunction) func).size();
-            Location funcStartLocation = ((UserFunction) func).getStartLocation();
+            if (!(func instanceof BlocksFunction)) return;
+            int length = ((BlocksFunction) func).size();
+            Location funcStartLocation = ((BlocksFunction) func).getStartLocation();
             Location newLocation = new Location(Bukkit.getWorld(Objects.requireNonNull(funcStartLocation.getWorld()).getName()), funcStartLocation.getX(), funcStartLocation.getY()+length, funcStartLocation.getZ());
             if (newLocation.getY() > 256){
                 e.getPlayer().sendMessage("error: height cant exceed 256");

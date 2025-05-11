@@ -39,3 +39,5 @@ Note: The \<parameters\> shown here are just for clarity; in actual usage, these
 - `httpget <substitute variable name> <URL>` : sends an HTTP GET request. (Global variables only)
 - `httppost <httpresponse assignment variable name> <argument structure variable name> <URL>` : send HTTP POST request. (Global variables only)
 - `variables <assigned variable name>` : generate a list array of variables. (Global variables only)
+- `exportfunc <stored variable name> <function name>` : Assigns the content of the function, converted to base64 (variable name is not converted), to the variable.
+- `importfunc <content of function>` : reads the function.

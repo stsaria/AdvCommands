@@ -13,11 +13,13 @@ public class Parser {
             line = line.replaceFirst("<randuuid>", UUID.randomUUID().toString().replace("-", ""));
         }
         line = line.replace("<unixtime>", String.valueOf(Instant.now().getEpochSecond()));
+        line = line.replace("<nl>", "\n");
         boolean found;
+        Matcher matcher;
         found = true;
         while (found) {
             found = false;
-            Matcher matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
+            matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
             while (matcher.find()) {
                 String g = matcher.group();
                 String prefixRemovedG = g.replaceFirst("<", "").replaceAll(">$", "");
@@ -82,6 +84,12 @@ public class Parser {
                 matcher = Pattern.compile("<[a-zA-Z0-9.]+>").matcher(line);
                 found = true;
             }
+        }
+        matcher = Pattern.compile("<[a-zA-Z0-9.]+!>").matcher(line);
+        while (matcher.find()) {
+            String g = matcher.group();
+            line = line.replace(g, g.replaceFirst("!>$", ">"));
+            matcher = Pattern.compile("<[a-zA-Z0-9.]+!>").matcher(line);
         }
         return line;
     }

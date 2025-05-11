@@ -22,8 +22,7 @@ public class EventFunctions{
         } catch (Exception ignore) {}
         Function function = Functions.get(functionName);
         if (function == null) return 2;
-        if (!(function instanceof UserFunction)) return 3;
-        eventFunctionMap.put(eventType, (UserFunction) function);
+        if (function instanceof UserFunction) eventFunctionMap.put(eventType, (UserFunction) function);
         return 0;
     }
     public static synchronized UserFunction get(EventType eventType){

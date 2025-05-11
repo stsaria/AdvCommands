@@ -96,3 +96,7 @@ The angle (pitch) is 0 degrees when looking straight ahead, and increases as you
 - `<damagerentity.*>`: only when damagertype is entity -> entity
 ## "User function" variables for loops
 - `<i>` : Current iteration count (starting from 0)
+## Others.
+- `<randuuid>` : random UUID (without hyphen)
+- `<unixtime>` : current UNIX time.
+- `<nl>` : new line.

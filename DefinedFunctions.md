@@ -38,3 +38,5 @@
 - `httpget <httpresponse代入変数名> <URL>` : HTTP GETリクエストを送ります。（グローバル変数のみ）
 - `httppost <httpresponse代入変数名> <引数構造体変数名> <URL>` : HTTP POSTリクエストを送ります。（グローバル変数のみ）
 - `variables <代入変数名>` : 変数の一覧配列を生成します。（グローバル変数のみ）
+- `exportfunc <保存先変数名> <関数名>` : 関数の内容をbase64に変換したもの（変数名は無変換）を、変数に代入します。
+- `importfunc <関数の内容>` : 関数を読み込みます。

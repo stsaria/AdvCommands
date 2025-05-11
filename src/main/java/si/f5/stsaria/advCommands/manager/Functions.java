@@ -48,6 +48,8 @@ public class Functions{
         functionMap.put("replace", new Replace());
         functionMap.put("structtojson", new StructToJson());
         functionMap.put("variables", new VariablesF());
+        functionMap.put("exportfunc", new ExportFunc());
+        functionMap.put("importfunc", new ImportFunc());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
@@ -63,7 +65,12 @@ public class Functions{
                 break;
             }
         }
-        functionMap.put(name, new UserFunction(name, blocks));
+        functionMap.put(name, new BlocksFunction(name, blocks));
+        return 0;
+    }
+    public static synchronized int addDirect(String name, String code){
+        if (functionMap.get(name) != null) return 1;
+        functionMap.put(name, new ImplFunction(name, code));
         return 0;
     }
     public static synchronized void remove(String name){

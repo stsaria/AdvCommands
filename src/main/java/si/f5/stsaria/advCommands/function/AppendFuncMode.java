@@ -19,9 +19,9 @@ public class AppendFuncMode implements Function{
         if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
         Function func = Functions.get(codeSplit[1]);
-        if (!(func instanceof UserFunction)) return "error: func not found";
-        if (AppendFuncModePlayers.set(this.player, ((UserFunction) func).getName()) == 0){
-            return "Start function append mode\n"+((UserFunction) func).cat();
+        if (!(func instanceof BlocksFunction)) return "error: func not found";
+        if (AppendFuncModePlayers.set(this.player, ((BlocksFunction) func).getName()) == 0){
+            return "Start function append mode\n"+((BlocksFunction) func).formatedLines();
         }
         return "error: Started function append mode";
     }

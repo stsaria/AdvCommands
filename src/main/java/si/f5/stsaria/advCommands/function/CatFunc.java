@@ -14,6 +14,6 @@ public class CatFunc implements Function{
         String[] codeSplit = code.split(" ");
         Function func = Functions.get(codeSplit[1]);
         if (!(func instanceof UserFunction)) return "error: func not found";
-        return "\n"+((UserFunction) func).cat()+"\n";
+        return "\n"+((UserFunction) func).formatedLines()+"\n";
     }
 }

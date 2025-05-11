@@ -93,3 +93,7 @@
 - `<damagerentity.*>` : typeがentityの時だけ -> entity
 ## for時"ユーザー関数"変数
 - `<i>` : 現在の往復回数（0から数えた）
+## そのほか
+- `<randuuid>` : ランダムなUUID(ハイフンなし)
+- `<unixtime>` : 今のUNIXタイム
+- `<nl>` : 改行
