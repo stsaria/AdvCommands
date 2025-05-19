@@ -6,8 +6,7 @@ import java.util.Objects;
 
 public class OnKillEvent extends Variables{
     public OnKillEvent(PlayerDeathEvent e){
-        new PlayerV(e.getEntity()).getVariableMap().forEach((n, v) -> this.set("player."+n, v));
-        new PlayerV(Objects.requireNonNull(e.getEntity().getKiller()))
-        .getVariableMap().forEach((n, v) -> this.set("killer."+n, v));
+        this.concat("player", new PlayerV(e.getEntity()));
+        this.concat("killer", new PlayerV(Objects.requireNonNull(e.getEntity().getKiller())));
     }
 }

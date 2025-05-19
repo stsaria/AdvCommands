@@ -37,7 +37,9 @@ public class Main extends BukkitRunnable implements Listener {
         Main.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         Functions.initial();
-        new Command(plugin);
+        new Interpreter("advcmd");
+        new Fer("fer");
+        GlobalVariables.set("env.debug", "true");
 
         this.runTaskTimer(plugin,0,0);
     }
@@ -50,7 +52,7 @@ public class Main extends BukkitRunnable implements Listener {
     public static synchronized void addFunctionBlock(InfoFunctionBlock info){
         setFunctionBlockInfos.add(info);
     }
-    public static synchronized void solveSchedules(){
+    public static synchronized void solveSchedules() {
         runFunctions.forEach(info -> info.getFunction().execute(info.getCode()));
         runFunctions.clear();
         setFunctionBlockInfos.forEach(info -> {

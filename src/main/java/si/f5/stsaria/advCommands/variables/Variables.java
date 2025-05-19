@@ -8,22 +8,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Variables {
     protected final Map<String, String> variableMap = new HashMap<>();
     public void set(String name, String variable) {
+        System.out.println(name+"="+variable);
         this.variableMap.put(name, variable);
     }
     public String get(String name){
-        AtomicReference<String> variable = new AtomicReference<>(null);
-        this.variableMap.forEach((n, v) -> {
-            if (n.equals(name)) variable.set(v);
-        });
-        if (variable.get() == null){
+        if (this.variableMap.get(name) == null){
             return name;
         }
-        return variable.get();
+        return this.variableMap.get(name);
     }
     public Map<String, String> getVariableMap(){
         return new HashMap<>(this.variableMap);
@@ -99,5 +95,8 @@ public abstract class Variables {
                 map.put(Arrays.stream(n.split("\\.")).toList().getLast(), v);
         });
         return map;
+    }
+    public void concat(String rootName, Variables variables){
+        VariablesUtil.concat(this, rootName, variables);
     }
 }

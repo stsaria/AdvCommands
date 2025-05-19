@@ -33,7 +33,7 @@ public class Gui implements Listener {
         else if (clickedItem.getType().isAir()) return;
         UserFunction f = EventFunctions.get(EventType.ON_CLICK_GUI_ITEM);
         if (f == null) return;
-        new OnClickGuiItemEvent(this.name, e).getVariableMap().forEach((n, v) -> f.setVariable("event." + n, v));
+        f.concat("event", new OnClickGuiItemEvent(this.name, e));
         if (f.execute("").equals("cancel")) e.setCancelled(true);
     }
 }

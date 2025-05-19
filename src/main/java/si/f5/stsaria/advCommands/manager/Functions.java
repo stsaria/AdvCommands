@@ -6,7 +6,6 @@ import org.bukkit.block.Block;
 import si.f5.stsaria.advCommands.function.*;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Functions{
     private static final Map<String, Function> functionMap = new HashMap<>();
@@ -50,6 +49,7 @@ public class Functions{
         functionMap.put("variables", new VariablesF());
         functionMap.put("exportfunc", new ExportFunc());
         functionMap.put("importfunc", new ImportFunc());
+        functionMap.put("output", new Output());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
@@ -77,12 +77,6 @@ public class Functions{
         functionMap.remove(name);
     }
     public static synchronized Function get(String name){
-        AtomicReference<Function> function = new AtomicReference<>(null);
-        functionMap.forEach((n, f) -> {
-            if (n.equals(name)) {
-                function.set(f);
-            }
-        });
-        return function.get();
+        return functionMap.get(name);
     }
 }

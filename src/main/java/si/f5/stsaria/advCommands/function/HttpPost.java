@@ -50,9 +50,7 @@ public class HttpPost implements Function{
                 connection.setInstanceFollowRedirects(false);
                 responseCode = connection.getResponseCode();
             }
-            new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8).replace("<", "&lt").replace(">", "&gt")).getVariableMap().forEach((n, v) ->
-                GlobalVariables.set(codeSplit[1]+"."+n, v)
-            );
+            GlobalVariables.concat(codeSplit[1], new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8).replace("<", "&lt").replace(">", "&gt")));
         } catch (Exception ignore) {
             return "error: failed communication";
         }

@@ -25,9 +25,7 @@ public class AddEnchant implements Function{
         ItemStack itemStack = ItemStackV.toItemStack(codeSplit[1]);
         if (itemStack == null) return "error: generate failed source itemStack";
         int len = GlobalVariables.length(codeSplit[1]+".enchants");
-        new Enchant(enchantment, level).getVariableMap().forEach((n, v) ->
-            GlobalVariables.set(codeSplit[1] + ".enchants." + len + "." + n, v)
-        );
+        GlobalVariables.concat(codeSplit[1]+".enchants."+len, new Enchant(enchantment, level));
         return "";
     }
 }

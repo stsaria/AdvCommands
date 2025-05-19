@@ -7,10 +7,10 @@ public class OnDamageEvent extends Variables{
     public OnDamageEvent(EntityDamageEvent e){
         if (e.getEntity() instanceof Player){
             this.set("type", "player");
-            new PlayerV((Player) e.getEntity()).getVariableMap().forEach((n, v) -> this.set("player."+n, v));
+            this.concat("player", new PlayerV((Player) e.getEntity()));
         } else {
             this.set("type", "entity");
-            new EntityV(e.getEntity()).getVariableMap().forEach((n, v) -> this.set("player."+n, v));
+            this.concat("entity", new EntityV(e.getEntity()));
         }
         this.set("damage", String.valueOf(e.getDamage()));
     }

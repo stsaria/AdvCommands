@@ -8,6 +8,6 @@ public class EntityV extends Variables {
         this.set("entityid", String.valueOf(entity.getEntityId()));
         this.set("uuid", String.valueOf(entity.getUniqueId()));
         this.set("isdead", entity.isDead() ? "true" : "false");
-        new LocationV(entity.getLocation()).getVariableMap().forEach((n, v) -> this.set("location."+n, v));
+        this.concat("location", new LocationV(entity.getLocation()));
     }
 }

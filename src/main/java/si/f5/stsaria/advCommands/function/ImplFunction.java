@@ -23,6 +23,9 @@ public class ImplFunction implements UserFunction{
     public synchronized void setVariable(String name, String variable) {
         this.variables.set(name, variable);
     }
+    public synchronized void concat(String rootName, Variables variables){
+        this.variables.concat(rootName, variables);
+    }
     @Override
     public String syntax() {
         return this.name;
@@ -30,6 +33,7 @@ public class ImplFunction implements UserFunction{
 
     @Override
     public synchronized String execute(String code) {
+        this.variables.set("argsstr", code.replaceFirst(this.name+" ", ""));
         for (int i = 1; i < code.split(" ").length; i++){
             this.variables.set("args."+(i-1), code.split(" ")[i]);
         }

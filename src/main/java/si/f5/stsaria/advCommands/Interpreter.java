@@ -10,17 +10,15 @@ import si.f5.stsaria.advCommands.function.AppendFuncMode;
 import si.f5.stsaria.advCommands.function.EndAppendFuncMode;
 import si.f5.stsaria.advCommands.function.Function;
 import si.f5.stsaria.advCommands.manager.Functions;
-import si.f5.stsaria.advCommands.variables.EmpVariables;
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
-import si.f5.stsaria.advCommands.variables.Variables;
+import si.f5.stsaria.advCommands.variables.*;
 
-public class Command implements CommandExecutor {
+public class Interpreter implements CommandExecutor {
     protected final JavaPlugin plugin;
 
-    public Command(JavaPlugin plugin){
-        this.plugin = plugin;
+    public Interpreter(String name){
+        this.plugin = Main.getPlugin();
 
-        PluginCommand command = this.plugin.getCommand("advCmd");
+        PluginCommand command = this.plugin.getCommand(name);
         if(command != null){
             command.setExecutor(this);
         }

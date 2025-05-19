@@ -26,6 +26,7 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 - 遅延(waitrun)
 - GUI
 - HTTP
+- 動的な独自コマンド(fer)
 
 詳しくはDefinedFunctions.mdとDefinedVariables.mdを参照してください。
 

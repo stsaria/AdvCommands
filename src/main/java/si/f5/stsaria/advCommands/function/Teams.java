@@ -15,7 +15,7 @@ public class Teams implements Function{
     @Override
     public String execute(String code) {
         if (!code.matches(syntax())) return "error: syntax";
-        Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard().getTeams().forEach(t -> new TeamV(t).getVariableMap().forEach((n, v) -> GlobalVariables.set(code.split(" ")[1]+"."+n, v)));
+        Objects.requireNonNull(Bukkit.getScoreboardManager()).getMainScoreboard().getTeams().forEach(t -> GlobalVariables.concat(code.split(" ")[1], new TeamV(t)));
         return "";
     }
 }

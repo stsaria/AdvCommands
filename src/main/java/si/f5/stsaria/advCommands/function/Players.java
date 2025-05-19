@@ -13,7 +13,7 @@ public class Players implements Function{
     @Override
     public String execute(String code) {
         if (!code.matches(syntax())) return "error: syntax";
-        Bukkit.getOnlinePlayers().forEach(p -> new PlayerV(p).getVariableMap().forEach((n, v) -> GlobalVariables.set(code.split(" ")[1]+"."+n, v)));
+        Bukkit.getOnlinePlayers().forEach(p -> GlobalVariables.concat(code.split(" ")[1]+"."+p.getName(), new PlayerV(p)));
         return "";
     }
 }

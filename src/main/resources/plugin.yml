@@ -1,15 +1,17 @@
 name: AdvCommands
-version: '2.1'
+version: '2.2'
 main: si.f5.stsaria.advCommands.AdvCommands
 api-version: '1.21'
 author: yudenOfSauce
 website: http://stsaria.f5.si
 
 commands:
-  advCmd:
+  advcmd:
     description: interpreter
-    permission: advCmd
+    permission: advcmd
+  fer:
+    description: advcmd usercmd base
 permissions:
-  advCmd:
-    description: advCmd command's permission
+  advcmd:
+    description: advcmd command's permission
     default: op

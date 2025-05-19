@@ -18,6 +18,9 @@
 - `<entityid>` : エンティティタイプのID
 - `<uuid>` : エンティティUUID
 - `<isdead>` : 死んでいるか
+### address
+- `<hostname>` : ホスト名
+- `<port>` : ポート番号
 ### player
 - `<name>` : プレイヤー名(mcid)
 - `<displayname>` : 表示名（\<と\>は取り除き済み）
@@ -27,6 +30,9 @@
 - `<level>` : 経験値レベル
 - `<uuid>` : MinecraftアカウントのUUID
 - `<isdead>` : 死んでいるか
+- `<ping>` : ユーザーのミリ秒遅延数
+- `<isop>` : オペレーター権限を持っているか
+- `<address.*>` -> address
 ### block
 - `<materialname>` : マテリアル名（例:polished_andesite）
 - `<location.*>` -> location
@@ -46,11 +52,16 @@
 ### httpresponse
 - `statuscode` : ステータスコード（例:200(success), 404(not found)）
 - `content` : レスポンス内容
+### commandsender
+- `<name>` : 送信者名
+- `<isop>` : オペレーター権限を持っているか
 ## 関数実行時変数
 - `<args.n>` : n個目の引数
+- `<argsstr>` : 引数文字列（例:"<args.0> <args.1> <args.2>"）
 - `<funcfirstblock>` : 関数の最初のブロック（line 1）-> block
 - `<funcnowlineblock>` : 関数の現在実行しているラインのブロック -> block
 ## イベント変数
+関数内では、`<event.*>`でアクセス可
 ### onkill
 - `<player.*>` -> player
 - `<killer.*>` -> player
@@ -91,6 +102,10 @@
 - `<damagertype>` : playerまたはentity(playerはentityを継承しているが別物とする)
 - `<damagerplayer.*>` : typeがplayerの時だけ -> player
 - `<damagerentity.*>` : typeがentityの時だけ -> entity
+### onfer
+- `<sender.*>` : コマンドの送信者 -> commandsender
+- `<argsstr>` : 引数文字列
+- `<args.n>` : n個目の引数
 ## for時"ユーザー関数"変数
 - `<i>` : 現在の往復回数（0から数えた）
 ## そのほか

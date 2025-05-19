@@ -2,8 +2,8 @@
 Note: The \<parameters\> shown here are just for clarity; in actual usage, these brackets are not included.
 
 - `nop` : Does nothing
-- `cmd <Minecraft command>` : Executes a Minecraft command through the server console.
-- `declfunc <function name> <world name> <x coordinate (for the first command block)> <y coordinate> <z coordinate>` : Defines a new function.
+- `cmd <Minecraft command>` : Executes a Minecraft advCommand through the server console.
+- `declfunc <function name> <world name> <x coordinate (for the first advCommand block)> <y coordinate> <z coordinate>` : Defines a new function.
 - `catfunc <function name>` : Outputs the contents of a function.
 - `exit` : Intentionally generates an error to terminate execution.
 - `seteventfunc <event type (onkill, onmove, onplaceblock, onbreakblock, onjoin, onchat, onclickguiitem, onclickhanditem, onleave, ondrop, ondrag)> <function name>` : Executes a specified function when a specific event occurs.
@@ -20,8 +20,8 @@ Note: The \<parameters\> shown here are just for clarity; in actual usage, these
 - `length <assignment variable name> <variable name>` : Counts the number of elements in variables with integer-based sequential names like `variable name.0`, `variable name.1`, and assigns the count to the specified assignment variable name. (May not count accurately if the sequence is interrupted or doesn't start from 0) (Global variables only)
 - `trueif <true, false> <code>` : An `if` statement that only handles the `true` case. The code can be any length.
 - `bungeemove <server ID> <player name>` : Moves a player using BungeeCord.
-- `/advcmd appendfuncmode <function name>` : Enters function line append mode. (Chatting normally will add new lines to the function) (Chat command only)
-- `/advcmd endappendfuncmode` : Exits function line append mode. (Chat command only)
+- `/advcmd appendfuncmode <function name>` : Enters function line append mode. (Chatting normally will add new lines to the function) (Chat advCommand only)
+- `/advcmd endappendfuncmode` : Exits function line append mode. (Chat advCommand only)
 - `teams <assignment variable name>` : Assigns the team list to the specified variable name. (Global variables only)
 - `size <assignment variable name> <variable name>` : Counts the number of elements in variables with any names like `variable name.a`, `variable name.hogeee`, and assigns the count to the specified assignment variable name. (Global variables only)
 - `players <assignment variable name>` : Assigns the player list to the specified variable name. (Global variables only)

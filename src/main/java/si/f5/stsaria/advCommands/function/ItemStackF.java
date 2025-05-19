@@ -26,7 +26,7 @@ public class ItemStackF implements Function{
             itemMeta.setDisplayName(code.replaceFirst("itemstack " + codeSplit[1] + " " + codeSplit[2] + " " + codeSplit[3] + " ", ""));
             itemStack.setItemMeta(itemMeta);
         } catch (Exception ignore) {}
-        new ItemStackV(itemStack).getVariableMap().forEach((n, v) -> GlobalVariables.set(codeSplit[1]+"."+n, v));
+        GlobalVariables.concat(codeSplit[1], new ItemStackV(itemStack));
         return "";
     }
 }

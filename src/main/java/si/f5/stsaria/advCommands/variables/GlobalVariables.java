@@ -40,4 +40,7 @@ public class GlobalVariables {
     public static synchronized Map<String, String> toOneLayerMap(String name){
         return variables.toOneLayerMap(name);
     }
+    public static synchronized void concat(String rootName, Variables variables){
+        variables.concat(rootName, variables);
+    }
 }

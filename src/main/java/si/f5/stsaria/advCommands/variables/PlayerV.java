@@ -11,6 +11,9 @@ public class PlayerV extends Variables {
         this.set("level", String.valueOf(player.getLevel()));
         this.set("uuid", String.valueOf(player.getUniqueId()));
         this.set("isdead", player.isDead() ? "true" : "false");
-        new LocationV(player.getLocation()).getVariableMap().forEach((n, v) -> this.set("location."+n, v));
+        this.set("ping", String.valueOf(player.getPing()));
+        this.set("isop", player.isOp() ? "true" : "false");
+        this.concat("address", new AddressV(player.getAddress()));
+        this.concat("location", new LocationV(player.getLocation()));
     }
 }

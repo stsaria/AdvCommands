@@ -4,6 +4,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class OnJoinEvent extends Variables{
     public OnJoinEvent(PlayerJoinEvent e){
-        new PlayerV(e.getPlayer()).getVariableMap().forEach((n, v) -> this.set("player."+n, v));
+        this.concat("player", new PlayerV(e.getPlayer()));
     }
 }

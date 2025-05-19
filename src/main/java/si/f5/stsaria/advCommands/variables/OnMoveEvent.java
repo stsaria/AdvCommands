@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class OnMoveEvent extends Variables{
     public OnMoveEvent(PlayerMoveEvent e){
-        new PlayerV(e.getPlayer()).getVariableMap().forEach((n, v) -> this.set("player."+n, v));
-        new LocationV(e.getFrom()).getVariableMap().forEach((n, v) -> this.set("from."+n, v));
-        new LocationV(Objects.requireNonNull(e.getTo())).getVariableMap().forEach((n, v) -> this.set("to."+n, v));
+        this.concat("player", new PlayerV(e.getPlayer()));
+        this.concat("from", new LocationV(e.getFrom()));
+        this.concat("to", new LocationV(Objects.requireNonNull(e.getTo())));
     }
 }

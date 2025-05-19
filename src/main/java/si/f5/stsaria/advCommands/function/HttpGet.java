@@ -6,7 +6,7 @@ import si.f5.stsaria.advCommands.variables.HttpResponse;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class HttpGet implements Function{
     @Override
@@ -36,9 +36,7 @@ public class HttpGet implements Function{
                 connection.setInstanceFollowRedirects(false);
                 responseCode = connection.getResponseCode();
             }
-            new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), Charset.defaultCharset()).replace("<", "&lt").replace(">", "&gt")).getVariableMap().forEach((n, v) ->
-                GlobalVariables.set(codeSplit[1]+"."+n, v)
-            );
+            GlobalVariables.concat(codeSplit[1], new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8).replace("<", "&lt").replace(">", "&gt")));
         } catch (Exception ignore) {
             return "error: failed communication";
         }

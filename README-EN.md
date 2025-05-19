@@ -3,16 +3,16 @@ AdvCommands is a plugin project that adds multiple features to traditional Minec
 
 ## Why This Is Needed
 There are many things that can be created with regular Minecraft commands.
-Most of these heavily rely on the combination of the `execute` command, which allows for conditional branching, and repeating command blocks.
+Most of these heavily rely on the combination of the `execute` advCommand, which allows for conditional branching, and repeating advCommand blocks.
 
 However, `execute` can be a bit difficult to understand, and using repeats increases complexity and reduces performance.
 
 This plugin replaces these with more understandable alternatives.
 
 ## Getting Started
-Install this plugin on a Spigot-based server and start it. (Please also enable command blocks.)
+Install this plugin on a Spigot-based server and start it. (Please also enable advCommand blocks.)
 
-Once started, try running the command `/advcmd cmd say Hello world`.
+Once started, try running the advCommand `/advcmd cmd say Hello world`.
 You should then see `Hello world` displayed. Well, I hope so.
 
 ## Added Features
@@ -60,10 +60,10 @@ Global variables are ignored if there are function-local variables with the same
 A function is a collection of related processes.
 Functions allow you to avoid writing the same process multiple times, reducing program size and improving readability.
 
-In this plugin, you can combine multiple processes into a single function by connecting command blocks vertically along the +y axis.
+In this plugin, you can combine multiple processes into a single function by connecting advCommand blocks vertically along the +y axis.
 If coordinate `10 10 10` is the first line, then `10 12 10` would be the third line.
 
-Please don't attach repeat or chain command blocks.
+Please don't attach repeat or chain advCommand blocks.
 
 You can also add arguments to functions. (Return values are not supported.)
 
@@ -98,7 +98,7 @@ for 10 hoge
 
 ### Event Handlers
 Plug-ins can execute a specific function when some event occurs (such as movement or block placement).
-This improves readability if the method is to have the function executed when something happens, rather than the traditional command that is checked with every tick.
+This improves readability if the method is to have the function executed when something happens, rather than the traditional advCommand that is checked with every tick.
 
 The event handler contains a variable (event.*) about the event
 
@@ -107,7 +107,7 @@ The event handler contains a variable (event.*) about the event
 seteventfunc onKill hoge
 
 # Example: send “move!
-# chat command
+# chat advCommand
 /advcmd seteventfunc onMove fuga
 # in function fuga
 cmd tell {event.player.name} move!
@@ -225,7 +225,7 @@ for 9 newEmpItemStack
 itemstack itemstacks.4 green_dye 1 <startButtuonName>
 itemstack menuOpenItem compass 1 <menuOpenItemName>
 newgui menuGui itemstacks StartGUI
-# In chat command (lups0 is my player name)
+# In chat advCommand (lups0 is my player name)
 /advcmd declfunc main world 10 10 10
 /advcmd main
 /advcmd give menuOpenItem lups0
