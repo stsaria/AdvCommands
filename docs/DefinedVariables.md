@@ -104,6 +104,7 @@
 - `<damagerentity.*>` : typeがentityの時だけ -> entity
 ### onfer
 - `<sender.*>` : コマンドの送信者 -> commandsender
+- `<cmd>` : 元コマンド
 - `<argsstr>` : 引数文字列
 - `<args.n>` : n個目の引数
 ## for時"ユーザー関数"変数

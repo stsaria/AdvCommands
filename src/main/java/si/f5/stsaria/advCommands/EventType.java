@@ -13,7 +13,7 @@ public enum EventType {
     ON_DROP("ondrop"),
     ON_DAMAGE("ondamage"),
     ON_DAMAGE_BY_ENTITY("ondamagebyentity"),
-    ON_FER("onfer");
+    ON_CMD("oncmd");
 
     private final String name;
     EventType(String name){

@@ -94,6 +94,11 @@ The angle (pitch) is 0 degrees when looking straight ahead, and increases as you
 - `<damagertype>`: player or entity (player inherits from entity but is treated as a separate type)
 - `<damagerplayer.*>`: only when damagertype is player -> player
 - `<damagerentity.*>`: only when damagertype is entity -> entity
+### onfer
+- `<sender.*>` : sender of the command -> commandsender
+- `<cmd>` : source command
+- `<argsstr>` : argument string
+- `<args.n>` : nth argument
 ## "User function" variables for loops
 - `<i>` : Current iteration count (starting from 0)
 ## Others.

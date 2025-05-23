@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Functions{
     private static final Map<String, Function> functionMap = new HashMap<>();
-    public static void initial(){
+    public static synchronized void initial(){
         functionMap.put("for", new For());
         functionMap.put("declfunc", new DeclFunc());
         functionMap.put("setvar", new SetVar());

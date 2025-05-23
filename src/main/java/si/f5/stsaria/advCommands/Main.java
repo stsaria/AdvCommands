@@ -23,6 +23,7 @@ import si.f5.stsaria.advCommands.function.BlocksFunction;
 import si.f5.stsaria.advCommands.function.UserFunction;
 import si.f5.stsaria.advCommands.manager.AppendFuncModePlayers;
 import si.f5.stsaria.advCommands.manager.EventFunctions;
+import si.f5.stsaria.advCommands.manager.FerCommands;
 import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.variables.*;
 
@@ -33,18 +34,22 @@ public class Main extends BukkitRunnable implements Listener {
     private static final ArrayList<InfoRunFunc> runFunctions = new ArrayList<>();
     private static final ArrayList<InfoFunctionBlock> setFunctionBlockInfos = new ArrayList<>();
     private static JavaPlugin plugin = null;
+    private static Config config = null;
     public Main(JavaPlugin plugin){
         Main.plugin = plugin;
+        Main.config = new Config(plugin.getConfig());
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         Functions.initial();
+        FerCommands.initial();
         new Interpreter("advcmd");
-        new Fer("fer");
-        GlobalVariables.set("env.debug", "true");
 
         this.runTaskTimer(plugin,0,0);
     }
     public static JavaPlugin getPlugin(){
         return Main.plugin;
+    }
+    public static Config getConfig(){
+        return Main.config;
     }
     public static synchronized void addRunFunction(InfoRunFunc info){
         runFunctions.add(info);

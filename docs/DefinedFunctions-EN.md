@@ -12,7 +12,7 @@ Note: The \<parameters\> shown here are just for clarity; in actual usage, these
 - `for <number of iterations> <function name>` : Executes a function a specific number of times.
 - `if <true, false> <function name 1> else <function name 2>` : Executes function 1 if the condition is true, and function 2 if it's false.
 - `waitrun <delay in milliseconds> <function name>` : Executes a function after a specific delay in milliseconds.
-- `randint <range start> <range end> <variable name>` : Assigns a random number within the specified range to the given variable name. (Global variable)
+- `randint <variable name> <range start> <range end>` : Assigns a random number within the specified range to the given variable name. (Global variable)
 - `itemstack <assignment variable name> <material name> <stack count> <item display name>` : Creates an item stack with the specified display name, material name (lowercase version of the Spigot material enum) (example: acacia_boat), and stack count, then assigns it to the specified variable name. (Global variables only)
 - `newgui <GUI name> <item stack array variable (example: hoge.0 -> itemstack, hoge.1) (Global variables only)> <GUI display name>` : Creates an inventory GUI.
 - `opengui <GUI name> <player name>` : Displays an inventory GUI to a player.
