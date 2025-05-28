@@ -92,7 +92,7 @@ public class Parser {
 
         while (matcher.find()) {
             String var = matcher.group(1);
-            matcher.appendReplacement(sb, variables.contains(var) ? "true" : "false");
+            matcher.appendReplacement(sb, variables.containsDirect(var) ? "true" : "false");
             matcher = CONTAINS_DIRECT_PATTERN.matcher(line);
         }
         matcher.appendTail(sb);
