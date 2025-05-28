@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class Variables {
     protected final Map<String, String> variableMap = new HashMap<>();
     public void set(String name, String variable) {
-        System.out.println(name+"="+variable);
         this.variableMap.put(name, variable);
     }
     public String get(String name){

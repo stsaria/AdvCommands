@@ -8,89 +8,111 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-    public static String variableSubstitution(Variables variables, String line){
-        while(line.contains("<randuuid>")){
+    private static final Pattern OPERATION_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)([+\\-*/%=><^])([a-zA-Z0-9.]+)>");
+    private static final Pattern CONTAINS_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)\\?>");
+    private static final Pattern CONTAINS_DIRECT_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)\\?\\?>");
+    private static final Pattern VARIABLE_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)>");
+    private static final Pattern ESCAPED_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)!>");
+
+    public static String variableSubstitution(Variables variables, String line) {
+        line = line.replace("<unixtime>", String.valueOf(Instant.now().getEpochSecond())).replace("<nl>", "\n");
+
+        while (line.contains("<randuuid>")) {
             line = line.replaceFirst("<randuuid>", UUID.randomUUID().toString().replace("-", ""));
         }
-        line = line.replace("<unixtime>", String.valueOf(Instant.now().getEpochSecond()));
-        line = line.replace("<nl>", "\n");
-        boolean found;
-        Matcher matcher;
-        found = true;
-        while (found) {
-            found = false;
-            matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-            while (matcher.find()) {
-                String g = matcher.group();
-                String prefixRemovedG = g.replaceFirst("<", "").replaceAll(">$", "");
-                String firstVarValue = variables.get(prefixRemovedG.split("[+\\-*/%=><^]")[0]);
-                String secondVarValue = variables.get(prefixRemovedG.split("[+\\-*/%=><^]")[1]);
-                if (g.contains("=")) {
-                    line = line.replace(g, firstVarValue.equals(secondVarValue) ? "true" : "false");
-                } else {
-                    double firstVarValueDouble;
-                    double secondVarValueDouble;
-                    try{
-                        firstVarValueDouble = Double.parseDouble(firstVarValue);
-                        secondVarValueDouble = Double.parseDouble(secondVarValue);
-                    } catch (NumberFormatException ignore) {
-                        continue;
-                    }
-                    double ans = 0;
-                    if (g.contains("+")) {
-                        ans = firstVarValueDouble + secondVarValueDouble;
-                    } else if (g.contains("-")) {
-                        ans = firstVarValueDouble - secondVarValueDouble;
-                    } else if (g.contains("*")) {
-                        ans = firstVarValueDouble * secondVarValueDouble;
-                    } else if (g.contains("/")) {
-                        ans = firstVarValueDouble / secondVarValueDouble;
-                    } else if (g.contains("%")) {
-                        ans = firstVarValueDouble % secondVarValueDouble;
-                    } else if (prefixRemovedG.contains("<")) {
-                        line = line.replace(g, firstVarValueDouble < secondVarValueDouble ? "true" : "false");
-                        matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                        found = true;
-                        continue;
-                    } else if (prefixRemovedG.contains(">")) {
-                        line = line.replace(g, firstVarValueDouble > secondVarValueDouble ? "true" : "false");
-                        matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                        found = true;
-                        continue;
-                    } else if (g.contains("^")) {
-                        ans = Math.pow(firstVarValueDouble, secondVarValueDouble);
-                    }
-                    if (ans - ((double) ((long) ans)) == 0D){
-                        line = line.replace(g, String.valueOf((long) ans));
-                    }
-                    line = line.replace(g, String.valueOf(ans));
-                }
-                matcher = Pattern.compile("<[a-zA-Z0-9.]+[+\\-*/%=><^][a-zA-Z0-9.]+>").matcher(line);
-                found = true;
-            }
-            matcher = Pattern.compile("<[a-zA-Z0-9.]+\\?>").matcher(line);
-            while (matcher.find()) {
-                String g = matcher.group();
-                line = line.replace(g, variables.contains(g.replaceFirst("<", "").replaceAll("\\?>$", "")) ? "true" : "false");
-                matcher = Pattern.compile("<[a-zA-Z0-9.]+\\?>").matcher(line);
-                found = true;
-            }
-            matcher = Pattern.compile("<[a-zA-Z0-9.]+>").matcher(line);
-            while (matcher.find()) {
-                String g = matcher.group();
-                String variableValue = variables.get(g.replaceFirst("<", "").replaceAll(">$", ""));
-                if (variableValue == null) continue;
-                line = line.replace(g, variableValue);
-                matcher = Pattern.compile("<[a-zA-Z0-9.]+>").matcher(line);
-                found = true;
-            }
-        }
-        matcher = Pattern.compile("<[a-zA-Z0-9.]+!>").matcher(line);
-        while (matcher.find()) {
-            String g = matcher.group();
-            line = line.replace(g, g.replaceFirst("!>$", ">"));
-            matcher = Pattern.compile("<[a-zA-Z0-9.]+!>").matcher(line);
-        }
+
+        String beforeLine;
+        do {
+            beforeLine = line;
+            line = operations(variables, line);
+            line = contains(variables, line);
+            line = containsDirect(variables, line);
+            line = variables(variables, line);
+            line = escapes(line);
+        } while (!line.equals(beforeLine));
         return line;
+    }
+
+    private static String operations(Variables variables, String line) {
+        Matcher matcher = OPERATION_PATTERN.matcher(line);
+        StringBuilder sb = new StringBuilder();
+
+        while (matcher.find()) {
+            String left = variables.get(matcher.group(1));
+            String op = matcher.group(2);
+            String right = variables.get(matcher.group(3));
+
+            if (left == null || right == null) continue;
+
+            String replacement = calcOperation(left, op, right).replaceFirst(".0$", "");
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(replacement));
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    private static String calcOperation(String left, String op, String right) {
+        try {
+            if (op.equals("=")) {
+                return left.equals(right) ? "true" : "false";
+            }
+            double a = Double.parseDouble(left);
+            double b = Double.parseDouble(right);
+            return switch (op) {
+                case "+" -> String.valueOf(a + b);
+                case "-" -> String.valueOf(a - b);
+                case "*" -> String.valueOf(a * b);
+                case "/" -> b == 0 ? "0yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" : String.valueOf(a / b);
+                case "%" -> String.valueOf(a % b);
+                case "<" -> a < b ? "true" : "false";
+                case ">" -> a > b ? "true" : "false";
+                case "^" -> String.valueOf(Math.pow(a, b));
+                default -> "NaN";
+            };
+        } catch (NumberFormatException e) {
+            return "NaN";
+        }
+    }
+
+    private static String contains(Variables variables, String line) {
+        Matcher matcher = CONTAINS_PATTERN.matcher(line);
+        StringBuilder sb = new StringBuilder();
+
+        while (matcher.find()) {
+            String var = matcher.group(1);
+            matcher.appendReplacement(sb, variables.contains(var) ? "true" : "false");
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    private static String containsDirect(Variables variables, String line) {
+        Matcher matcher = CONTAINS_DIRECT_PATTERN.matcher(line);
+        StringBuilder sb = new StringBuilder();
+
+        while (matcher.find()) {
+            String var = matcher.group(1);
+            matcher.appendReplacement(sb, variables.contains(var) ? "true" : "false");
+            matcher = CONTAINS_DIRECT_PATTERN.matcher(line);
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    private static String variables(Variables variables, String line) {
+        Matcher matcher = VARIABLE_PATTERN.matcher(line);
+        StringBuilder sb = new StringBuilder();
+
+        while (matcher.find()) {
+            String var = matcher.group(1);
+            String value = variables.get(var);
+            matcher.appendReplacement(sb, value != null ? Matcher.quoteReplacement(value) : matcher.group());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    private static String escapes(String line) {
+        return ESCAPED_PATTERN.matcher(line).replaceAll(mr -> "<" + mr.group(1) + ">");
     }
 }

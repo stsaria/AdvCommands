@@ -14,7 +14,7 @@ public class Output implements Function{
         if (!code.matches(syntax())) return "error: syntax";
         String[] codeSplit = code.split(" ");
         Function func = Functions.get(codeSplit[2]);
-        if (!(func instanceof UserFunction)) return "error: func not found";
+        if (func == null) return "error: func not found";
         String r = func.execute(code.replaceFirst("output "+codeSplit[1]+" ", ""));
         GlobalVariables.set(codeSplit[1], r);
         return "";

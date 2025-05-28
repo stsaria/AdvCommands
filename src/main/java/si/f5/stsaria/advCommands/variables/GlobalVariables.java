@@ -41,6 +41,6 @@ public class GlobalVariables {
         return variables.toOneLayerMap(name);
     }
     public static synchronized void concat(String rootName, Variables variables){
-        variables.concat(rootName, variables);
+        GlobalVariables.variables.concat(rootName, variables);
     }
 }
