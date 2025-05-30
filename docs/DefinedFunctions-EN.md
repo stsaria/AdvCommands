@@ -41,3 +41,5 @@ Note: The \<parameters\> shown here are just for clarity; in actual usage, these
 - `variables <assigned variable name>` : generate a list array of variables. (Global variables only)
 - `exportfunc <stored variable name> <function name>` : Assigns the content of the function, converted to base64 (variable name is not converted), to the variable.
 - `importfunc <content of function>` : reads the function.
+- `toint <converted assignment variable name> <minority or integer>` : converts a value to an integer.
+- `getname <variable name assignment> <structure> <value>` : searches for a variable name for the value of a structure (including arrays). If there are two names, the first one is returned.

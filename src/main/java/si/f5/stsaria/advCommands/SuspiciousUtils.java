@@ -24,4 +24,7 @@ public class SuspiciousUtils {
         scm.registerServerAliases();
         return true;
     }
+    public static void fail(){
+        throw null;
+    }
 }
