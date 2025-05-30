@@ -51,6 +51,7 @@ public class Functions{
         functionMap.put("importfunc", new ImportFunc());
         functionMap.put("output", new Output());
         functionMap.put("toint", new ToInt());
+        functionMap.put("getname", new GetName());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
