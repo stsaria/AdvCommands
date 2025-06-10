@@ -62,7 +62,7 @@ public class Parser {
                 case "+" -> String.valueOf(a + b);
                 case "-" -> String.valueOf(a - b);
                 case "*" -> String.valueOf(a * b);
-                case "/" -> b == 0 ? "0yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" : String.valueOf(a / b);
+                case "/" -> b == 0 ? "0" : String.valueOf(a / b);
                 case "%" -> String.valueOf(a % b);
                 case "<" -> a < b ? "true" : "false";
                 case ">" -> a > b ? "true" : "false";

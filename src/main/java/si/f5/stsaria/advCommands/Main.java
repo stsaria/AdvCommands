@@ -21,32 +21,36 @@ import org.bukkit.scheduler.BukkitRunnable;
 import si.f5.stsaria.advCommands.function.Function;
 import si.f5.stsaria.advCommands.function.BlocksFunction;
 import si.f5.stsaria.advCommands.function.UserFunction;
-import si.f5.stsaria.advCommands.manager.AppendFuncModePlayers;
-import si.f5.stsaria.advCommands.manager.EventFunctions;
-import si.f5.stsaria.advCommands.manager.FerCommands;
-import si.f5.stsaria.advCommands.manager.Functions;
+import si.f5.stsaria.advCommands.manager.*;
 import si.f5.stsaria.advCommands.variables.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Main extends BukkitRunnable implements Listener {
     private static final ArrayList<InfoRunFunc> runFunctions = new ArrayList<>();
     private static final ArrayList<InfoFunctionBlock> setFunctionBlockInfos = new ArrayList<>();
     private static JavaPlugin plugin = null;
+    private static Logger logger = null;
     private static Config config = null;
     public Main(JavaPlugin plugin){
         Main.plugin = plugin;
+        Main.logger = plugin.getLogger();
         Main.config = new Config(plugin.getConfig());
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         Functions.initial();
         FerCommands.initial();
+        Libraries.initial();
         new Interpreter("advcmd");
 
         this.runTaskTimer(plugin,0,0);
     }
     public static JavaPlugin getPlugin(){
         return Main.plugin;
+    }
+    public static Logger getLogger() {
+        return Main.logger;
     }
     public static Config getConfig(){
         return Main.config;
