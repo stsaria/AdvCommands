@@ -16,7 +16,7 @@ public class Libraries {
     private static final Map<String, File> libraryMap = new HashMap<>();
 
     private static File getLibsDir(){
-        return new File(Main.getPlugin().getDataFolder().getAbsoluteFile().getName()+"/libs");
+        return new File(Main.getPlugin().getDataFolder().getAbsoluteFile().getAbsolutePath()+"/libs");
     }
     private static void copyFromResources(String name){
         boolean isSuccess = InJarFileUtil.copyResourcesFileToLocalFile("/libs/"+name+".func", getLibsDir().getName()+"/"+name+".func");
@@ -44,7 +44,7 @@ public class Libraries {
     }
     public static synchronized void initial(){
         try {
-            if (!getLibsDir().isDirectory()) Files.createDirectory(getLibsDir().toPath());
+            if (!getLibsDir().exists()) Files.createDirectory(getLibsDir().toPath());
         } catch (IOException ignore) {}
 
         copyFromResources("abc");
