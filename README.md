@@ -27,3 +27,4 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 - [GUI](docs/features/gui.md)
 - [HTTP](docs/features/http.md)
 - [独自コマンド](docs/features/userDefinedCommand.md)
+- [ライブラリ](docs/features/libraries.md)

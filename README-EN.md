@@ -29,3 +29,4 @@ This should output `Hello world`. Or at least, we hope it will.
 - [GUI](docs/features-EN/gui.md)
 - [HTTP](docs/features-EN/http.md)
 - [User-Defined Commands](docs/features-EN/userDefinedCommand.md)
+- [Libraries](docs/features-EN/libraries.md)
