@@ -22,7 +22,7 @@ The first and second values are abstracted as x and y for explanation purposes.
 ```
 - Remainder
 ```
-<x/y>
+<x%y>
 ```
 - Exponentiation
 ```
