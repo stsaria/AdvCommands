@@ -20,6 +20,10 @@ The first and second values are abstracted as x and y for explanation purposes.
 ```
 <x/y>
 ```
+- Remainder
+```
+<x%y>
+```
 - Exponentiation
 ```
 <x^y>
