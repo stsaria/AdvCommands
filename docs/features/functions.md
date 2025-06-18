@@ -28,9 +28,9 @@ declfunc 関数名 ワールド名 x座標 y座標 z座標
 /advcmd declfunc hoge world 20 30 10
 
 # 関数hogeの実行
-/advcmd runfunc hoge
+/advcmd hoge
 
-# 関数内で関数を呼び出す場合はrunFuncはいりません。
+# 関数内で関数を呼び出す場合はadvcmdはいりません。
 hoge
 # だけです。
 

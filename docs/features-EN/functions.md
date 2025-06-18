@@ -30,9 +30,9 @@ functionName
 /advcmd declfunc hoge world 20 30 10
 
 # Execute function hoge
-/advcmd runfunc hoge
+/advcmd hoge
 
-# When calling a function within another function, runFunc is not needed.
+# When calling a function within another function, advcmd is not needed.
 hoge
 # That's all.
 
