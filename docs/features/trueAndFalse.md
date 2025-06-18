@@ -38,6 +38,9 @@ false
 ```
 ## 拡張
 ```
-# 2個以上
+# AND(論理積)
 <<hoge=2><fugaga=2>=truetrue>
+
+# OR(論理和)
+<<<hoge=2><fugaga=2>=falsefalse>=false>
 ```

@@ -40,6 +40,9 @@ The first and second values are abstracted as x and y, or meaningless variables 
 ```
 ## Extension
 ```
-# Two or more  
+# AND
 <<hoge=2><fugaga=2>=truetrue>
+
+# OR
+<<<hoge=2><fugaga=2>=falsefalse>=false>
 ```
