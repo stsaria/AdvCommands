@@ -36,3 +36,8 @@ false
 # 変数hogeが存在するか
 <hoge?>
 ```
+## 拡張
+```
+# 2個以上
+<<hoge=2><fugaga=2>=truetrue>
+```

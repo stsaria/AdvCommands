@@ -38,3 +38,8 @@ The first and second values are abstracted as x and y, or meaningless variables 
 # Does variable hoge exist?
 <hoge?>
 ```
+## Extension
+```
+# Two or more  
+<<hoge=2><fugaga=2>=truetrue>
+```
