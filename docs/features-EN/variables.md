@@ -66,7 +66,7 @@ When variables with the same name exist:
 ## Error Handling
 
 ### Non-existent Variables
-- When referencing a non-existent variable, it remains as `<variableName>`
+- When referencing a non-existent variable, it remains as `variableName`
 - When using non-existent variables in operations, that operation is skipped
 
 ### Operation Errors
