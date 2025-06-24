@@ -32,4 +32,7 @@ public class Guis {
     public static synchronized boolean contains(String name){
         return guiMap.containsKey(name);
     }
+    public static synchronized void remove(String name){
+        guiMap.remove(name);
+    }
 }

@@ -85,6 +85,7 @@
 - `<guiname>` : GUIインベントリ名（プレイヤーデフォルトだとdefault）
 - `<guititle>` : GUIインベントリタイトル
 - `<itemstack.*>` -> itemstack
+- `<slot>` : スロット番号
 ### onclickhanditem
 - `<player>` : GUIインベントリ名
 - `<guititle>` : GUIインベントリタイトル

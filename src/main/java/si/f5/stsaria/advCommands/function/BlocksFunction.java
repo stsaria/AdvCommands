@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CommandBlock;
+import si.f5.stsaria.advCommands.Main;
 import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.Parser;
 import si.f5.stsaria.advCommands.variables.*;
@@ -11,6 +12,7 @@ import si.f5.stsaria.advCommands.variables.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 public class BlocksFunction implements UserFunction{
     private final List<Block> blocks;
@@ -39,6 +41,7 @@ public class BlocksFunction implements UserFunction{
 
     @Override
     public synchronized String execute(String code) {
+        boolean isEvent = this.variables.contains("event");
         this.variables.set("argsstr", code.replaceFirst(this.name+" ", ""));
         for (int i = 1; i < code.split(" ").length; i++){
             this.variables.set("args."+(i-1), code.split(" ")[i]);
@@ -101,6 +104,7 @@ public class BlocksFunction implements UserFunction{
             if (func == null) return "error: Line " + i + ": " + line + " - " + "func not found";
             String r = func.execute(line);
             if (r.startsWith("error: ")) {
+                if (isEvent) Main.getLogger().log(Level.SEVERE, "Error in event function! -> "+"error: Line " + i + ": " + line + " - " + r);
                 return "error: Line " + i + ": " + line + " - " + r;
             }
         }

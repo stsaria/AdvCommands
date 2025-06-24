@@ -1,5 +1,6 @@
 package si.f5.stsaria.advCommands.function;
 
+import si.f5.stsaria.advCommands.Main;
 import si.f5.stsaria.advCommands.Parser;
 import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.variables.EmpVariables;
@@ -8,6 +9,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 public class ImplFunction implements UserFunction{
     private final String name;
@@ -33,6 +35,7 @@ public class ImplFunction implements UserFunction{
 
     @Override
     public synchronized String execute(String code) {
+        boolean isEvent = this.variables.contains("event");
         this.variables.set("argsstr", code.replaceFirst(this.name+" ", ""));
         for (int i = 1; i < code.split(" ").length; i++){
             this.variables.set("args."+(i-1), code.split(" ")[i]);
@@ -87,6 +90,7 @@ public class ImplFunction implements UserFunction{
             if (func == null) return "error: Line " + i + ": " + line + " - " + "func not found";
             String r = func.execute(line);
             if (r.startsWith("error: ")) {
+                if (isEvent) Main.getLogger().log(Level.SEVERE, "Error in event function! -> "+"error: Line " + i + ": " + line + " - " + r);
                 return "error: Line " + i + ": " + line + " - " + r;
             }
         }
