@@ -21,11 +21,7 @@ public class Libraries {
     private static void copyFromResources(String name){
         boolean isSuccess = InJarFileUtil.copyResourcesFileToLocalFile("/libs/"+name+".func", getLibsDir().getName()+"/"+name+".func");
         Logger logger = Main.getLogger();
-        if (isSuccess) {
-            logger.log(Level.INFO, "Loaded initial library \""+name+"\"");
-        } else {
-            logger.log(Level.WARNING, "Cannot load initial library! \""+name+"\"");
-        }
+        if (!isSuccess) logger.log(Level.WARNING, "Cannot load initial library! \""+name+"\"");
     }
     private static synchronized void getAndPutFiles(){
         File workingDir = getLibsDir();
@@ -39,7 +35,10 @@ public class Libraries {
         libraryMap.forEach((n, f) -> {
             try {
                 Functions.addDirect(n,  String.join("\n", Files.readAllLines(f.toPath())));
-            } catch (IOException ignore) {}
+                Main.getLogger().log(Level.INFO, "Loaded library \""+n+"\"");
+            } catch (IOException ignore) {
+                Main.getLogger().log(Level.WARNING, "Cannot load library \""+n+"\"");
+            }
         });
     }
     public static synchronized void initial(){
@@ -47,7 +46,7 @@ public class Libraries {
             if (!getLibsDir().exists()) Files.createDirectory(getLibsDir().toPath());
         } catch (IOException ignore) {}
 
-        copyFromResources("abc");
+        // copyFromResources("abc");
 
         getAndPutFiles();
         registers();

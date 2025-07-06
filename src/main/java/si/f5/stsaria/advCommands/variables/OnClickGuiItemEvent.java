@@ -14,5 +14,6 @@ public class OnClickGuiItemEvent extends Variables{
         this.set("click", click);
         this.concat("player", new PlayerV((Player) e.getWhoClicked()));
         this.concat("itemstack", new ItemStackV(e.getCurrentItem()));
+        this.set("slot", String.valueOf(e.getSlot()));
     }
 }

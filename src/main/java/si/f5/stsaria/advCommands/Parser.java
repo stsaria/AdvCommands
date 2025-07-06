@@ -8,11 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-    private static final Pattern OPERATION_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)([+\\-*/%=><^])([a-zA-Z0-9.]+)>");
-    private static final Pattern CONTAINS_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)\\?>");
-    private static final Pattern CONTAINS_DIRECT_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)\\?\\?>");
-    private static final Pattern VARIABLE_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)>");
-    private static final Pattern ESCAPED_PATTERN = Pattern.compile("<([a-zA-Z0-9.]+)!>");
+    private static final Pattern OPERATION_PATTERN = Pattern.compile("<(-?\\d+(?:\\.\\d+)?|[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*)([+\\-*/%=><^])(-?\\d+(?:\\.\\d+)?|[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*)>");
+    private static final Pattern CONTAINS_PATTERN = Pattern.compile("<([a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*)\\?>");
+    private static final Pattern CONTAINS_DIRECT_PATTERN = Pattern.compile("<([a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*)\\?\\?>");
+    private static final Pattern VARIABLE_PATTERN = Pattern.compile("<([a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*)>");
+    private static final Pattern ESCAPED_PATTERN = Pattern.compile("<([a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*)!>");
 
     public static String variableSubstitution(Variables variables, String line) {
         line = line.replace("<unixtime>", String.valueOf(Instant.now().getEpochSecond())).replace("<nl>", "\n");
