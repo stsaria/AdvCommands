@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import si.f5.stsaria.advCommands.function.UserFunction;
 import si.f5.stsaria.advCommands.manager.EventFunctions;
-
-import si.f5.stsaria.advCommands.variables.*;
+import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.OnFer;
 
 public class Fer {
     private final Command command;
@@ -18,8 +18,8 @@ public class Fer {
                 boolean failedReturnBool = !GlobalVariables.get("env.debug").equals("true");
                 UserFunction f = EventFunctions.get(EventType.ON_CMD);
                 if (f == null) return failedReturnBool;
-                f.concat("event", new OnFer(commandSender, name, strings));
-                f.execute("");
+                f.getVariables().concat("event", new OnFer(commandSender, name, strings));
+                f.execute("", null);
                 return true;
             }
         };

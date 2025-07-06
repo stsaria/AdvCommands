@@ -1,18 +1,17 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class CopyVar implements Function{
     @Override
     public String syntax() {
-        return "copyvarG? [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
+        return "copyvar [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        GlobalVariables.copy(codeSplit[1], codeSplit[2]);
-        return "";
+        variables.copy(codeSplit[1], codeSplit[2]);
+        return null;
     }
 }

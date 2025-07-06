@@ -26,12 +26,12 @@ public class ItemStackV extends Variables{
             i.getAndIncrement();
         });
     }
-    public static ItemStack toItemStack(String name){
+    public static ItemStack toItemStack(String name, Variables variables){
         try{
             ItemStack itemStack = new ItemStack(Objects.requireNonNull(Material.matchMaterial(GlobalVariables.get(name+".materialname").toUpperCase())), Integer.parseInt(GlobalVariables.get(name+".amount")));
             try {
                 ItemMeta itemMeta = Objects.requireNonNull(itemStack.getItemMeta());
-                itemMeta.setDisplayName(GlobalVariables.get(name + ".displayname"));
+                itemMeta.setDisplayName(variables.get(name + ".displayname"));
                 for (int i = 0; i < GlobalVariables.length(name + ".enchants"); i++) {
                     Map<Enchantment, Integer> enchantMap = Enchant.toEnchantMap(GlobalVariables.get(name + ".enchants." + i));
                     AtomicReference<Enchantment> enchantment = new AtomicReference<>();

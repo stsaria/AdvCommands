@@ -3,6 +3,7 @@ package si.f5.stsaria.advCommands.manager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.CommandBlock;
 import si.f5.stsaria.advCommands.function.*;
 
 import java.util.*;
@@ -21,7 +22,6 @@ public class Functions{
         functionMap.put("delvar", new DelVar());
         functionMap.put("delvarG", new DelVar());
         functionMap.put("catfunc", new CatFunc());
-        functionMap.put("exit", new Exit());
         functionMap.put("waitrun", new WaitRun());
         functionMap.put("randint", new RandInt());
         functionMap.put("copyvar", new CopyVar());
@@ -39,7 +39,6 @@ public class Functions{
         functionMap.put("strtolist", new StrToList());
         functionMap.put("shuffled", new Shuffled());
         functionMap.put("addenchant", new AddEnchant());
-        functionMap.put("regex", new RegexF());
         functionMap.put("split", new Split());
         functionMap.put("jsontostruct", new JsonToStruct());
         functionMap.put("httpget", new HttpGet());
@@ -49,9 +48,13 @@ public class Functions{
         functionMap.put("variables", new VariablesF());
         functionMap.put("exportfunc", new ExportFunc());
         functionMap.put("importfunc", new ImportFunc());
-        functionMap.put("output", new Output());
         functionMap.put("toint", new ToInt());
         functionMap.put("getname", new GetName());
+        functionMap.put("runinglobal", new RunInGlobal());
+        functionMap.put("localtoglobal", new LocalToGlobal());
+        functionMap.put("globaltolocal", new GlobalToLocal());
+        functionMap.put("deepequal", new DeepEqual());
+        functionMap.put("ismatch", new IsMatch());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
@@ -67,12 +70,18 @@ public class Functions{
                 break;
             }
         }
-        functionMap.put(name, new BlocksFunction(name, blocks));
+        StringBuilder funcCode = new StringBuilder();
+        blocks.forEach(b -> {
+            if (b.getType().equals(Material.COMMAND_BLOCK)){
+                funcCode.append(((CommandBlock) b.getState()).getCommand()).append("\n");
+            }
+        });
+        functionMap.put(name, new UserFunction(name, funcCode.toString()));
         return 0;
     }
     public static synchronized int addDirect(String name, String code){
         if (functionMap.get(name) != null) return 1;
-        functionMap.put(name, new ImplFunction(name, code));
+        functionMap.put(name, new UserFunction(name, code));
         return 0;
     }
     public static synchronized void remove(String name){

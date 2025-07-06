@@ -1,5 +1,7 @@
 package si.f5.stsaria.advCommands.function;
 
+import si.f5.stsaria.advCommands.variables.Variables;
+
 public class Nop implements Function{
     @Override
     public String syntax() {
@@ -7,7 +9,7 @@ public class Nop implements Function{
     }
 
     @Override
-    public String execute(String code) {
-        return "";
+    public Variables execute(String code, Variables variables) {
+        return null;
     }
 }

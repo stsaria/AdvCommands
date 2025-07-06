@@ -1,8 +1,9 @@
 package si.f5.stsaria.advCommands.function;
 
 import org.apache.commons.io.IOUtils;
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.HttpResponse;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -11,13 +12,13 @@ import java.nio.charset.StandardCharsets;
 public class HttpGet implements Function{
     @Override
     public String syntax() {
-        return "httpget [a-zA-Z0-9.]+ https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+";
+        return "httpget https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
+        Variables result;
         try {
             HttpURLConnection connection = (HttpURLConnection) URI.create(codeSplit[2]).toURL().openConnection();
             connection.setInstanceFollowRedirects(false);
@@ -36,10 +37,10 @@ public class HttpGet implements Function{
                 connection.setInstanceFollowRedirects(false);
                 responseCode = connection.getResponseCode();
             }
-            GlobalVariables.concat(codeSplit[1], new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8).replace("<", "&lt").replace(">", "&gt")));
+            result = new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8).replace("<", "&lt").replace(">", "&gt"));
         } catch (Exception ignore) {
-            return "error: failed communication";
+            return new ErrorV("failed communication");
         }
-        return "";
+        return result;
     }
 }

@@ -1,7 +1,8 @@
 package si.f5.stsaria.advCommands.function;
 
 import si.f5.stsaria.advCommands.manager.Guis;
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class NewGui implements Function{
     @Override
@@ -10,13 +11,12 @@ public class NewGui implements Function{
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        if (!GlobalVariables.contains(codeSplit[2])) return "error: itemStacks var not found";
-        else if (!(9 <= GlobalVariables.length(codeSplit[2]) && GlobalVariables.length(codeSplit[2]) <= 54 && GlobalVariables.length(codeSplit[2]) % 9 == 0)) return "error: size of the itemstacks must be a multiple of 9 between 9 and 54 slots";
-        int r = Guis.add(codeSplit[1], code.replaceFirst("newgui "+codeSplit[1]+" "+codeSplit[2]+" ", ""), codeSplit[2]);
-        if (r == 1) return "error: gui already exists";
-        return "";
+        if (!variables.contains(codeSplit[2])) return new ErrorV("itemStacks var not found");
+        else if (!(9 <= variables.length(codeSplit[2]) && variables.length(codeSplit[2]) <= 54 && variables.length(codeSplit[2]) % 9 == 0)) return new ErrorV("size of the itemstacks must be a multiple of 9 between 9 and 54 slots");
+        int r = Guis.add(codeSplit[1], code.replaceFirst("newgui "+codeSplit[1]+" "+codeSplit[2]+" ", ""), codeSplit[2], variables);
+        if (r == 1) return new ErrorV("gui already exists");
+        return null;
     }
 }

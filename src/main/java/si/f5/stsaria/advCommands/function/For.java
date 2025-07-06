@@ -1,34 +1,46 @@
 package si.f5.stsaria.advCommands.function;
 
+import si.f5.stsaria.advCommands.Parser;
 import si.f5.stsaria.advCommands.manager.Functions;
+import si.f5.stsaria.advCommands.variables.EmpVariables;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.NullV;
+import si.f5.stsaria.advCommands.variables.Variables;
+
+import java.util.Objects;
 
 public class For implements Function{
     @Override
     public String syntax() {
-        return "for \\d+ .*";
+        return "for [A-Za-z] \\d+ .+";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        for (int i = 0; i < Integer.parseInt(codeSplit[1]); i++){
-            Function func = Functions.get(codeSplit[2]);
-            if (func == null) return "error: func not found";
-            if (func instanceof UserFunction userFunc){
-                userFunc.setVariable("i", String.valueOf(i));
-                String r = userFunc.execute(code.replaceFirst("for " + codeSplit[1] + " ", ""));
-                if (r.startsWith("error: ")) {
-                    return r;
-                }
+        Variables results = new EmpVariables();
+        variables = variables.clone();
+        for (int i = 0; i < Integer.parseInt(codeSplit[2]); i++){
+            Function func = Functions.get(codeSplit[3]);
+            if (func == null) return new ErrorV("func not found");
+            variables.set(codeSplit[1], String.valueOf(i));
+            code = Parser.variableSubstitution(variables, code.replaceFirst("for "+codeSplit[1]+" "+codeSplit[2]+" ", ""));
+            if (!code.matches(func.syntax())) return new ErrorV("syntax error (content) (i="+i+")");
+            Variables r = func.execute(code, variables);
+            if (r == null) r = new NullV();
+            else if (Objects.equals(r.get("resulttype"), "error")) return new ErrorV("error in for (i="+i+") -> "+r.get("0"));
+            else if (Objects.equals(r.get("resulttype"), "oneresult")) {
+                int finalI = i;
+                r.getVariableMap().forEach((n, v) -> {
+                    if (n.equals("0")) results.set(String.valueOf(finalI), v);
+                    else if (n.startsWith("0.")) results.set(finalI+"."+n.replaceFirst("0.", ""), v);
+                });
+            } else {
+                results.concat(String.valueOf(i), r);
             }
-            else {
-                String r = func.execute(code.replaceFirst("for " + codeSplit[1] + " ", ""));
-                if (r.startsWith("error: ")) {
-                    return r;
-                }
-            }
+            if (Objects.equals(r.get("resulttype"), "oneresult") && Objects.equals(r.get("0"), "break")) return results;
+
         }
-        return "";
+        return results;
     }
 }

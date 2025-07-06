@@ -1,22 +1,24 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.OneResultV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class ToInt implements Function{
     @Override
     public String syntax() {
-        return "toint [a-zA-Z0-9.]+ [0-9]+(\\.[0-9]+)?";
+        return "toint [0-9]+(\\.[0-9]+)?";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
+        String strInt;
         try{
-            GlobalVariables.set(codeSplit[1], String.valueOf((long) Double.parseDouble(codeSplit[2])));
+            strInt = String.valueOf((long) Double.parseDouble(codeSplit[1]));
         } catch (NumberFormatException ignore) {
-            return "error: cant cast source to double";
+            return new ErrorV("cant cast source to double");
         }
-        return "";
+        return new OneResultV(strInt);
     }
 }

@@ -1,45 +1,49 @@
 # Predefined Functions
-Note: The \<parameters\> shown here are just for clarity; in actual usage, these brackets are not included.
+※The \<〇〇\> written here is just for clarity, so there are no actual brackets in practice.
 
-- `nop` : Does nothing
-- `cmd <Minecraft command>` : Executes a Minecraft advCommand through the server console.
-- `declfunc <function name> <world name> <x coordinate (for the first advCommand block)> <y coordinate> <z coordinate>` : Defines a new function.
-- `catfunc <function name>` : Outputs the contents of a function.
-- `exit` : Intentionally generates an error to terminate execution.
-- `seteventfunc <event type (onkill, onmove, onplaceblock, onbreakblock, onjoin, onchat, onclickguiitem, onclickhanditem, onleave, ondrop, ondrag)> <function name>` : Executes a specified function when a specific event occurs.
-- `setvar <variable name> <variable value>` : Defines or overwrites a variable.
-- `delvar <variable name>` : Deletes a variable.
-- `for <number of iterations> <function name>` : Executes a function a specific number of times.
-- `if <true, false> <function name 1> else <function name 2>` : Executes function 1 if the condition is true, and function 2 if it's false.
-- `waitrun <delay in milliseconds> <function name>` : Executes a function after a specific delay in milliseconds.
-- `randint <variable name> <range start> <range end>` : Assigns a random number within the specified range to the given variable name. (Global variable)
-- `itemstack <assignment variable name> <material name> <stack count> <item display name>` : Creates an item stack with the specified display name, material name (lowercase version of the Spigot material enum) (example: acacia_boat), and stack count, then assigns it to the specified variable name. (Global variables only)
-- `newgui <GUI name> <item stack array variable (example: hoge.0 -> itemstack, hoge.1) (Global variables only)> <GUI display name>` : Creates an inventory GUI.
-- `opengui <GUI name> <player name>` : Displays an inventory GUI to a player.
-- `give <item stack variable> <player name>` : Gives an item stack to a player.
-- `length <assignment variable name> <variable name>` : Counts the number of elements in variables with integer-based sequential names like `variable name.0`, `variable name.1`, and assigns the count to the specified assignment variable name. (May not count accurately if the sequence is interrupted or doesn't start from 0) (Global variables only)
-- `trueif <true, false> <code>` : An `if` statement that only handles the `true` case. The code can be any length.
-- `bungeemove <server ID> <player name>` : Moves a player using BungeeCord.
-- `/advcmd appendfuncmode <function name>` : Enters function line append mode. (Chatting normally will add new lines to the function) (Chat advCommand only)
-- `/advcmd endappendfuncmode` : Exits function line append mode. (Chat advCommand only)
-- `teams <assignment variable name>` : Assigns the team list to the specified variable name. (Global variables only)
-- `size <assignment variable name> <variable name>` : Counts the number of elements in variables with any names like `variable name.a`, `variable name.hogeee`, and assigns the count to the specified assignment variable name. (Global variables only)
-- `players <assignment variable name>` : Assigns the player list to the specified variable name. (Global variables only)
-- `cancel` : Terminates the function and, in the case of events, cancels the event if possible. (Can only be used within functions)
-- `silexit` : Terminates the function without generating an error. (Can only be used within functions)
-- `skip` : Ignores the next line of the function. (Can only be used within functions)
-- `strtolist <assignment variable name> <string>` : Converts a string into a list of single-character strings. (Global variables only)
-- `shuffled <source variable name> <assignment variable name>` : Shuffles a list and assigns it to a variable. (Global variables only)
-- `addenchant <source itemStack variable> <enchant name> <enchant level>` : Adds an enchantment to the itemStack. (Global variables only)
-- `jsontostruct <assigned variable name> <Json string>` : Convert a Json string to a structure. (Global variables only)
-- `structtojson <assigned variable name> <structure variable name>` : Convert a structure to a Json string. (Global variables only)
-- `regex <assigned variable name> <match source variable name> <regex string>` : Assigns true to the value for the assigned variable name if it matches, or false if it does not match. (Global variables only)
-- `replace <substituted variable name> <source variable name> <substituted regexp variable name> <substituted variable name>` : replaces a string with a regular expression. (Global variables only)
-- `split <substitute variable name> <source string variable name> <delimited string>` : delimits a string. (Global variables only)
-- `httpget <substitute variable name> <URL>` : sends an HTTP GET request. (Global variables only)
-- `httppost <httpresponse assignment variable name> <argument structure variable name> <URL>` : send HTTP POST request. (Global variables only)
-- `variables <assigned variable name>` : generate a list array of variables. (Global variables only)
-- `exportfunc <stored variable name> <function name>` : Assigns the content of the function, converted to base64 (variable name is not converted), to the variable.
-- `importfunc <content of function>` : reads the function.
-- `toint <converted assignment variable name> <minority or integer>` : converts a value to an integer.
-- `getname <variable name assignment> <structure> <value>` : searches for a variable name for the value of a structure (including arrays). If there are two names, the first one is returned.
+Return values are represented and written as result*.
+
+- `nop` : Do nothing. -> result = null
+- `cmd <minecraft_command>` : Execute minecraft command through server console. -> result = null
+- `declfunc <function_name> <world_name> <x_coordinate(of_first_command_block)> <y_coordinate> <z_coordinate>` : Define a new function. -> result = null
+- `catfunc <function_name>` : Return the contents of the function. -> result = function contents
+- `exit` : Exit the function. -> result = undefined
+- `exit <return_value_variable_name>` : Exit the function with a return value. -> result = undefined
+- `seteventfunc <event_type> <function_name>` : Execute a specific function on a specific event. -> result = null
+- `setvar <variable_name> <variable_value>` : Define or overwrite a variable. -> result = null
+- `delvar <variable_name>` : Delete a variable. -> result = null
+- `for <repeat_count> <statement>` : Execute a statement a specific number of times.
+- `if <true,false> <function1_name> else <function2_name>` : Execute function1 if true, execute function2 if false. -> result.* = result of executed function
+- `waitrun <delay_milliseconds> <function_name>` : Execute function after a specific millisecond delay. -> result = null
+- `randint <range_start> <range_end>` : Return a random number within range. -> result = random number
+- `itemstack <material_name> <stack_count> <item_display_name>` : Return an item stack created from specified display name, material name (spigot material enum in lowercase) (e.g., acacia_boat), and stack count. -> result.* = itemstack
+- `newgui <gui_name> <itemstack_array_variable(e.g., hoge.0 -> itemstack, hoge.1)(global_variables_only)> <gui_display_name>` : Create an inventory GUI. -> result = null
+- `opengui <gui_name> <player_name>` : Display inventory GUI to player. -> result = null
+- `give <itemstack_variable> <player_name>` : Give item stack to player. -> result = null
+- `length <variable_name>` : Count and return the number of elements in variables with integer order like `variable_name.0`, `variable_name.1`. (Cannot count accurately if interrupted or not starting from 0) -> result = array length
+- `trueif <true,false> <code>` : An `if` that only handles `true` cases. Code can be any length. -> result.* = result of executed function
+- `bungeemove <server_id> <player_name>` : Move player with BungeeCord. -> result = null
+- `teams` : Return team list. -> result.n.* = nth team
+- `size <variable_name>` : Count and return the number of elements in variables like `variable_name.a`, `variable_name.hogeee`. -> result = number of struct elements
+- `players` : Return player list. -> result.n.* = nth player
+- `cancel` : Exit function and cancel event if possible during events. (Use only within functions) -> result = undefined
+- `skip` : Ignore the next line of the function. (Use only within functions) -> result = undefined
+- `strtolist <string>` : Convert string to list of single-character strings and return. -> result.n = nth character
+- `shuffled <variable_name>` : Shuffle list. (Destructive modification) -> result = null
+- `addenchant <source_itemstack_variable> <enchantment_name> <enchantment_level>` : Add enchantment to item stack. -> result = null
+- `jsontostruct <json_string>` : Convert JSON string to struct. -> result.* = json struct
+- `structtojson <struct_variable_name>` : Convert struct to JSON string. -> result = json string
+- `ismatch <match_source_variable_name> <regex_string>` : Return true if the value matches the assigned variable name, false if not. -> result = whether it matches (true or false)
+- `replace <replacement_source_variable_name> <replacement_regex_variable_name> <replacement_target_variable_name>` : Replace string with regex and return. -> result = replaced string
+- `split <delimiter_source_string_variable_name> <delimiter_string>` : Split string and return. -> result.n = nth split string
+- `httpget <url>` : Send HTTP GET request and return httpresponse. -> result.* = httpresponse
+- `httppost <argument_struct_variable_name> <url>` : Send HTTP POST request and return httpresponse. -> result.* = httpresponse
+- `variables` : Generate and return a list array of variables. -> result.n = string expression like `variable_name -> value`
+- `exportfunc <function_name>` : Convert function contents to proprietary format and return. -> result = converted string
+- `importfunc <function_contents>` : Load function. -> result = null
+- `toint <decimal_or_integer>` : Convert value to integer and return. -> result = converted integer
+- `getname <struct> <value>` : Search for variable name corresponding to value in struct (including arrays) and return. If there are two, return the first assigned one. -> result = found variable name, null if not found
+- `runinglobal <statement>` : Execute statement in global variable scope. -> result.* = result of executed function
+- `localtoglobal <source_function_variable_name> <destination_global_variable_name>` : Copy current function variable to global variable. -> result = null
+- `globaltolocal <source_global_variable_name> <destination_function_variable_name>` : Copy global variable to current function variable. -> result = null
+- `deepequal <comparison_target1> <comparison_target2>` : Return true if all subordinate elements of target variables are the same, false otherwise. -> result = whether they are the same (true or false)

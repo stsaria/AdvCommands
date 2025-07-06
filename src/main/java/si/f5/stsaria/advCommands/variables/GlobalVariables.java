@@ -43,4 +43,7 @@ public class GlobalVariables {
     public static synchronized void concat(String rootName, Variables variables){
         GlobalVariables.variables.concat(rootName, variables);
     }
+    public static synchronized Variables getRaw(){
+        return variables;
+    }
 }

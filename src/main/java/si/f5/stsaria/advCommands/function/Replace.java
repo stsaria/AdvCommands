@@ -1,21 +1,21 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.OneResultV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class Replace implements Function{
     @Override
     public String syntax() {
-        return "replace [a-zA-Z0-9.]+ [a-zA-Z0-9.]+ [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
+        return "replace [a-zA-Z0-9.]+ [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
         for (int i = 2; i < 5; i++){
-            if (!GlobalVariables.containsDirect(codeSplit[i])) return "error: args."+i+" variable not found";
+            if (!variables.containsDirect(codeSplit[i])) return new ErrorV("args."+i+" variable not found");
         }
-        GlobalVariables.set(codeSplit[1], GlobalVariables.get(codeSplit[2]).replaceAll(GlobalVariables.get(codeSplit[3]), GlobalVariables.get(codeSplit[4])));
-        return "";
+        return new OneResultV(variables.get(codeSplit[1]).replaceAll(variables.get(codeSplit[2]), variables.get(codeSplit[3])));
     }
 }

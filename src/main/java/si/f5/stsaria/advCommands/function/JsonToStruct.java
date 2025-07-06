@@ -1,7 +1,9 @@
 package si.f5.stsaria.advCommands.function;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.EmpVariables;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,31 +11,30 @@ import java.util.Map;
 public class JsonToStruct implements Function{
     @Override
     public String syntax() {
-        return "jsontostruct [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
+        return "jsontostruct [a-zA-Z0-9.]+";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        if (!GlobalVariables.containsDirect(codeSplit[2])) return "error: json string variable not found";
+        if (!variables.containsDirect(codeSplit[2])) return new ErrorV("json string variable not found");
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonMap;
         try{
-            jsonMap = mapper.readValue(GlobalVariables.get(codeSplit[2]), Map.class);
+            jsonMap = mapper.readValue(variables.get(codeSplit[2]), Map.class);
         } catch (Exception ignore){
-            return "error: cant parse json";
+            return new ErrorV("cant parse json");
         }
-        setVars(jsonMap, codeSplit[0]);
-        return "";
+        return setVars(jsonMap, "");
     }
 
-    private void setVars(Object obj, String baseVarName){
+    private Variables setVars(Object obj, String baseVarName){
+        Variables variables = new EmpVariables();
         if (obj instanceof Map) {
             ((Map<String, Object>) obj).forEach((k, v) -> {
                 if (v instanceof Map) setVars(v, baseVarName + "." + k);
                 else if (v instanceof ArrayList) setVars(v, baseVarName + "." + k);
-                else GlobalVariables.set(baseVarName + "." + k.replaceAll("[_-]", ""), String.valueOf(v).replaceAll("[_-]", ""));
+                else variables.set(baseVarName + "." + k.replaceAll("[_-]", ""), String.valueOf(v).replaceAll("[_-]", ""));
             });
         } else if (obj instanceof ArrayList){
             ArrayList<Object> al = (ArrayList<Object>) obj;
@@ -41,10 +42,11 @@ public class JsonToStruct implements Function{
                 Object v = al.get(i);
                 if (v instanceof Map) setVars(v, baseVarName+"."+i);
                 else if (v instanceof ArrayList) setVars(v, baseVarName+"."+i);
-                else GlobalVariables.set(baseVarName+"."+i, String.valueOf(v).replaceAll("[_-]", ""));
+                else variables.set(baseVarName+"."+i, String.valueOf(v).replaceAll("[_-]", ""));
             }
         } else {
-            GlobalVariables.set(baseVarName, String.valueOf(obj));
+            variables.set(baseVarName, String.valueOf(obj));
         }
+        return variables;
     }
 }

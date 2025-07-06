@@ -1,6 +1,8 @@
 package si.f5.stsaria.advCommands.function;
 
 import si.f5.stsaria.advCommands.manager.Functions;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class If implements Function {
     @Override
@@ -9,18 +11,19 @@ public class If implements Function {
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
         if (codeSplit[1].equals("true")){
             Function func = Functions.get(codeSplit[2]);
-            if (func == null) return "error: func not found";
-            return func.execute(codeSplit[1]);
+            if (func == null) return new ErrorV("func not found");
+            else if (!codeSplit[1].matches(func.syntax())) return new ErrorV("syntax error (content)");
+            return func.execute(codeSplit[1], variables.clone());
         } else if (codeSplit[1].equals("false")){
             Function func = Functions.get(codeSplit[4]);
-            if (func == null) return "error: func not found";
-            return func.execute(codeSplit[4]);
+            if (func == null) return new ErrorV("func not found");
+            else if (!codeSplit[4].matches(func.syntax())) return new ErrorV("syntax error (content)");
+            return func.execute(codeSplit[4], variables.clone());
         }
-        return "";
+        return null;
     }
 }

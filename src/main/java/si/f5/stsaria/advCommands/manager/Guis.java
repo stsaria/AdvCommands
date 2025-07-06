@@ -2,20 +2,22 @@ package si.f5.stsaria.advCommands.manager;
 
 import org.bukkit.inventory.ItemStack;
 import si.f5.stsaria.advCommands.Gui;
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
 import si.f5.stsaria.advCommands.variables.ItemStackV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Guis {
     private static final Map<String, Gui> guiMap = new HashMap<>();
-    public static synchronized int add(String name, String title, String itemStacksVarName){
+    public static synchronized int add(String name, String title, String itemStacksVarName, Variables variables){
         if (get(name) != null) return 1;
         ArrayList<ItemStack> itemStacks = new ArrayList<>();
-        for (int i = 0; i < GlobalVariables.length(itemStacksVarName); i++){
-            if (!GlobalVariables.contains(itemStacksVarName+"."+i)) return 2;
-            ItemStack itemStack = ItemStackV.toItemStack(itemStacksVarName+"."+i);
+        for (int i = 0; i < variables.length(itemStacksVarName); i++){
+            if (!variables.contains(itemStacksVarName+"."+i)) return 2;
+            ItemStack itemStack = ItemStackV.toItemStack(itemStacksVarName+"."+i, variables);
             if (itemStack == null) return 3;
             itemStacks.add(itemStack);
         }

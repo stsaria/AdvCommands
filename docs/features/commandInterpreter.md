@@ -12,3 +12,5 @@
 Hello worldを表示
 /advcmd cmd say "Hello world"
 ```
+## ヒント
+-　インタプリタで実行するときの変数スコープは必ずグローバルです。

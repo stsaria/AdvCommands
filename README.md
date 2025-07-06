@@ -16,6 +16,7 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 ## 追加される機能
 - [変数](docs/features/variables.md)
 - [関数](docs/features/functions.md)
+- [グローバル変数](docs/features/globalVariables.md)
 - [繰り返し](docs/features/for.md)
 - [イベントハンドラ](docs/features/eventHandler.md)
 - [ランダム](docs/features/random.md)

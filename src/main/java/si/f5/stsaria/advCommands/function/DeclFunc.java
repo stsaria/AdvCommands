@@ -3,6 +3,8 @@ package si.f5.stsaria.advCommands.function;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import si.f5.stsaria.advCommands.manager.Functions;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class DeclFunc implements Function{
     @Override
@@ -11,17 +13,16 @@ public class DeclFunc implements Function{
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        if (Bukkit.getWorld(codeSplit[2]) == null) return "error: world not found";
+        if (Bukkit.getWorld(codeSplit[2]) == null) return new ErrorV("error: world not found");
         int r = Functions.add(codeSplit[1], new Location(Bukkit.getWorld(codeSplit[2]),
         Integer.parseInt(codeSplit[3]), Integer.parseInt(codeSplit[4]), Integer.parseInt(codeSplit[5])));
         if (r == 1){
-            return "error: not command block";
+            return new ErrorV("not command block");
         } else if (r == 2){
-            return "error: func exists";
+            return new ErrorV("func exists");
         }
-        return "";
+        return null;
     }
 }

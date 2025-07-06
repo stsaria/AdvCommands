@@ -58,8 +58,6 @@
 ## 関数実行時変数
 - `<args.n>` : n個目の引数
 - `<argsstr>` : 引数文字列（例:"<args.0> <args.1> <args.2>"）
-- `<funcfirstblock>` : 関数の最初のブロック（line 1）-> block
-- `<funcnowlineblock>` : 関数の現在実行しているラインのブロック -> block
 ## イベント変数
 関数内では、`<event.*>`でアクセス可
 ### onkill

@@ -1,12 +1,13 @@
 # Random
-Random numbers and random strings
+Random numbers, random strings, and random list shuffling
 
 ## Usage
-- Generate a random number within a specified range (assign to a variable name as a global variable)
+- Generate random number within a specified range
 ```
-randint variable_name range_start range_end
+randint range_start range_end
+shuffled variable_name_to_shuffle
 ```
-- Generate a random UUID (like a macro)
+- Generate random UUID (like a macro)
 ```
 <randuuid>
 ```
@@ -15,18 +16,19 @@ randint variable_name range_start range_end
 ```
 # Send "Hit!" to a random player
 players players
-length playersLen players
-randint playerInt 0 <playersLen-1>
+length players
+setvar playersLen <r>
+randint 0 <playersLen-1>
+setvar playerInt <r>
 copyvar players.<playerInt> hitPlayer
 cmd tellraw <hitPlayer.name> "Hit!"
 
-# Use random UUID to simulate return values
+# Use random UUID to reproduce return values
 # Inside function hoge
 setvar returnId <randuuid>
 piyo <returnId>
+cmd say <return<returnId>>
 # Inside function piyo
 setvarG return<args.0> hello
-# Inside function hoge
-cmd say <return<returnId>>
 # This will display "hello"
 ```

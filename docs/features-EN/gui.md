@@ -1,11 +1,12 @@
 # GUI
 Create inventory GUIs like game menus.
 
-## Usage Examples
+## Usage Example
 ```
-# Display "Start!!!!" when the green dye in the GUI is clicked
+# When clicking the green dye in the GUI, display "Start!!!!"
 # Inside function newEmpItemStack
-itemstack itemstacks.<i> barrier 64 n/a
+itemstack barrier 64 n/a
+exit r
 # Inside function clickGuiItem
 if <event.itemstack.displayname=startButtonName> nop else exit
 cmd say Start!!!!

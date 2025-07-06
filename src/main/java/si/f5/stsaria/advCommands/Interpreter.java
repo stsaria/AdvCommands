@@ -3,14 +3,16 @@ package si.f5.stsaria.advCommands;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import si.f5.stsaria.advCommands.function.AppendFuncMode;
-import si.f5.stsaria.advCommands.function.EndAppendFuncMode;
 import si.f5.stsaria.advCommands.function.Function;
 import si.f5.stsaria.advCommands.manager.Functions;
-import si.f5.stsaria.advCommands.variables.*;
+import si.f5.stsaria.advCommands.variables.EmpVariables;
+import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.NullV;
+import si.f5.stsaria.advCommands.variables.Variables;
+
+import java.util.Objects;
 
 public class Interpreter implements CommandExecutor {
     protected final JavaPlugin plugin;
@@ -29,27 +31,20 @@ public class Interpreter implements CommandExecutor {
         Variables variables = new EmpVariables();
         GlobalVariables.getAll().forEach(variables::set);
         String line = Parser.variableSubstitution(variables, String.join(" ", args));
-        try {
-            if (line.matches(new AppendFuncMode((Player) commandSender).syntax())) {
-                AppendFuncMode appendFuncMode = new AppendFuncMode((Player) commandSender);
-                commandSender.sendMessage(appendFuncMode.execute(line));
-                return true;
-            } else if (line.matches(new EndAppendFuncMode((Player) commandSender).syntax())) {
-                EndAppendFuncMode endAppendFuncMode = new EndAppendFuncMode((Player) commandSender);
-                commandSender.sendMessage(endAppendFuncMode.execute(line));
-                return true;
-            }
-        } catch (Exception ignore){}
         Function func = Functions.get(args[0]);
         if (func == null){
             commandSender.sendMessage("error: func not found");
             return false;
+        } else if (!line.matches(func.syntax())){
+            commandSender.sendMessage("error: syntax");
+            return false;
         }
-        String r = func.execute(line);
-        if (r.isEmpty()) {
-            commandSender.sendMessage("done");
+        Variables r = func.execute(line, GlobalVariables.getRaw());
+        if (r == null) r = new NullV();
+        if (Objects.equals(r.get("resulttype"), "error")){
+            commandSender.sendMessage(r.get("0"));
         } else {
-            commandSender.sendMessage(r);
+            commandSender.sendMessage("done");
         }
         return true;
     }

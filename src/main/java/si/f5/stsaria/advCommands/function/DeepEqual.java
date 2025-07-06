@@ -3,15 +3,16 @@ package si.f5.stsaria.advCommands.function;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Length implements Function{
+public class DeepEqual implements Function{
     @Override
     public String syntax() {
-        return "length [a-zA-Z0-9.]+";
+        return "deepequal [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
     }
 
     @Override
     public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        return new OneResultV(String.valueOf(variables.length(codeSplit[1])));
+        boolean isEqual = variables.deepEqual(codeSplit[1], codeSplit[2]);
+        return new OneResultV(isEqual ? "true" : "false");
     }
 }

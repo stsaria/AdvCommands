@@ -12,6 +12,7 @@ import si.f5.stsaria.advCommands.manager.EventFunctions;
 import si.f5.stsaria.advCommands.variables.OnClickGuiItemEvent;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Gui implements Listener {
     private final String name;
@@ -33,7 +34,7 @@ public class Gui implements Listener {
         else if (clickedItem.getType().isAir()) return;
         UserFunction f = EventFunctions.get(EventType.ON_CLICK_GUI_ITEM);
         if (f == null) return;
-        f.concat("event", new OnClickGuiItemEvent(this.name, e));
-        if (f.execute("").equals("cancel")) e.setCancelled(true);
+        f.getVariables().concat("event", new OnClickGuiItemEvent(this.name, e));
+        if (Objects.equals(f.execute("", null).get("0"), "cancel")) e.setCancelled(true);
     }
 }

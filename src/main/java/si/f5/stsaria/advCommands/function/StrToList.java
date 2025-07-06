@@ -1,22 +1,23 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.EmpVariables;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class StrToList implements Function{
     @Override
     public String syntax() {
-        return "strtolist [a-zA-Z0-9.]+ (?s).*";
+        return "strtolist (?s).*";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
-        String[] codeSplit = code.split(" ");
+    public Variables execute(String code, Variables variables) {
         int i = 0;
-        for (String c : code.replaceFirst("strtolist "+codeSplit[1]+" ", "").split("")){
-            GlobalVariables.set(code+"."+i, c);
+        Variables result = new EmpVariables();
+        for (String c : code.replaceFirst("strtolist ", "").split("")){
+            result.set("0."+i, c);
             i++;
         }
-        return "";
+        result.set("resulttype", "oneresult");
+        return result;
     }
 }

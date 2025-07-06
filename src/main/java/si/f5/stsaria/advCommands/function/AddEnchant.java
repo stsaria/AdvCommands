@@ -2,9 +2,7 @@ package si.f5.stsaria.advCommands.function;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import si.f5.stsaria.advCommands.variables.Enchant;
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
-import si.f5.stsaria.advCommands.variables.ItemStackV;
+import si.f5.stsaria.advCommands.variables.*;
 
 public class AddEnchant implements Function{
     @Override
@@ -13,19 +11,18 @@ public class AddEnchant implements Function{
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        if (!GlobalVariables.contains(codeSplit[1])) return "error: source itemstack not found";
+        if (!variables.contains(codeSplit[1])) new ErrorV("source itemstack not found");
         Enchantment enchantment = Enchantment.getByName(codeSplit[2]);
-        if (enchantment == null) return "error: unknown enchant";
+        if (enchantment == null) return new ErrorV("unknown enchant");
         int level;
         try {level = Integer.parseInt(codeSplit[3]);}
-        catch (NumberFormatException ignore) {return "error: cant cast string to int (level)";}
-        ItemStack itemStack = ItemStackV.toItemStack(codeSplit[1]);
-        if (itemStack == null) return "error: generate failed source itemStack";
+        catch (NumberFormatException ignore) {return new ErrorV("cant cast string to int (level)");}
+        ItemStack itemStack = ItemStackV.toItemStack(codeSplit[1], variables);
+        if (itemStack == null) return new ErrorV("generate failed source itemStack");
         int len = GlobalVariables.length(codeSplit[1]+".enchants");
-        GlobalVariables.concat(codeSplit[1]+".enchants."+len, new Enchant(enchantment, level));
-        return "";
+        variables.concat(codeSplit[1]+".enchants."+len, new Enchant(enchantment, level));
+        return null;
     }
 }

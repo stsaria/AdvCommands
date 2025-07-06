@@ -1,16 +1,20 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.InfoRunFunc;
 import si.f5.stsaria.advCommands.Main;
+import si.f5.stsaria.advCommands.manager.Functions;
+import si.f5.stsaria.advCommands.variables.EmpVariables;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class WaitRun implements Function, Runnable{
     private String code = "";
+    private Variables variables = new EmpVariables();
     public WaitRun(){
 
     }
-    public WaitRun(String code){
+    public WaitRun(String code, Variables variables){
         this.code = code;
+        this.variables = variables;
     }
 
     @Override
@@ -19,10 +23,9 @@ public class WaitRun implements Function, Runnable{
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
-        new Thread(new WaitRun(code)).start();
-        return "";
+    public Variables execute(String code, Variables variables) {
+        new Thread(new WaitRun(code, variables.clone())).start();
+        return null;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class WaitRun implements Function, Runnable{
         } catch (InterruptedException ignore){}
         Function func = Functions.get(codeSplit[2].split(" ")[0]);
         if (func == null) return;
-        Main.addRunFunction(new InfoRunFunc(func, code.replaceFirst("waitrun "+codeSplit[1]+" ", "")));
+        else if (!this.code.matches(func.syntax())) return;
+        Main.addRunFunction(new InfoRunFunc(func, this.code.replaceFirst("waitrun "+codeSplit[1]+" ", ""), this.variables));
     }
 }

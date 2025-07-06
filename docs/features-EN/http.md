@@ -2,23 +2,23 @@
 Send HTTP requests and receive responses.
 
 ## Usage
-- GET Request
+- GET request
 ```
-httpget response_variable_name URL
+httpget URL
 ```
-- POST Request
+- POST request
 ```
-httppost response_variable_name argument_struct_variable_name URL
+httppost argument_struct_variable_name URL
 ```
 
-## Examples
+## Usage Examples
 ```
 # Get IP using GET protocol
-httpget ip https://ipinfo.io/ip
-cmd say <ip>
+httpget https://ipinfo.io/ip
+cmd say <r.content>
 
 # User registration using POST protocol and output status code
-setvarG httpargs.name namae
-httppost res httpargs http://api.hoge.fuga/register
-cmd say <res.statuscode>
+setvar httpargs.name namae
+httppost httpargs http://api.hoge.fuga/register
+cmd say <r.statuscode>
 ```

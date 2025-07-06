@@ -17,4 +17,11 @@ if true hoge else panda
 if false panda else hoge
 # 不等式を使ってみる
 if <2>1> nisu else nice
+# if(trueif)内で代入した値を使う
+setvar a null
+trueif true setvar a aaa
+tesfunc <a>
 ```
+## ヒント
+- 実行時には実行元の変数群を参照することができます。ですが、実行先で代入してもそれは元に適用されることはありません。
+- `if`は関数を実行することはできますが、その後に引数はつけられません。

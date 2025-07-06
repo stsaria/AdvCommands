@@ -14,3 +14,5 @@ In this plugin, it is called from Spigot commands.
 Display Hello world
 /advcmd cmd say "Hello world"
 ```
+## Tips
+- The variable scope is always global when executed in the interpreter.

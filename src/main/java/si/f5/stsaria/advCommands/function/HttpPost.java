@@ -1,8 +1,9 @@
 package si.f5.stsaria.advCommands.function;
 
 import org.apache.commons.io.IOUtils;
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.HttpResponse;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -12,14 +13,14 @@ import java.nio.charset.StandardCharsets;
 public class HttpPost implements Function{
     @Override
     public String syntax() {
-        return "httppost [a-zA-Z0-9.]+ [a-zA-Z0-9.]+ https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+";
+        return "httppost [a-zA-Z0-9.]+ https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        if (!GlobalVariables.contains(codeSplit[2])) return "error: request properties variable not found.";
+        if (!variables.contains(codeSplit[2])) return new ErrorV("request properties variable not found");
+        Variables result;
         try {
             HttpURLConnection connection = (HttpURLConnection) URI.create(codeSplit[3]).toURL().openConnection();
             connection.setInstanceFollowRedirects(false);
@@ -27,7 +28,7 @@ public class HttpPost implements Function{
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             StringBuilder parameter = new StringBuilder();
-            GlobalVariables.toOneLayerMap(codeSplit[2]).forEach((k, v) -> {
+            variables.toOneLayerMap(codeSplit[2]).forEach((k, v) -> {
                 k = k.replace("&", "%26");
                 v = v.replace("&", "%26");
                 parameter.append(k).append("=").append(v).append("&");
@@ -50,10 +51,10 @@ public class HttpPost implements Function{
                 connection.setInstanceFollowRedirects(false);
                 responseCode = connection.getResponseCode();
             }
-            GlobalVariables.concat(codeSplit[1], new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8).replace("<", "&lt").replace(">", "&gt")));
+            result = new HttpResponse(responseCode, IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8).replace("<", "&lt").replace(">", "&gt"));
         } catch (Exception ignore) {
-            return "error: failed communication";
+            return new ErrorV("failed communication");
         }
-        return "";
+        return result;
     }
 }

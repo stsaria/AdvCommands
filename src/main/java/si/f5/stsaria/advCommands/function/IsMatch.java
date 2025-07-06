@@ -4,16 +4,17 @@ import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class StructToJson implements Function{
+public class IsMatch implements Function{
     @Override
     public String syntax() {
-        return "structtojson [a-zA-Z0-9.]+";
+        return "ismatch [a-zA-Z0-9.]+ (?s).*";
     }
 
     @Override
     public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        if (!variables.contains(codeSplit[2])) return new ErrorV("struct variable not found");
-        return new OneResultV(variables.toJson(codeSplit[2]));
+        if (!variables.containsDirect(codeSplit[1])) return new ErrorV("search source variable not found");
+        boolean isMatch = variables.get(codeSplit[1]).matches(code.replaceFirst("regex "+codeSplit[1]+" "+codeSplit[2]+" ", ""));
+        return new OneResultV(isMatch ? "true" : "false");
     }
 }

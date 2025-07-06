@@ -1,6 +1,7 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.OneResultV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class Size implements Function{
     @Override
@@ -9,10 +10,8 @@ public class Size implements Function{
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        GlobalVariables.set(codeSplit[1], String.valueOf(GlobalVariables.size(codeSplit[2])));
-        return "";
+        return new OneResultV(String.valueOf(variables.size(codeSplit[2])));
     }
 }

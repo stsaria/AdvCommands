@@ -1,18 +1,17 @@
 package si.f5.stsaria.advCommands.function;
 
-import si.f5.stsaria.advCommands.variables.GlobalVariables;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class DelVar implements Function{
     @Override
     public String syntax() {
-        return "delvarG? [a-zA-Z0-9.]+";
+        return "delvar [a-zA-Z0-9.]+";
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        GlobalVariables.delete(codeSplit[1]);
-        return "";
+        variables.delete(codeSplit[1]);
+        return null;
     }
 }
