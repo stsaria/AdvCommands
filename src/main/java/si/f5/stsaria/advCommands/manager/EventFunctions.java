@@ -4,7 +4,8 @@ import si.f5.stsaria.advCommands.EventType;
 import si.f5.stsaria.advCommands.function.Function;
 import si.f5.stsaria.advCommands.function.UserFunction;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class EventFunctions{

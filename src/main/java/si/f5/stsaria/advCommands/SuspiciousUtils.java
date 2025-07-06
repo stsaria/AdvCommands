@@ -1,11 +1,12 @@
 package si.f5.stsaria.advCommands;
 
-import java.lang.reflect.Field;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.SimplePluginManager;
+
+import java.lang.reflect.Field;
 
 public class SuspiciousUtils {
     public static boolean registerCommand(Command command) {
