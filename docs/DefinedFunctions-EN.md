@@ -43,6 +43,8 @@ Return values are represented and written as result*.
 - `importfunc <function_contents>` : Load function. -> result = null
 - `toint <decimal_or_integer>` : Convert value to integer and return. -> result = converted integer
 - `getname <struct> <value>` : Search for variable name corresponding to value in struct (including arrays) and return. If there are two, return the first assigned one. -> result = found variable name, null if not found
+- `delgui <GUI_name>` : Delete GUI. -> result = null
+- `closegui <player_name>` : Close the GUi that the player is displaying. -> result = null
 - `runinglobal <statement>` : Execute statement in global variable scope. -> result.* = result of executed function
 - `localtoglobal <source_function_variable_name> <destination_global_variable_name>` : Copy current function variable to global variable. -> result = null
 - `globaltolocal <source_global_variable_name> <destination_function_variable_name>` : Copy global variable to current function variable. -> result = null

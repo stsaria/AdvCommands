@@ -50,6 +50,8 @@ public class Functions{
         functionMap.put("importfunc", new ImportFunc());
         functionMap.put("toint", new ToInt());
         functionMap.put("getname", new GetName());
+        functionMap.put("delgui", new DelGui());
+        functionMap.put("closegui", new CloseGui());
         functionMap.put("runinglobal", new RunInGlobal());
         functionMap.put("localtoglobal", new LocalToGlobal());
         functionMap.put("globaltolocal", new GlobalToLocal());

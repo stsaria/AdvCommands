@@ -1,6 +1,5 @@
 package si.f5.stsaria.advCommands.function;
 
-import com.google.errorprone.annotations.Var;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import si.f5.stsaria.advCommands.variables.ErrorV;
