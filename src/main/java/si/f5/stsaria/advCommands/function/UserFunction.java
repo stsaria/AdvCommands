@@ -58,7 +58,7 @@ public class UserFunction implements Function{
                     } else {
                         this.variables.concat(lineSplit[1], previousResult);
                     }
-                    break;
+                    continue;
                 case "exit":
                     Variables result;
                     if (lineSplit.length == 2) {
