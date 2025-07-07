@@ -1,7 +1,10 @@
 package si.f5.stsaria.advCommands.function;
 
+import com.google.errorprone.annotations.Var;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import si.f5.stsaria.advCommands.variables.ErrorV;
+import si.f5.stsaria.advCommands.variables.Variables;
 
 public class CloseGui implements Function{
     @Override
@@ -10,12 +13,11 @@ public class CloseGui implements Function{
     }
 
     @Override
-    public String execute(String code) {
-        if (!code.matches(syntax())) return "error: syntax";
+    public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
         Player p = Bukkit.getPlayer(codeSplit[1]);
-        if (p == null) return "error: player not found";
+        if (p == null) return new ErrorV("player not found");
         p.closeInventory();
-        return "";
+        return null;
     }
 }
