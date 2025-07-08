@@ -8,7 +8,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Teams implements Function{
+public class Teams extends Function {
     @Override
     public String syntax() {
         return "teams";

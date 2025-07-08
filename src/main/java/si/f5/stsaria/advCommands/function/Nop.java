@@ -2,10 +2,10 @@ package si.f5.stsaria.advCommands.function;
 
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Nop implements Function{
+public class Nop extends Function {
     @Override
     public String syntax() {
-        return "nop";
+        return ".*";
     }
 
     @Override

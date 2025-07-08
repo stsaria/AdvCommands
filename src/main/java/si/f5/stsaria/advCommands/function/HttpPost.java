@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-public class HttpPost implements Function{
+public class HttpPost extends Function {
     @Override
     public String syntax() {
         return "httppost [a-zA-Z0-9.]+ https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+";

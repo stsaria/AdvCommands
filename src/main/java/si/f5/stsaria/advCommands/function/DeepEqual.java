@@ -3,7 +3,7 @@ package si.f5.stsaria.advCommands.function;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class DeepEqual implements Function{
+public class DeepEqual extends Function {
     @Override
     public String syntax() {
         return "deepequal [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";

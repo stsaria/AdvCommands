@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class CatFunc implements Function{
+public class CatFunc extends Function {
     @Override
     public String syntax() {
         return "catfunc [a-zA-Z0-9]+";

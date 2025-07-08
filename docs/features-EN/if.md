@@ -26,5 +26,5 @@ tesfunc <a>
 ```
 
 ## Tips
-- During execution, you can reference the variable group of the execution source. However, even if you assign values at the execution destination, those changes will not be applied to the original.
+- At runtime, a set of variables from the executor can be referenced or assigned to.
 - `if` can execute functions, but you cannot add arguments after them.

@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class StructToJson implements Function{
+public class StructToJson extends Function {
     @Override
     public String syntax() {
         return "structtojson [a-zA-Z0-9.]+";

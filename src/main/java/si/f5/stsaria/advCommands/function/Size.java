@@ -3,7 +3,7 @@ package si.f5.stsaria.advCommands.function;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Size implements Function{
+public class Size extends Function {
     @Override
     public String syntax() {
         return "size [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";

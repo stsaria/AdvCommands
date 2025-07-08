@@ -10,7 +10,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.Objects;
 
-public class ItemStackF implements Function{
+public class ItemStackF extends Function {
     @Override
     public String syntax() {
         return "itemstack [a-zA-Z0-9_]+ \\d+ .+";

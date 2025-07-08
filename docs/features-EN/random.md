@@ -29,6 +29,6 @@ setvar returnId <randuuid>
 piyo <returnId>
 cmd say <return<returnId>>
 # Inside function piyo
-setvarG return<args.0> hello
+runinglobal setvar return<args.0> hello
 # This will display "hello"
 ```

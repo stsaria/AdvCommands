@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class CloseGui implements Function{
+public class CloseGui extends Function {
     @Override
     public String syntax() {
         return "closegui [a-zA-Z0-9_.]+";

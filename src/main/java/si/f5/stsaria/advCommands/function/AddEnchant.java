@@ -4,7 +4,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import si.f5.stsaria.advCommands.variables.*;
 
-public class AddEnchant implements Function{
+public class AddEnchant extends Function {
     @Override
     public String syntax() {
         return "addenchant [a-zA-Z0-9.]+ [a-z_]+ \\d+";

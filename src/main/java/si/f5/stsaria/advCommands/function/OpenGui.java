@@ -6,7 +6,7 @@ import si.f5.stsaria.advCommands.manager.Guis;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class OpenGui implements Function{
+public class OpenGui extends Function {
     @Override
     public String syntax() {
         return "opengui [a-zA-Z0-9]+ [a-zA-Z0-9_.]+";

@@ -3,7 +3,7 @@ package si.f5.stsaria.advCommands.function;
 import org.bukkit.Bukkit;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Cmd implements Function{
+public class Cmd extends Function {
     @Override
     public String syntax() {
         return "cmd (?s).+";

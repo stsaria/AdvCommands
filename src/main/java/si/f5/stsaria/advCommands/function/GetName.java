@@ -6,10 +6,10 @@ import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class GetName implements Function{
+public class GetName extends Function {
     @Override
     public String syntax() {
-        return "getname .*";
+        return "getname (?s).*";
     }
 
     @Override

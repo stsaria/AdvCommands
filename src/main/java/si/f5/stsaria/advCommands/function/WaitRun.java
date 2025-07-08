@@ -6,7 +6,7 @@ import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.variables.EmpVariables;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class WaitRun implements Function, Runnable{
+public class WaitRun extends Function implements Runnable{
     private String code = "";
     private Variables variables = new EmpVariables();
     public WaitRun(){
@@ -19,7 +19,7 @@ public class WaitRun implements Function, Runnable{
 
     @Override
     public String syntax() {
-        return "waitrun \\d+ .*";
+        return "waitrun \\d+ .+";
     }
 
     @Override

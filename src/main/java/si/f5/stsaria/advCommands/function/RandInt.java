@@ -6,7 +6,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.Random;
 
-public class RandInt implements Function{
+public class RandInt extends Function {
     @Override
     public String syntax() {
         return "randint [+-]?\\d+ [+-]?\\d+";

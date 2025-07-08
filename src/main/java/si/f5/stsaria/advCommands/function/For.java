@@ -9,7 +9,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.Objects;
 
-public class For implements Function{
+public class For extends Function {
     @Override
     public String syntax() {
         return "for [A-Za-z] \\d+ .+";
@@ -19,7 +19,6 @@ public class For implements Function{
     public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
         Variables results = new EmpVariables();
-        variables = variables.clone();
         for (int i = 0; i < Integer.parseInt(codeSplit[2]); i++){
             Function func = Functions.get(codeSplit[3]);
             if (func == null) return new ErrorV("func not found");
@@ -28,7 +27,10 @@ public class For implements Function{
             if (!code.matches(func.syntax())) return new ErrorV("syntax error (content) (i="+i+")");
             Variables r = func.execute(code, variables);
             if (r == null) r = new NullV();
-            else if (Objects.equals(r.get("resulttype"), "error")) return new ErrorV("error in for (i="+i+") -> "+r.get("0"));
+            else if (Objects.equals(r.get("resulttype"), "error")){
+                variables.delete(codeSplit[1]);
+                return new ErrorV("error in for (i="+i+") -> "+r.get("0"));
+            }
             else if (Objects.equals(r.get("resulttype"), "oneresult")) {
                 int finalI = i;
                 r.getVariableMap().forEach((n, v) -> {
@@ -38,9 +40,12 @@ public class For implements Function{
             } else {
                 results.concat(String.valueOf(i), r);
             }
-            if (Objects.equals(r.get("resulttype"), "oneresult") && Objects.equals(r.get("0"), "break")) return results;
-
+            if (Objects.equals(r.get("resulttype"), "oneresult") && Objects.equals(r.get("0"), "break")){
+                variables.delete(codeSplit[1]);
+                return results;
+            }
         }
+        variables.delete(codeSplit[1]);
         return results;
     }
 }

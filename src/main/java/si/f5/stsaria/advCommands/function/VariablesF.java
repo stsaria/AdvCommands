@@ -6,7 +6,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class VariablesF implements Function{
+public class VariablesF extends Function {
     @Override
     public String syntax() {
         return "variables [a-zA-Z0-9.]+";

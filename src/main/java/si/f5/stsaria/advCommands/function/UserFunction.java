@@ -10,11 +10,11 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
-public class UserFunction implements Function{
+public class UserFunction extends Function {
     private final String name;
     private final String code;
-    private final Variables variables = new EmpVariables();
     public UserFunction(String name, String code){
+        this.variables = new EmpVariables();
         this.name = name;
         this.code = code;
     }
@@ -30,6 +30,7 @@ public class UserFunction implements Function{
 
     @Override
     public synchronized Variables execute(String code, Variables variables) {
+        this.variables.concat("", variables);
         boolean isEvent = this.variables.contains("event");
         Variables previousResult = new EmpVariables();
         this.variables.set("argsstr", code.replaceFirst(this.name+" ", ""));
@@ -71,22 +72,23 @@ public class UserFunction implements Function{
                         result = null;
                     }
                     return result;
-                case "skip":
-                    nextSkip = true;
-                    continue;
                 case "cancel":
                     return new OneResultV("cancel");
             }
             Function func = Functions.get(line.split(" ")[0]);
             if (func == null) return new ErrorV("Line " + i + ": " + line + " - " + "func not found");
             else if (!line.matches(func.syntax())) return new ErrorV("Line " + i + ": " + line + " - " + "syntax");
-            Variables r = func.execute(line, this.getVariables());
+
+            Variables r;
+            if (func instanceof UserFunction) r = func.execute(line, new EmpVariables());
+            else r = func.execute(line, this.getVariables());
+
             if (r == null) r = new NullV();
             previousResult = r;
             if (Objects.equals(r.get("resulttype"), "error")){
                 if (isEvent) Main.getLogger().log(Level.SEVERE, "Error in event function! -> "+"Line " + i + ": " + line + " - " + r.get("0"));
                 return new ErrorV("error: Line " + i + ": " + line + " - " + r.get("0"));
-            }
+            } else if (Objects.equals(r.get("resulttype"), "oneresult") && Objects.equals(r.get("0"), "plsskip")) nextSkip = true;
         }
         return new NullV();
     }

@@ -5,7 +5,7 @@ import si.f5.stsaria.advCommands.variables.EmpVariables;
 import si.f5.stsaria.advCommands.variables.PlayerV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Players implements Function{
+public class Players extends Function {
     @Override
     public String syntax() {
         return "players";

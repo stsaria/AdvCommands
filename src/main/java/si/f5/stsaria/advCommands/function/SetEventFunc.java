@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.manager.EventFunctions;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class SetEventFunc implements Function {
+public class SetEventFunc extends Function {
     @Override
     public String syntax() {
         return "seteventfunc [a-zA-Z0-9]+ [a-zA-Z0-9]+";

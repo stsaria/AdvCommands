@@ -1,17 +1,16 @@
 package si.f5.stsaria.advCommands.function;
 
+import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class CopyVar extends Function {
+public class Skip extends Function {
     @Override
     public String syntax() {
-        return "copyvar [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
+        return "skip";
     }
 
     @Override
     public Variables execute(String code, Variables variables) {
-        String[] codeSplit = code.split(" ");
-        variables.copy(codeSplit[1], codeSplit[2]);
-        return null;
+        return new OneResultV("plsskip");
     }
 }

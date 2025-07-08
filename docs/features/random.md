@@ -27,6 +27,6 @@ setvar returnId <randuuid>
 piyo <returnId>
 cmd say <return<returnId>>
 # 関数piyo内
-setvarG return<args.0> hello
+runinglobal setvar return<args.0> hello
 # これでhelloと表示されます。
 ```

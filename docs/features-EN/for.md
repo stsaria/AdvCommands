@@ -22,4 +22,4 @@ for i 10 hoge <i>
 ```
 
 ## Tips
-- During execution, you can reference the variable group of the execution source. However, even if you modify them, those changes will not be applied to the original.
+- At runtime, a set of variables from the executor can be referenced or assigned to.

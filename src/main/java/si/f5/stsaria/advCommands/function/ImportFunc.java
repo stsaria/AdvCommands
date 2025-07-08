@@ -6,7 +6,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 
 import java.util.Base64;
 
-public class ImportFunc implements Function{
+public class ImportFunc extends Function {
     @Override
     public String syntax() {
         return "importfunc [a-zA-Z0-9+/.=]*";

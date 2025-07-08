@@ -18,6 +18,7 @@ This should output `Hello world`. Or at least, we hope it will.
 ## Added Features
 - [Variables](docs/features-EN/variables.md)
 - [Functions](docs/features-EN/functions.md)
+- [Global Variables](docs/features-EN/globalVariables.md)
 - [Loops](docs/features-EN/for.md)
 - [Event Handlers](docs/features-EN/eventHandler.md)
 - [Random](docs/features-EN/random.md)

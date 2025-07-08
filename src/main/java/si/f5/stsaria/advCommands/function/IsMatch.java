@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class IsMatch implements Function{
+public class IsMatch extends Function {
     @Override
     public String syntax() {
         return "ismatch [a-zA-Z0-9.]+ (?s).*";

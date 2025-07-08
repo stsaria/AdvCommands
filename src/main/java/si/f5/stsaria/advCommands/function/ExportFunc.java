@@ -8,7 +8,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-public class ExportFunc implements Function{
+public class ExportFunc extends Function {
     @Override
     public String syntax() {
         return "exportfunc [a-zA-Z0-9.]+";

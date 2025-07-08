@@ -3,7 +3,7 @@ package si.f5.stsaria.advCommands.function;
 import si.f5.stsaria.advCommands.variables.EmpVariables;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class StrToList implements Function{
+public class StrToList extends Function {
     @Override
     public String syntax() {
         return "strtolist (?s).*";

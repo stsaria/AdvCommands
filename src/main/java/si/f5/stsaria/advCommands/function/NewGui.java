@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.manager.Guis;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class NewGui implements Function{
+public class NewGui extends Function {
     @Override
     public String syntax() {
         return "newgui [a-zA-Z0-9]+ [a-zA-Z0-9.]+ .+";

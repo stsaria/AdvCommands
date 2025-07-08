@@ -8,7 +8,7 @@ import si.f5.stsaria.advCommands.variables.Variables;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class JsonToStruct implements Function{
+public class JsonToStruct extends Function {
     @Override
     public String syntax() {
         return "jsontostruct [a-zA-Z0-9.]+";

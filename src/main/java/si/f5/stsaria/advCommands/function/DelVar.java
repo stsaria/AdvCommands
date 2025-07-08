@@ -2,7 +2,7 @@ package si.f5.stsaria.advCommands.function;
 
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class DelVar implements Function{
+public class DelVar extends Function {
     @Override
     public String syntax() {
         return "delvar [a-zA-Z0-9.]+";

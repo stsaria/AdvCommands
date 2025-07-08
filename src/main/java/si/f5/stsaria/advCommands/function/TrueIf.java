@@ -5,7 +5,7 @@ import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.NullV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class TrueIf implements Function{
+public class TrueIf extends Function {
     @Override
     public String syntax() {
         return "trueif (true|false) .+";
@@ -19,7 +19,7 @@ public class TrueIf implements Function{
             if (func == null) return new ErrorV("func not found");
             code = code.replaceFirst("trueif true ", "");
             if (!code.matches(func.syntax())) return new ErrorV("syntax error (content)");
-            return func.execute(code, variables.clone());
+            return func.execute(code, variables);
         }
         return new NullV();
     }

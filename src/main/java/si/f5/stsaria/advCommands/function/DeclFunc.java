@@ -6,7 +6,7 @@ import si.f5.stsaria.advCommands.manager.Functions;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class DeclFunc implements Function{
+public class DeclFunc extends Function {
     @Override
     public String syntax() {
         return "declfunc [a-zA-Z0-9]+ [a-zA-Z0-9_]+ [+-]?\\d+ [+-]?\\d+ [+-]?\\d+";

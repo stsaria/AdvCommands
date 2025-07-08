@@ -4,7 +4,7 @@
 ```
 # GUIの緑の染料をクリックしたらStart!!!!って表示する
 # 関数newEmpItemStack内
-itemstack barrier 64 n/a
+itemstack r barrier 64 n/a
 exit r
 # 関数clickGuiItem内
 if <event.itemstack.displayname=startButtonName> nop else exit

@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.variables.EmpVariables;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Split implements Function{
+public class Split extends Function {
     @Override
     public String syntax() {
         return "split [a-zA-Z0-9.]+ (?s).+";

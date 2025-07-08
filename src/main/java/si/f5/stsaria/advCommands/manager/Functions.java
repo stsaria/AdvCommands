@@ -57,6 +57,7 @@ public class Functions{
         functionMap.put("globaltolocal", new GlobalToLocal());
         functionMap.put("deepequal", new DeepEqual());
         functionMap.put("ismatch", new IsMatch());
+        functionMap.put("skip", new Skip());
     }
     public static synchronized int add(String name, Location location){
         if (!location.getBlock().getType().equals(Material.COMMAND_BLOCK)) return 1;
@@ -90,6 +91,6 @@ public class Functions{
         functionMap.remove(name);
     }
     public static synchronized Function get(String name){
-        return functionMap.get(name);
+        return functionMap.get(name).clone();
     }
 }

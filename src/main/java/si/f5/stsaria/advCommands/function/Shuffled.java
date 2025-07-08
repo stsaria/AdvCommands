@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Shuffled implements Function{
+public class Shuffled extends Function {
     @Override
     public String syntax() {
-        return "shuffle [a-zA-Z0-9.]+";
+        return "shuffled [a-zA-Z0-9.]+";
     }
 
     @Override
@@ -25,9 +25,9 @@ public class Shuffled implements Function{
         Collections.shuffle(indexes);
         Variables shuffled = new EmpVariables();
         for (i = 0; i < len; i++){
-            shuffled.set(String.valueOf(indexes.get(i)), variables.get(codeSplit[1]+"."+i));
+            shuffled.set("0."+indexes.get(i), variables.get(codeSplit[1]+"."+i));
         }
-        variables.concat(codeSplit[1], shuffled);
-        return null;
+        shuffled.set("resulttype", "oneresult");
+        return shuffled;
     }
 }

@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class ToInt implements Function{
+public class ToInt extends Function {
     @Override
     public String syntax() {
         return "toint [0-9]+(\\.[0-9]+)?";

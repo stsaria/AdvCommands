@@ -8,7 +8,7 @@ import si.f5.stsaria.advCommands.Main;
 import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class BungeeMove implements Function{
+public class BungeeMove extends Function {
     @Override
     public String syntax() {
         return "bungeemove [a-zA-Z0-9\\-]+ [a-zA-Z0-9_.]+";

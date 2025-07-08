@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-public class HttpGet implements Function{
+public class HttpGet extends Function {
     @Override
     public String syntax() {
         return "httpget https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+";

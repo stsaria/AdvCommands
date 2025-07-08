@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.OneResultV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Replace implements Function{
+public class Replace extends Function {
     @Override
     public String syntax() {
         return "replace [a-zA-Z0-9.]+ [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";

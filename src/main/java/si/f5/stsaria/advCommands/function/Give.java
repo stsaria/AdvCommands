@@ -7,7 +7,7 @@ import si.f5.stsaria.advCommands.variables.ErrorV;
 import si.f5.stsaria.advCommands.variables.ItemStackV;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class Give implements Function{
+public class Give extends Function {
     @Override
     public String syntax() {
         return "give [a-zA-Z0-9.]+ [a-zA-Z0-9_.]+";

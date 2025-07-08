@@ -2,10 +2,10 @@ package si.f5.stsaria.advCommands.function;
 
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class SetVar implements Function{
+public class SetVar extends Function {
     @Override
     public String syntax() {
-        return "setvar [a-zA-Z0-9.]+ .*";
+        return "setvar [a-zA-Z0-9.]+ (?s).*";
     }
 
     @Override

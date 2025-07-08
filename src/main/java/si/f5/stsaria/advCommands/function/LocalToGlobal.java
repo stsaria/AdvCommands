@@ -4,7 +4,7 @@ import si.f5.stsaria.advCommands.variables.EmpVariables;
 import si.f5.stsaria.advCommands.variables.GlobalVariables;
 import si.f5.stsaria.advCommands.variables.Variables;
 
-public class LocalToGlobal implements Function{
+public class LocalToGlobal extends Function {
     @Override
     public String syntax() {
         return "localtoglobal [a-zA-Z0-9.]+ [a-zA-Z0-9.]+";
