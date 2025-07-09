@@ -105,7 +105,7 @@ public class Parser {
 
         while (matcher.find()) {
             String var = matcher.group(1);
-            String value = variables.get(var);
+            String value = variables.contains(var) ? variables.get(var) : matcher.group(0);
             matcher.appendReplacement(sb, value != null ? Matcher.quoteReplacement(value) : matcher.group());
         }
         matcher.appendTail(sb);

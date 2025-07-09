@@ -34,7 +34,7 @@ public class WaitRun extends Function implements Runnable{
         try {
             Thread.sleep(Integer.parseInt(codeSplit[1]));
         } catch (InterruptedException ignore){}
-        Function func = Functions.get(codeSplit[2].split(" ")[0]);
+        Function func = Functions.get(codeSplit[2]);
         if (func == null) return;
         else if (!this.code.matches(func.syntax())) return;
         Main.addRunFunction(new InfoRunFunc(func, this.code.replaceFirst("waitrun "+codeSplit[1]+" ", ""), this.variables));

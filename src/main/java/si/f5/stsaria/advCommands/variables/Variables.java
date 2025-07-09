@@ -12,10 +12,8 @@ public abstract class Variables {
         this.variableMap.put(name, variable);
     }
     public synchronized String get(String name){
-        if (this.variableMap.get(name) == null){
-            return name;
-        }
-        return this.variableMap.get(name);
+        String v = this.variableMap.get(name);
+        return v == null ? name : v;
     }
     public synchronized Map<String, String> getVariableMap(){
         return new LinkedHashMap<>(this.variableMap);
@@ -102,9 +100,9 @@ public abstract class Variables {
         if (!Objects.equals(this.variableMap.get(leftName), this.variableMap.get(rightName))) return false;
         this.variableMap.forEach((n, v) -> {
             if (n.startsWith(leftName+".")){
-                if (Objects.equals(this.variableMap.get(n), this.variableMap.get(rightName+n.replaceFirst(leftName, "")))) failed.set(true);
+                if (!Objects.equals(this.variableMap.get(n), this.variableMap.get(rightName+n.replaceFirst(leftName, "")))) failed.set(true);
             } else if (n.startsWith(rightName+".")){
-                if (Objects.equals(this.variableMap.get(n), this.variableMap.get(leftName+n.replaceFirst(rightName, "")))) failed.set(true);
+                if (!Objects.equals(this.variableMap.get(n), this.variableMap.get(leftName+n.replaceFirst(rightName, "")))) failed.set(true);
             }
         });
         return !failed.get();

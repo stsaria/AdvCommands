@@ -25,12 +25,14 @@ public class UserFunction extends Function {
         return variables;
     }
     public String syntax() {
-        return this.name;
+        return ".*";
     }
 
     @Override
     public synchronized Variables execute(String code, Variables variables) {
-        this.variables.concat("", variables);
+        if (variables != null) {
+            this.variables = variables;
+        }
         boolean isEvent = this.variables.contains("event");
         Variables previousResult = new EmpVariables();
         this.variables.set("argsstr", code.replaceFirst(this.name+" ", ""));
@@ -65,8 +67,10 @@ public class UserFunction extends Function {
                     if (lineSplit.length == 2) {
                         result = new EmpVariables();
                         this.variables.getVariableMap().forEach((n, v) -> {
-                            if (n.equals(lineSplit[1]) && n.startsWith(lineSplit[1]+".")) result.set(n.replace(lineSplit[1]+".", ""), v);
+                            if (n.equals(lineSplit[1])) result.set("0", v);
+                            else if (n.startsWith(lineSplit[1]+".")) result.set(n.replace(lineSplit[1]+".", "0."), v);
                         });
+                        result.set("resulttype", "oneresult");
                         return result;
                     } else {
                         result = null;
@@ -80,12 +84,13 @@ public class UserFunction extends Function {
             else if (!line.matches(func.syntax())) return new ErrorV("Line " + i + ": " + line + " - " + "syntax");
 
             Variables r;
-            if (func instanceof UserFunction) r = func.execute(line, new EmpVariables());
+            if (func instanceof UserFunction) r = func.execute(line, null);
             else r = func.execute(line, this.getVariables());
 
             if (r == null) r = new NullV();
             previousResult = r;
             if (Objects.equals(r.get("resulttype"), "error")){
+                System.out.println("error: Line " + i + ": " + line + " - " + r.get("0"));
                 if (isEvent) Main.getLogger().log(Level.SEVERE, "Error in event function! -> "+"Line " + i + ": " + line + " - " + r.get("0"));
                 return new ErrorV("error: Line " + i + ": " + line + " - " + r.get("0"));
             } else if (Objects.equals(r.get("resulttype"), "oneresult") && Objects.equals(r.get("0"), "plsskip")) nextSkip = true;

@@ -91,6 +91,7 @@ public class Functions{
         functionMap.remove(name);
     }
     public static synchronized Function get(String name){
-        return functionMap.get(name).clone();
+        Function f = functionMap.get(name);
+        return f == null ? null : f.clone();
     }
 }

@@ -28,12 +28,12 @@ public class ItemStackV extends Variables{
     }
     public static ItemStack toItemStack(String name, Variables variables){
         try{
-            ItemStack itemStack = new ItemStack(Objects.requireNonNull(Material.matchMaterial(GlobalVariables.get(name+".materialname").toUpperCase())), Integer.parseInt(GlobalVariables.get(name+".amount")));
+            ItemStack itemStack = new ItemStack(Objects.requireNonNull(Material.matchMaterial(variables.get(name+".materialname").toUpperCase())), Integer.parseInt(variables.get(name+".amount")));
             try {
                 ItemMeta itemMeta = Objects.requireNonNull(itemStack.getItemMeta());
                 itemMeta.setDisplayName(variables.get(name + ".displayname"));
-                for (int i = 0; i < GlobalVariables.length(name + ".enchants"); i++) {
-                    Map<Enchantment, Integer> enchantMap = Enchant.toEnchantMap(GlobalVariables.get(name + ".enchants." + i));
+                for (int i = 0; i < variables.length(name + ".enchants"); i++) {
+                    Map<Enchantment, Integer> enchantMap = Enchant.toEnchantMap(variables.get(name + ".enchants." + i));
                     AtomicReference<Enchantment> enchantment = new AtomicReference<>();
                     AtomicInteger level = new AtomicInteger();
                     Objects.requireNonNull(enchantMap).forEach((e, l) -> {
