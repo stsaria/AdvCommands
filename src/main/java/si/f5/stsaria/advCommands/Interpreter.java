@@ -39,9 +39,9 @@ public class Interpreter implements CommandExecutor {
             commandSender.sendMessage("error: syntax");
             return false;
         }
-        System.out.println(func.syntax());
+        
         Variables r = func.execute(line, GlobalVariables.getRaw());
-        System.out.println(r);
+        
         if (r == null) r = new NullV();
         if (Objects.equals(r.get("resulttype"), "error") || Objects.equals(r.get("resulttype"), "oneresult")){
             commandSender.sendMessage(r.get("0"));

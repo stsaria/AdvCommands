@@ -19,16 +19,16 @@ public class HttpPost extends Function {
     @Override
     public Variables execute(String code, Variables variables) {
         String[] codeSplit = code.split(" ");
-        if (!variables.contains(codeSplit[2])) return new ErrorV("request properties variable not found");
+        if (!variables.contains(codeSplit[1])) return new ErrorV("request properties variable not found");
         Variables result;
         try {
-            HttpURLConnection connection = (HttpURLConnection) URI.create(codeSplit[3]).toURL().openConnection();
+            HttpURLConnection connection = (HttpURLConnection) URI.create(codeSplit[2]).toURL().openConnection();
             connection.setInstanceFollowRedirects(false);
             connection.setRequestProperty("user-agent", "AdvCommandsHTTP.JAVA");
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             StringBuilder parameter = new StringBuilder();
-            variables.toOneLayerMap(codeSplit[2]).forEach((k, v) -> {
+            variables.toOneLayerMap(codeSplit[1]).forEach((k, v) -> {
                 k = k.replace("&", "%26");
                 v = v.replace("&", "%26");
                 parameter.append(k).append("=").append(v).append("&");

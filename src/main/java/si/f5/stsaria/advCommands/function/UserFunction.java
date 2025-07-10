@@ -90,7 +90,7 @@ public class UserFunction extends Function {
             if (r == null) r = new NullV();
             previousResult = r;
             if (Objects.equals(r.get("resulttype"), "error")){
-                System.out.println("error: Line " + i + ": " + line + " - " + r.get("0"));
+                
                 if (isEvent) Main.getLogger().log(Level.SEVERE, "Error in event function! -> "+"Line " + i + ": " + line + " - " + r.get("0"));
                 return new ErrorV("error: Line " + i + ": " + line + " - " + r.get("0"));
             } else if (Objects.equals(r.get("resulttype"), "oneresult") && Objects.equals(r.get("0"), "plsskip")) nextSkip = true;

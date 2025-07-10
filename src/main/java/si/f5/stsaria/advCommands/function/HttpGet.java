@@ -20,7 +20,7 @@ public class HttpGet extends Function {
         String[] codeSplit = code.split(" ");
         Variables result;
         try {
-            HttpURLConnection connection = (HttpURLConnection) URI.create(codeSplit[2]).toURL().openConnection();
+            HttpURLConnection connection = (HttpURLConnection) URI.create(codeSplit[1]).toURL().openConnection();
             connection.setInstanceFollowRedirects(false);
             connection.setRequestProperty("user-agent", "AdvCommandsHTTP.JAVA");
             int responseCode = connection.getResponseCode();
@@ -30,7 +30,7 @@ public class HttpGet extends Function {
                 newUrl = connection.getHeaderField("Location");
                 tempUrl = URI.create(newUrl);
                 if (!tempUrl.isAbsolute()){
-                    tempUrl = URI.create(codeSplit[2]).resolve(newUrl);
+                    tempUrl = URI.create(codeSplit[1]).resolve(newUrl);
                 }
                 connection = (HttpURLConnection) tempUrl.toURL().openConnection();
                 connection.setRequestProperty("user-agent", "AdvCommandsHTTP.JAVA");

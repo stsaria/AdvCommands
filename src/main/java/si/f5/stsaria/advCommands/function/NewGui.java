@@ -17,7 +17,7 @@ public class NewGui extends Function {
         else if (!(9 <= variables.length(codeSplit[2]) && variables.length(codeSplit[2]) <= 54 && variables.length(codeSplit[2]) % 9 == 0)) return new ErrorV("size of the itemstacks must be a multiple of 9 between 9 and 54 slots");
         int r = Guis.add(codeSplit[1], code.replaceFirst("newgui "+codeSplit[1]+" "+codeSplit[2]+" ", ""), codeSplit[2], variables);
         if (r == 1) return new ErrorV("gui already exists");
-        System.out.println(r);
+        
         return null;
     }
 }
