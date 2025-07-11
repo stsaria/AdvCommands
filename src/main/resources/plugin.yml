@@ -3,7 +3,7 @@ version: '3.0'
 main: si.f5.stsaria.cakeLang.CakeLang
 api-version: '1.21'
 author: stsaria
-website: http://stsaria.f5.si
+website: https://github.com/stsaria/cake
 
 commands:
   cakelang:
