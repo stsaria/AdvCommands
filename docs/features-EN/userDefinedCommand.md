@@ -26,7 +26,7 @@ For static command definitions, you can use `/command` format, but there are con
 
 If you can directly log into the server console, use this method!
 
-- Register command (inside `plugins/AdvCommands/config.yml`)
+- Register command (inside `plugins/CakeLang/config.yml`)
 ```yaml:config.yml
 commands:
  - command_name

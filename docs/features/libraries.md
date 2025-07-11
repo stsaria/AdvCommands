@@ -16,7 +16,7 @@
 ライブラリファイルは以下の場所に配置されます：
 
 ```
-plugins/AdvCommands/libs/
+plugins/CakeLang/libs/
 ```
 
 このディレクトリは初回起動時に自動的に作成されます。
@@ -40,7 +40,7 @@ cmd say Library function executed
 ### 2. ライブラリの作成と使用
 
 #### Step 1: ライブラリファイルの作成
-`plugins/AdvCommands/libs/myUtils.func` を作成：
+`plugins/CakeLang/libs/myUtils.func` を作成：
 
 ```
 # myUtils.func の内容例
@@ -54,7 +54,7 @@ setvarG lastUtilExecution <unixtime>
 #### Step 3: ライブラリ関数の呼び出し
 ```
 # カスタムライブラリの関数を呼び出し
-/advcmd myUtils
+/cakelang myUtils
 ```
 
 ## ライブラリの動作仕組み

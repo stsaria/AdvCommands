@@ -1,5 +1,5 @@
-# AdvCommands
-AdvCommands is a plugin project that adds multiple features to traditional Minecraft commands.
+# Cake
+Cake is a plugin project that adds multiple features to traditional Minecraft commands.
 
 ## Why This is Needed
 There are many things that can be created with traditional Minecraft commands.
@@ -12,7 +12,7 @@ This plugin aims to replace these with more intuitive alternatives.
 ## Getting Started
 Install this plugin on a Spigot-based server and start it up. (Please also enable command blocks)
 
-Once started, try executing the command `/advcmd cmd say Hello world`.
+Once started, try executing the command `/cakelang cmd say Hello world`.
 This should output `Hello world`. Or at least, we hope it will.
 
 ## Added Features

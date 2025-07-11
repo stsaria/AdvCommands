@@ -19,7 +19,7 @@ seteventfunc onkill hoge
 
 # 例:移動したプレイヤーにmove!と送る
 # チャットコマンド
-/advcmd seteventfunc onmove fuga
+/cakelang seteventfunc onmove fuga
 # 関数fuga内
 cmd tellraw <event.player.name> "move!"
 ```

@@ -1,17 +1,17 @@
-name: AdvCommands
+name: CakeLang
 version: '3.0'
-main: si.f5.stsaria.advCommands.AdvCommands
+main: si.f5.stsaria.cakeLang.CakeLang
 api-version: '1.21'
-author: yudenOfSauce
+author: stsaria
 website: http://stsaria.f5.si
 
 commands:
-  advcmd:
-    description: interpreter
-    permission: advcmd
+  cakelang:
+    description: cakelang interpreter
+    permission: cakelang
   fer:
-    description: advcmd usercmd base
+    description: cakelang usercmd base
 permissions:
-  advcmd:
-    description: advcmd command's permission
+  cakelang:
+    description: cakelang command's permission
     default: op

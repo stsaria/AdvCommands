@@ -17,7 +17,7 @@ declfunc function_name world_name x_coordinate y_coordinate z_coordinate
 ```
 - Output function contents
 ```
-/advcmd catfunc function_name
+/cakelang catfunc function_name
 ```
 - Function call
 ```
@@ -35,12 +35,12 @@ saveresult save_variable_name
 ## Usage Examples
 ```
 # Declaration of function hoge with coordinate `20 30 10` as line 1
-/advcmd declfunc hoge world 20 30 10
+/cakelang declfunc hoge world 20 30 10
 
 # Execute function hoge
-/advcmd hoge
+/cakelang hoge
 
-# When calling a function within a function, advcmd is not needed.
+# When calling a function within a function, cakelang is not needed.
 hoge
 # That's all.
 

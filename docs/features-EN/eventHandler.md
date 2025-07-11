@@ -21,7 +21,7 @@ seteventfunc onkill hoge
 
 # Example: Send "move!" to a player who moved
 # Chat command
-/advcmd seteventfunc onmove fuga
+/cakelang seteventfunc onmove fuga
 # Inside function fuga
 cmd tellraw <event.player.name> "move!"
 ```

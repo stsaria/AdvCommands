@@ -16,7 +16,7 @@ declfunc 関数名 ワールド名 x座標 y座標 z座標
 ```
 - 関数の中身を出力
 ```
-/advcmd catfunc 関数名
+/cakelang catfunc 関数名
 ```
 - 関数の呼び出し
 ```
@@ -33,12 +33,12 @@ saveresult 保存変数名
 ## 使用例
 ```
 # 座標`20 30 10`が1行目とした関数hogeの宣言
-/advcmd declfunc hoge world 20 30 10
+/cakelang declfunc hoge world 20 30 10
 
 # 関数hogeの実行
-/advcmd hoge
+/cakelang hoge
 
-# 関数内で関数を呼び出す場合はadvcmdはいりません。
+# 関数内で関数を呼び出す場合はcakelangはいりません。
 hoge
 # だけです。
 

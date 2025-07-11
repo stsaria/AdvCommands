@@ -23,7 +23,7 @@ seteventfunc onfer 関数名
 
 もし、サーバーのコンソールに直接ログインできるのであれば、使いましょう！
 
-- コマンドを登録（`plugins/AdvCommands/config.yml`内）
+- コマンドを登録（`plugins/CakeLang/config.yml`内）
 ```yaml:config.yml
 commands:
  - コマンド名

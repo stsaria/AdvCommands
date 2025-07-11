@@ -1,6 +1,6 @@
 This README is in Japanese. The English README is [here](README-EN.md). (It is left to machine translation, so there is a possibility that something may have gone wrong.)
-# AdvCommands
-AdvCommandsは、従来のマインクラフトコマンドに複数の機能を追加するプラグインのプロジェクトです。
+# Cake
+Cakeは、従来のマインクラフトコマンドに複数の機能を追加するプラグインのプロジェクトです。
 ## これが必要な理由
 今までのマインクラフトコマンドで作れるものはたくさんあります。
 その殆どは、`execute`という条件分岐ができるコマンドとコマンドブロックのリピートを組み合わせて多用しています。
@@ -11,7 +11,7 @@ AdvCommandsは、従来のマインクラフトコマンドに複数の機能を
 ## 始めてみましょう
 このプラグインをspigot系のサーバーで導入して、起動します。（コマンドブロックも有効化してください）
 
-起動したらコマンド`/advcmd cmd say Hello world`を実行してみてください。
+起動したらコマンド`/cakelang cmd say Hello world`を実行してみてください。
 そうしたら、`Hello world`が出力されます。いや、されることを祈っています。
 ## 追加される機能
 - [変数](docs/features/variables.md)

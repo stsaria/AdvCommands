@@ -16,7 +16,7 @@ The library system has the following features:
 Library files are placed in the following location:
 
 ```
-plugins/AdvCommands/libs/
+plugins/CakeLang/libs/
 ```
 
 This directory is automatically created on the first startup.
@@ -40,7 +40,7 @@ cmd say Library function executed
 ### 2. Creating and Using Libraries
 
 #### Step 1: Creating a Library File
-Create `plugins/AdvCommands/libs/myUtils.func`:
+Create `plugins/CakeLang/libs/myUtils.func`:
 
 ```
 # Example content of myUtils.func
@@ -54,7 +54,7 @@ After placing the library file, restart the plugin.
 #### Step 3: Calling Library Functions
 ```
 # Call custom library function
-/advcmd myUtils
+/cakelang myUtils
 ```
 
 ## How Libraries Work

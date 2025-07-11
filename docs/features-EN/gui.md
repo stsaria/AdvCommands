@@ -26,7 +26,7 @@ itemstack itemstacks.4 green_dye 1 <startButtonName>
 itemstack menuOpenItem compass 1 <menuOpenItemName>
 newgui menuGui itemstacks StartGUI
 # In chat command (lups0 is my player name)
-/advcmd declfunc main world 10 10 10
-/advcmd main
-/advcmd give menuOpenItem lups0
+/cakelang declfunc main world 10 10 10
+/cakelang main
+/cakelang give menuOpenItem lups0
 ```
